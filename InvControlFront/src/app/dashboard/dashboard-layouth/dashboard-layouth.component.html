@@ -1,0 +1,25 @@
+<mat-drawer-container  autosize class="h-full">
+    <mat-drawer #drawer  mode="side" >
+      <app-side-var>
+
+      </app-side-var>
+    </mat-drawer>
+  
+
+    <div class="h-full">
+      <app-nav-var>
+        <button type="button" mat-button (click)="drawer.toggle()" displayMenu>
+          Menu
+        </button>
+
+      </app-nav-var>
+      <div>
+        <router-outlet>
+
+        </router-outlet>
+      </div>
+
+
+    </div>
+  
+  </mat-drawer-container>
