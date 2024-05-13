@@ -9,6 +9,7 @@ import { ShareModule } from './share/share.module';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatButtonModule} from '@angular/material/button';
 import {MatListModule} from '@angular/material/list';
+import { InventarioRoutingModule } from './page/inventario/inventario-routing.module';
 @NgModule({
   declarations: [
     DashboardLayouthComponent,
@@ -22,7 +23,8 @@ import {MatListModule} from '@angular/material/list';
     ShareModule,
     MatSidenavModule,
     MatButtonModule,
-    MatListModule
+    MatListModule,
+ 
 
   ]
 })
