@@ -5,6 +5,7 @@ import { HomePageComponent } from './page/home-page/home-page.component';
 import { UserPageComponent } from './page/user-page/user-page.component';
 
 import { InventarioRoutingModule } from './page/inventario/inventario-routing.module';
+import { BloquesComponent } from './page/areas/bloques/bloques.component';
 
 const routes: Routes = [
   {
@@ -13,6 +14,7 @@ const routes: Routes = [
     children: [
       {path: 'home', component: HomePageComponent},
       {path: 'user', component: UserPageComponent},
+      {path: 'building', component: BloquesComponent},
       {path: 'inventory', loadChildren: () => import ('./page/inventario/inventario.module').then(m=> m.InventarioModule) },
       {path: '', redirectTo:'home', pathMatch:'full'},
     
