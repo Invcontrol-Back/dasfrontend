@@ -1,4 +1,6 @@
-<mat-drawer-container  autosize class="h-full">
+
+
+  <mat-drawer-container  autosize class="h-full">
     <mat-drawer #drawer  mode="side" >
       <app-side-var>
 
@@ -7,9 +9,13 @@
   
 
     <div class="h-full">
-      <app-nav-var>
-        <button type="button" mat-button (click)="drawer.toggle()" displayMenu>
-          Menu
+      <app-nav-var >
+        
+        <button class= "font-bold text-lg text-slate-100" button mat-button (click)="drawer.toggle()" displayMenu>
+          <a class="text-slate-100 ">
+          <mat-icon  class="pt-1" aria-hidden="false" aria-label="" fontIcon="menu_open" ></mat-icon>
+          <a class="px-2 pb-16">Opciones</a>
+        </a>
         </button>
 
       </app-nav-var>
@@ -23,3 +29,4 @@
     </div>
   
   </mat-drawer-container>
+
