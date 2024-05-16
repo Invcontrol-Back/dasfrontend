@@ -24,6 +24,7 @@ import { InventarioRoutingModule } from './page/inventario/inventario-routing.mo
     MatSidenavModule,
     MatButtonModule,
     MatListModule,
+    InventarioRoutingModule,
  
 
   ]

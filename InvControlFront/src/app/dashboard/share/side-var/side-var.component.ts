@@ -10,7 +10,13 @@ export class SideVarComponent {
 
   menu: MenuItems[]= [
     {label:'Dashboard', icon: 'home', routerLink: './home'},
-    {label:'Usuarios', icon: 'home', routerLink: './user'}
+    {label:'Usuarios', icon: 'home', routerLink: './user'},
+    {label:'Inventario', icon: 'home', routerLink: './inventory',
+      items: [{label:'Tecnologico', icon: 'home', routerLink:'./tech'},
+      {label:'Tecnologico', icon: 'home', routerLink:'./notech'},
+      {label:'Tecnologico', icon: 'home', routerLink:'./software'}
+      ]
+    }
 
   ];
 }
