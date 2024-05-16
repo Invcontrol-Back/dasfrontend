@@ -17,14 +17,16 @@ export class SideVarComponent {
       {label:'Software', icon: 'developer_board', routerLink:'./software'}
       ]
     },
+
     {label:'Usuarios', icon: 'person', routerLink: './user'},
     {label:'Áreas', icon: 'account_tree', routerLink: './user',
-    items: [{label:'Bloques', icon: 'computer', routerLink:'./tech'},
+    items: [{label:'Bloques', icon: 'computer', routerLink:'./building'},
         {label:'Ubicacion', icon: 'chair', routerLink:'./notech'},
     
       ] },
     {label:'Reportes', icon: 'book_5', routerLink: './home'},
     
+
 
 
   ];
