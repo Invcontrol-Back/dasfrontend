@@ -6,6 +6,10 @@ import { SideVarComponent } from './side-var/side-var.component';
 import { NavVarComponent } from './nav-var/nav-var.component';
 import {MatListModule} from '@angular/material/list';
 import {MatIconModule} from '@angular/material/icon';
+import { TableComponent } from './table/table.component';
+import {MatTableModule} from '@angular/material/table';
+import { ContainerComponent } from './container/container.component';
+import {MatCardModule} from '@angular/material/card';
 
 import {MatExpansionModule} from '@angular/material/expansion';
 
@@ -30,11 +34,14 @@ import {MatCardModule} from '@angular/material/card';
     MatListModule,
     MatIconModule,
 
+
     MatExpansionModule,
 
 
     MatTableModule,
     MatCardModule
+
+
 
   ],
   exports: [
@@ -42,12 +49,14 @@ import {MatCardModule} from '@angular/material/card';
     NavVarComponent,
     MatListModule,
 
+
     MatIconModule, 
     MatExpansionModule,
 
 
     ContainerComponent,
     TableComponent
+
 
   ]
 })
