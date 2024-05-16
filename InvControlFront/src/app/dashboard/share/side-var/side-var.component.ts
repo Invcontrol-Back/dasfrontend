@@ -9,14 +9,23 @@ import { MenuItems } from '../models/menu.model';
 export class SideVarComponent {
 
   menu: MenuItems[]= [
-    {label:'Dashboard', icon: 'home', routerLink: './home'},
-    {label:'Usuarios', icon: 'home', routerLink: './user'},
-    {label:'Inventario', icon: 'home', routerLink: './inventory',
-      items: [{label:'Tecnologico', icon: 'home', routerLink:'./tech'},
-      {label:'Tecnologico', icon: 'home', routerLink:'./notech'},
-      {label:'Tecnologico', icon: 'home', routerLink:'./software'}
+    {label:'Dashboard', icon: 'data_thresholding', routerLink: './home'},
+    
+    {label:'Inventario', icon: 'token', routerLink: './inventory',
+      items: [{label:'Tecnologico', icon: 'computer', routerLink:'./tech'},
+      {label:'Inmobiliario', icon: 'chair', routerLink:'./notech'},
+      {label:'Software', icon: 'developer_board', routerLink:'./software'}
       ]
-    }
+    },
+    {label:'Usuarios', icon: 'person', routerLink: './user'},
+    {label:'Áreas', icon: 'account_tree', routerLink: './user',
+    items: [{label:'Bloques', icon: 'computer', routerLink:'./tech'},
+        {label:'Ubicacion', icon: 'chair', routerLink:'./notech'},
+    
+      ] },
+    {label:'Reportes', icon: 'book_5', routerLink: './home'},
+    
+
 
   ];
 }

@@ -4,9 +4,10 @@ import { LayoutInventarioComponent } from './layout-inventario/layout-inventario
 import { InvTecnologicoComponent } from './inv-tecnologico/inv-tecnologico.component';
 import { InvNoTecnologicoComponent } from './inv-no-tecnologico/inv-no-tecnologico.component';
 import { InvSoftwareComponent } from './inv-software/inv-software.component';
+import { DashboardLayouthComponent } from '../../dashboard-layouth/dashboard-layouth.component';
 
 const routes: Routes = [
-  {path: '', component:LayoutInventarioComponent,
+  {path: '', component:DashboardLayouthComponent,
     children: [
       {path: 'tech', component: InvTecnologicoComponent},
       {path: 'notech', component: InvNoTecnologicoComponent},
