@@ -1,35 +1,34 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Faculty } from '../../share/models/faculty.model';
-
+import { TipoUbicacion } from '../../share/models/tipoUbicacion.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class FacultadService {
+export class TipoUbicacionService {
 
-  url = 'http://127.0.0.1:8000/api/facultad/'
+  url = 'http://127.0.0.1:8000/api/tipoUbi/'
   constructor(private http:HttpClient) {
    }
 
-   loadFacultys():Observable<any> {
+  loadTipoUbicaciones():Observable<any> {
     return this.http.get(this.url)
   }
 
-  loadFaculty(id:string):Observable<any> {
+  loadTipoUbicacion(id:string):Observable<any> {
     return this.http.get(this.url+id)
   }
 
-  addFaculty(entidad:Faculty):Observable<any>{
+  addTipoUbicacion(entidad:TipoUbicacion):Observable<any>{
     return this.http.post(this.url,entidad)
   }
 
-  updateFaculty(id:string, entidad:Faculty):Observable<any>{
+  updateTipoUbicacion(id:string, entidad:TipoUbicacion):Observable<any>{
     return this.http.put(this.url+id,entidad)
   }
 
-  deleteFaculty(id:string):Observable<any> {
+  deleteTipoUbicacion(id:string):Observable<any> {
     return this.http.delete(this.url+id)
   }
 }
