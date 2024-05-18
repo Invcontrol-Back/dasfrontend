@@ -13,6 +13,23 @@ button {
   border-radius: 10px;
   margin: 10px;
 }
+.Cancelar{
+  background-color: rgb(96, 87, 87);
+  color: rgb(255, 255, 255) !important;
+  border: 1px solid #7f7f7f;
+  padding: 10px 20px;
+  border-radius: 10px;
+  margin: 10px;
+}
+.Cancelar:hover{
+  background-color: rgb(155, 146, 146);
+}
+
+.invalid-button {
+  background-color: rgb(96, 87, 87);
+  color: rgb(255, 255, 255) !important;
+}
+
 button:hover{
   background-color: red;
 }
