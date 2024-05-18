@@ -50,15 +50,17 @@
             <button mat-button 
             (click)="saveData()" 
             [disabled]="!isFormValid()" 
+            [ngClass]="{'invalid-button': !isFormValid()}"
             *ngIf="showButtonCreate">Guardar</button>
 
             <button mat-button 
             (click)="updateData()" 
             [disabled]="!isFormValid()" 
+            [ngClass]="{'invalid-button': !isFormValid()}"
             *ngIf="showButtonEdit">Actualizar</button>
 
             <button mat-button 
-            (click)="closeModal()">Cancelar</button>
+            (click)="closeModal()" class="Cancelar">Cancelar</button>
         </div>
     </div>
 </div>
@@ -72,7 +74,7 @@
             <button mat-button 
             (click)="deleteData()">Eliminar</button>
             <button mat-button 
-            (click)="closeDeleteModal()">Cancelar</button>
+            (click)="closeDeleteModal()" class="Cancelar">Cancelar</button>
         </div>
     </div>
 </div>

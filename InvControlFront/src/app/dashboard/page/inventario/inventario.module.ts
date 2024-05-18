@@ -6,6 +6,18 @@ import { LayoutInventarioComponent } from './layout-inventario/layout-inventario
 import { InvTecnologicoComponent } from './inv-tecnologico/inv-tecnologico.component';
 import { InvNoTecnologicoComponent } from './inv-no-tecnologico/inv-no-tecnologico.component';
 import { InvSoftwareComponent } from './inv-software/inv-software.component';
+import { ShareModule } from '../../share/share.module';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
+import { DashboardModule } from '../../dashboard.module';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatButtonModule } from '@angular/material/button';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatTableModule } from '@angular/material/table';
 
 
 @NgModule({
@@ -17,7 +29,18 @@ import { InvSoftwareComponent } from './inv-software/inv-software.component';
   ],
   imports: [
     CommonModule,
-    InventarioRoutingModule
+    InventarioRoutingModule,
+    ShareModule,
+   MatSidenavModule,
+   MatButtonModule,
+   MatListModule,
+   MatIconModule,
+   MatTooltipModule,
+   FormsModule,
+   MatTableModule,
+   MatFormFieldModule,
+   MatSelectModule,
+   MatInputModule
   ]
 })
 export class InventarioModule { }
