@@ -4,8 +4,9 @@ import { CommonModule } from '@angular/common';
 import { AuthRoutingModule } from './auth-routing.module';
 import { AuthLayouthComponent } from './auth-layouth/auth-layouth.component';
 import { LoginPageComponent } from './page/login-page/login-page.component';
-
-
+import {MatInputModule} from '@angular/material/input';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatButtonModule} from '@angular/material/button';
 @NgModule({
   declarations: [
     AuthLayouthComponent,
@@ -13,7 +14,10 @@ import { LoginPageComponent } from './page/login-page/login-page.component';
   ],
   imports: [
     CommonModule,
-    AuthRoutingModule
+    AuthRoutingModule,
+    MatSidenavModule,
+    MatInputModule,
+    MatButtonModule
   ]
 })
 export class AuthModule { }

@@ -1,1 +1,28 @@
-<p>login-page works!</p>
+<mat-sidenav-container class="contenedor">
+    <mat-sidenav-content class="main-content">
+      <div class="login-box mat-elevation-z8">
+        <div class="left-side">
+          <img src="assets/imagenlogin.JPG" alt="Login Image" class="login-image">
+        </div>
+        <div class="right-side">
+          <h2 class="login-title">Login</h2>
+          <div class="login-field">
+            <mat-form-field appearance="fill" class="full-width">
+              <mat-label>Usuario</mat-label>
+              <input matInput placeholder="Usuario">
+            </mat-form-field>
+          </div>
+          <div class="login-field">
+            <mat-form-field appearance="fill" class="full-width">
+              <mat-label>Contrasena</mat-label>
+              <input matInput placeholder="Contrasena" type="password">
+            </mat-form-field>
+          </div>
+          <div class="login-button">
+            <button mat-flat-button color="warn" class="full-width" (click)="onLogin()">Iniciar Sesion</button>
+          </div>
+        </div>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+  
