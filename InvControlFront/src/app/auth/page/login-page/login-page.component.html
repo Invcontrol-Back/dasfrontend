@@ -8,16 +8,17 @@
           <h2 class="login-title">Login</h2>
           <div class="login-field">
             <mat-form-field appearance="fill" class="full-width">
-              <mat-label>Usuario</mat-label>
-              <input matInput placeholder="Usuario">
+              <mat-label>Correo</mat-label>
+              <input matInput placeholder="Correo" [(ngModel)]="correoText" required type="email">
             </mat-form-field>
           </div>
           <div class="login-field">
             <mat-form-field appearance="fill" class="full-width">
               <mat-label>Contrasena</mat-label>
-              <input matInput placeholder="Contrasena" type="password">
+              <input matInput placeholder="Contrasena" type="password" [(ngModel)]="passText" required>
             </mat-form-field>
           </div>
+          <span *ngIf="errorVisible" class="texto-rojo">Credenciales incorrectas</span>
           <div class="login-button">
             <button mat-flat-button color="warn" class="full-width" (click)="onLogin()">Iniciar Sesion</button>
           </div>
