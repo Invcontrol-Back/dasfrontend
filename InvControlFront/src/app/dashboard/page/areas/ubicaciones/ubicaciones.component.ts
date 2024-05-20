@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { MetaDataColumn } from '../../../share/interfaces/metacolumn.interface';
+import { BloqueService } from 'src/app/dashboard/services/bloque/bloque.service';
+import { TipoUbicacionService } from 'src/app/dashboard/services/tipoUbicacion/tipo-ubicacion.service';
+import { UbicacionService } from 'src/app/dashboard/services/ubicacion/ubicacion.service';
 
 @Component({
   selector: 'app-ubicaciones',
@@ -15,7 +18,9 @@ export class UbicacionesComponent {
   typeOption: string = '';
 
   data:any[] = []
-  dataFaculty:any[] = []
+  dataBuilding:any[] = []
+  dataTypeLocation:any[] = []
+  
   showButtonCreate: boolean = false;
   showButtonEdit: boolean = false;
   idRow:string = '';
@@ -27,20 +32,50 @@ export class UbicacionesComponent {
     {field:"tip_ubi_nombre", title:"TIPO DE UBICACION"}
   ]
 
-  constructor(){
-
+  constructor(private buildingEntity:BloqueService,private typeLocationEntity:TipoUbicacionService,private locationEntity:UbicacionService){
+    this.loadBuildings();
+    this.loadTypeLocations();
+    this.loadLocations();
   }
 
+  loadBuildings(){
+    this.buildingEntity.loadBuildings().subscribe(data => {
+      this.dataBuilding = data
+    },error => {
+      console.log(error)
+    })
+  }
 
+  loadTypeLocations(){
+    this.typeLocationEntity.loadTipoUbicaciones().subscribe(data => {
+      this.dataTypeLocation = data
+    },error => {
+      console.log(error)
+    })
+  }
+
+  loadLocations(){
+    this.locationEntity.loadLocations().subscribe(data => {
+      this.data = data
+    },error => {
+      console.log(error)
+    })
+  }
 
   openModal(action:string,row: any) {
     if (action == 'crear'){
       this.titleText = 'CREAR UBICACION'
       this.locationText = ''
+      this.buildingOption = this.dataBuilding[0].blo_id
+      this.typeOption = this.dataTypeLocation[0].tip_ubi_id
       this.showButtonCreate = true
       this.showButtonEdit = false
     }else{
       this.titleText = 'ACTUALIZAR UBICACION'
+      this.locationText = row.ubi_nombre
+      this.buildingOption = row.ubi_blo
+      this.typeOption = row.ubi_tip_ubi
+      this.idRow = row.ubi_id
       this.showButtonCreate = false
       this.showButtonEdit = true
     }
@@ -54,18 +89,28 @@ export class UbicacionesComponent {
     this.modalDeleteOpen = false;
   }
   openDeleteModal(row:any){
-    this.idRow = row.blo_id
+    this.idRow = row.ubi_id
     this.modalDeleteOpen = true;
   }
   saveData() {
+    const location = {ubi_nombre:this.locationText,ubi_blo:Number(this.buildingOption), ubi_tip_ubi:Number(this.typeOption)}
+    this.locationEntity.addLocation(location).subscribe(() => {
+      this.loadLocations();
+    })
     this.closeModal();
   }
   updateData() {
+    const location = {ubi_nombre:this.locationText,ubi_blo:Number(this.buildingOption), ubi_tip_ubi:Number(this.typeOption)}
+    this.locationEntity.updateLocation(this.idRow,location).subscribe(() => {
+      this.loadLocations();
+    })
     this.closeModal();
   }
 
   deleteData(){
-
+    this.locationEntity.deleteLocation(this.idRow).subscribe(() => {
+      this.loadLocations();
+    })
     this.closeDeleteModal();
   }
 

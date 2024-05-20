@@ -43,13 +43,13 @@
         <mat-form-field>
             <mat-label>Bloque</mat-label>
             <mat-select [(ngModel)]="buildingOption">
-              <mat-option *ngFor="let faculty of dataFaculty" [value]="faculty.fac_id">{{ faculty.fac_nombre }}</mat-option>
+              <mat-option *ngFor="let building of dataBuilding" [value]="building.blo_id">{{ building.blo_nombre }}</mat-option>
             </mat-select>
         </mat-form-field>
         <mat-form-field>
             <mat-label>Tipo de ubicación</mat-label>
             <mat-select [(ngModel)]="typeOption">
-              <mat-option *ngFor="let faculty of dataFaculty" [value]="faculty.fac_id">{{ faculty.fac_nombre }}</mat-option>
+              <mat-option *ngFor="let typeLocation of dataTypeLocation" [value]="typeLocation.tip_ubi_id">{{ typeLocation.tip_ubi_nombre }}</mat-option>
             </mat-select>
         </mat-form-field>
         <div class="button-container">
