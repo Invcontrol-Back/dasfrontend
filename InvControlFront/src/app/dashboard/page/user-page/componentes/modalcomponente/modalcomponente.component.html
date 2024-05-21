@@ -1,0 +1,39 @@
+<h1 mat-dialog-title>Editar Usuario</h1>
+<div mat-dialog-content>
+  <form>
+    <div>
+      <label for="nombre">Nombre</label>
+      <input id="nombre" type="text" placeholder="Nombre" required>
+    </div>
+    <div>
+      <label for="apellido">Apellido</label>
+      <input id="apellido" type="text" placeholder="Apellido" required>
+    </div>
+    <div>
+      <label for="email">Email</label>
+      <input id="email" type="email" placeholder="Email" required>
+    </div>
+    <div>
+      <label for="telefono">Teléfono</label>
+      <input id="telefono" type="tel" placeholder="Teléfono" required>
+    </div>
+    <div>
+      <label for="rol">Rol</label>
+      <select id="rol" required>
+        <option value="admin">Administrador</option>
+        <option value="user">Usuario</option>
+      </select>
+    </div>
+    <div>
+      <label for="estado">Estado</label>
+      <select id="estado" required>
+        <option value="active">Activo</option>
+        <option value="inactive">Inactivo</option>
+      </select>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button color="warn" mat-dialog-close>Cancelar</button>
+  <button mat-button color="primary" >Guardar</button>
+</div>
