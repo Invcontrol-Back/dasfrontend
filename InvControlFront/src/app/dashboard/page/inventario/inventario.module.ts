@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { InventarioRoutingModule } from './inventario-routing.module';
 import { LayoutInventarioComponent } from './layout-inventario/layout-inventario.component';
-import { InvTecnologicoComponent } from './inv-tecnologico/inv-tecnologico.component';
+
 import { InvNoTecnologicoComponent } from './inv-no-tecnologico/inv-no-tecnologico.component';
 import { InvSoftwareComponent } from './inv-software/inv-software.component';
 import { ShareModule } from '../../share/share.module';
@@ -18,14 +18,17 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTableModule } from '@angular/material/table';
+import { InvTecnologicoComponent } from './inv-tecnologico/inv-tecnologico.component';
 
 
 @NgModule({
   declarations: [
     LayoutInventarioComponent,
-    InvTecnologicoComponent,
+    
     InvNoTecnologicoComponent,
-    InvSoftwareComponent
+    InvSoftwareComponent,
+    InvTecnologicoComponent,
+    
   ],
   imports: [
     CommonModule,
