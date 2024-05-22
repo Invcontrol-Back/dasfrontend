@@ -23,6 +23,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatOptionModule } from '@angular/material/core';
 
 import { UbicacionesComponent } from './page/areas/ubicaciones/ubicaciones.component';
+import { ReportPageComponent } from './page/report-page/report-page.component';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import { UbicacionesComponent } from './page/areas/ubicaciones/ubicaciones.compo
     
 
     UbicacionesComponent,
+    ReportPageComponent,
 
 
 
