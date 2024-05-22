@@ -19,6 +19,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { UbicacionesComponent } from './page/areas/ubicaciones/ubicaciones.component';
+import { ReportPageComponent } from './page/report-page/report-page.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { UbicacionesComponent } from './page/areas/ubicaciones/ubicaciones.compo
     UserPageComponent,
     BloquesComponent,
     UbicacionesComponent,
+    ReportPageComponent,
 
 
   ],

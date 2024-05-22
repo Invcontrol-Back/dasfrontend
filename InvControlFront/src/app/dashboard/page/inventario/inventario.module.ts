@@ -18,6 +18,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTableModule } from '@angular/material/table';
+import { InvComponentesComponent } from './inv-componentes/inv-componentes.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { MatTableModule } from '@angular/material/table';
     LayoutInventarioComponent,
     InvTecnologicoComponent,
     InvNoTecnologicoComponent,
-    InvSoftwareComponent
+    InvSoftwareComponent,
+    InvComponentesComponent
   ],
   imports: [
     CommonModule,

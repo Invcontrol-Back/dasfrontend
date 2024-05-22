@@ -5,6 +5,7 @@ import { InvTecnologicoComponent } from './inv-tecnologico/inv-tecnologico.compo
 import { InvNoTecnologicoComponent } from './inv-no-tecnologico/inv-no-tecnologico.component';
 import { InvSoftwareComponent } from './inv-software/inv-software.component';
 import { DashboardLayouthComponent } from '../../dashboard-layouth/dashboard-layouth.component';
+import { InvComponentesComponent } from './inv-componentes/inv-componentes.component';
 
 const routes: Routes = [
   {path: '', component:DashboardLayouthComponent,
@@ -12,6 +13,7 @@ const routes: Routes = [
       {path: 'tech', component: InvTecnologicoComponent},
       {path: 'notech', component: InvNoTecnologicoComponent},
       {path: 'software', component:InvSoftwareComponent},
+      {path: 'component', component:InvComponentesComponent},
       {path: '', redirectTo:'tech', pathMatch:'full'},
     ]
   }
