@@ -18,8 +18,13 @@ import { MatTableModule } from '@angular/material/table';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
+
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatOptionModule } from '@angular/material/core';
+
 import { UbicacionesComponent } from './page/areas/ubicaciones/ubicaciones.component';
 import { ReportPageComponent } from './page/report-page/report-page.component';
+
 
 @NgModule({
   declarations: [
@@ -27,8 +32,12 @@ import { ReportPageComponent } from './page/report-page/report-page.component';
     HomePageComponent,
     UserPageComponent,
     BloquesComponent,
+
+    
+
     UbicacionesComponent,
     ReportPageComponent,
+
 
 
   ],
@@ -46,7 +55,26 @@ import { ReportPageComponent } from './page/report-page/report-page.component';
     MatTableModule,
     MatFormFieldModule,
     MatSelectModule,
-    MatInputModule
+    MatInputModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatOptionModule
+  
+  ],
+  exports:[
+    MatDialogModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatOptionModule
   ]
 })
 export class DashboardModule { }

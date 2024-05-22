@@ -1,0 +1,41 @@
+/* Estilos para el formulario */
+form {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Divide el formulario en dos columnas */
+    grid-gap: 10px; /* Espacio entre elementos del formulario */
+  }
+  
+  /* Estilos para cada campo del formulario */
+  form div {
+    margin-bottom: 15px; /* Espacio entre campos */
+  }
+  
+  /* Estilos para etiquetas */
+  label {
+    font-weight: bold;
+  }
+  
+  /* Estilos para los campos de entrada y select */
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+  }
+  
+  /* Estilos para los botones */
+  .mat-dialog-actions button {
+    margin-right: 10px; /* Espacio entre botones */
+  }
+  
+  /* Estilos para el botón de "Guardar" */
+  .mat-dialog-actions button.mat-button-primary {
+    background-color: #e53935; /* Rojo */
+    color: white; /* Texto blanco */
+  }
+  
