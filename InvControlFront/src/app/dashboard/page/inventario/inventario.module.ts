@@ -32,7 +32,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     
     InvNoTecnologicoComponent,
     InvSoftwareComponent,
-    InvComponentesComponent
+    InvComponentesComponent,
     InvTecnologicoComponent,
   ],
   imports: [
