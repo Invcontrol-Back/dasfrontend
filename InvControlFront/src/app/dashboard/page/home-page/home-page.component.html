@@ -4,22 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página de Inicio</title>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        img {
-            
-            max-width: 800px; /* Tamaño máximo para asegurar que no sea demasiado grande */
-            height: auto;
-        }
-    </style>
 </head>
 <body>
-    <img src="../../../../assets/Invcontrol-_1_.png" alt="Descripción de la imagen">
+      
+    <div class="card-container">
+        <mat-card *ngFor="let item of items">
+            <mat-card-header>{{ item.titulo }}</mat-card-header>
+            <mat-card-content class="contenido-flex">
+                <div class="contenido-izquierda">
+                    <p><strong>{{ item.disponibles }}</strong></p>
+                    <p>Disponibles</p>
+                    <div class="linea-horizontal"></div>
+                    <p><strong>{{ item.nodisponibles }}</strong></p>
+                    <p>Baja</p>
+                </div>
+                <div class="icono-derecha">
+                    <mat-icon fontIcon="{{ item.icono }}"></mat-icon>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+    <div class="card-container">
+        <mat-card>
+            <mat-card-header class="centrar-contenido">Bienes Tecnológicos</mat-card-header>
+            <mat-card-content class="contenido-flex">
+                <div class="chart-container">
+                    <div class="chart" *ngFor="let data of datos">
+                        
+                        <div class="label">{{ data.valor }}</div>
+                        <div class="bar" [style.height.px]="data.valor * escala"></div>
+                        <div class="label">{{ data.nombre }}</div>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
 </body>
 </html>
