@@ -13,7 +13,7 @@ import { InventarioRoutingModule } from './page/inventario/inventario-routing.mo
 import { BloquesComponent } from './page/areas/bloques/bloques.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { FormsModule } from '@angular/forms';
+import { FormsModule} from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
@@ -27,15 +27,13 @@ import { ReportPageComponent } from './page/report-page/report-page.component';
 import { MatCardModule } from '@angular/material/card';
 
 
+
 @NgModule({
   declarations: [
     DashboardLayouthComponent,
     HomePageComponent,
     UserPageComponent,
     BloquesComponent,
-
-    
-
     UbicacionesComponent,
     ReportPageComponent,
 
@@ -68,6 +66,7 @@ import { MatCardModule } from '@angular/material/card';
     MatDialogModule,
     MatOptionModule,
     MatCardModule
+
   ],
   exports:[
     MatDialogModule,

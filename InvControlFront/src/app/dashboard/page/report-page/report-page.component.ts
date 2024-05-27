@@ -3,12 +3,15 @@ import { MetaDataColumn } from '../../share/interfaces/metacolumn.interface';
 import { TipoUbicacionService } from '../../services/tipoUbicacion/tipo-ubicacion.service';
 import { SoftwareService } from '../../services/software/software.service';
 
+
 @Component({
   selector: 'app-report-page',
   templateUrl: './report-page.component.html',
-  styleUrls: ['./report-page.component.css']
+  styleUrls: ['./report-page.component.css'],
+  
 })
 export class ReportPageComponent {
+
   modalOpen: boolean = false;
   modalDeleteOpen: boolean = false;
 
@@ -110,4 +113,5 @@ export class ReportPageComponent {
   isFormValid(): boolean {
     return this.encargadoText.trim() !== '' && this.tipoBienSeleccionado.trim() !== '' && this.bloqueSeleccionado.trim() !== '' && this.laboratorioSeleccionado.trim() !== '';
   }
+
 }

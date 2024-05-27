@@ -1,0 +1,134 @@
+<mat-toolbar class="flex justify-between bg-red-700 rounded-lg text-white" >
+    <h3>{{titulo}} BIEN TECNOLÓGICO</h3>
+    <button mat-icon-button mat-dialog-close class="hover:bg-red-900" >
+        <mat-icon>
+            close
+        </mat-icon>
+
+    </button>
+</mat-toolbar>
+<mat-dialog-content class="rounded-lg flex justify-center  ">
+    <form [formGroup]="formularioT"  >
+        <div class="grid grid-cols-2 space-x-6 ">
+            <mat-form-field class="mx-4 w-48"  >
+                <mat-label>Código Tecnológico</mat-label>
+                <input type="text" formControlName="codigoTec" matInput placeholder="Ingrese el codigo">
+                <mat-error *ngIf="formularioT.get('codigoTec')?.invalid ">Campo Requerido</mat-error>
+                
+            </mat-form-field>
+            <mat-form-field class="w-48" >
+                <mat-label>N° Serie Tecnológico</mat-label>
+                <input type="text" formControlName="serieTec" matInput placeholder="Ingrese la serie">
+                <mat-error *ngIf="formularioT.get('serieTec')?.invalid ">Campo Requerido</mat-error>
+              </mat-form-field>
+              
+              <mat-form-field >
+                <mat-label>Modelo</mat-label>
+                <input type="text" formControlName="modeloTec" matInput placeholder="Ingrese el modelo">
+                <mat-error *ngIf="formularioT.get('modeloTec')?.invalid ">Campo Requerido</mat-error>
+              </mat-form-field>
+              
+    
+            <mat-form-field  >
+                <mat-label>Marca</mat-label>
+                <input type="text" formControlName="marcaTec" required matInput placeholder="Ingrese la marca">
+                <mat-error *ngIf="formularioT.get('marcaTec')?.invalid">Campo Requerido</mat-error>
+               
+            </mat-form-field>
+    
+    
+            <mat-form-field  >
+                <mat-label>IP</mat-label>
+                <input type="text" formControlName="ipTec"  matInput placeholder="Ingrese la ip">
+                
+                
+            </mat-form-field>
+            <mat-form-field >
+                <mat-label>Año de Ingreso</mat-label>
+                <input type="nu" formControlName="anioIngresoTec" required matInput placeholder="Ingrese el año">
+                
+                <mat-error *ngIf="formularioT.get('anioIngresoTec')?.invalid">Campo Requerido</mat-error>
+            </mat-form-field>
+    
+            <mat-form-field >
+                <mat-label>Laboratorista Encargado</mat-label>
+                <input type="text" formControlName="tecnicoEncIdTec" required matInput placeholder="Ingrese las Característica">
+                
+                <mat-error *ngIf="formularioT.get('tecnicoEncIdTec')?.invalid">Campo Requerido</mat-error>
+            </mat-form-field>
+            <mat-form-field >
+                <mat-label>Localización</mat-label>
+                <mat-select [(ngModel)]="laboratorioSeleccionado" name="sof_tip_ubi" id="sof_tip_ubi">
+                <mat-option *ngFor="let ubicacion of dataTipoUbicacion" [value]="ubicacion.tip_ubi_id">{{ ubicacion.tip_ubi_nombre }}</mat-option>
+              </mat-select>
+            
+            <mat-error *ngIf="formularioT.get('tecnicoEncIdTec')?.invalid">Campo Requerido</mat-error>
+       
+            </mat-form-field>
+            <mat-form-field >
+                <mat-label>Categoria</mat-label>
+                <input type="text" formControlName="categoriaIdTec" required matInput placeholder="Ingrese las Característica">
+                
+                <mat-error *ngIf="formularioT.get('categoriaIdTec')?.invalid">Campo Requerido</mat-error>
+            </mat-form-field>
+            <mat-form-field >
+                <mat-label>Dependencia</mat-label>
+                <input type="text" formControlName="dependenciaIdTec" required matInput placeholder="Ingrese las Característica">
+                
+                <mat-error *ngIf="formularioT.get('dependenciaIdTec')?.invalid">Campo Requerido</mat-error>
+            </mat-form-field>
+            <mat-form-field >
+                <mat-label>Eleminado</mat-label>
+                <input type="text" formControlName="eleminadoTec" matInput placeholder="Ingrese las Característica">
+                
+                <mat-error *ngIf="formularioT.get('eleminadoTec')?.invalid">Campo Requerido</mat-error>
+            </mat-form-field>
+
+        </div>
+        
+        <div class="flex justify-between px-6 ">
+            <button
+                class="bg-red-700 rounded-lg hover:bg-red-950"
+                mat-raised-button
+                
+                type="button"
+                [disabled]="formularioT.invalid"
+                (click)="grabar()">
+                <a class="text-white  font-bold no-underline">Grabar</a>
+
+            </button>
+            <button 
+            class="bg-red-700 rounded-lg hover:bg-red-950"
+                mat-button
+                mat-dialog-close>
+                <a class="no-underline text-white font-bold ">Cancelar</a>
+
+            </button>
+
+        </div>
+ 
+
+
+    </form>
+</mat-dialog-content>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
