@@ -6,6 +6,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ModalComponenteComponent } from '../shared/modal-componente/modal-componente.component';
 import { FormTecnologicoComponent } from './form-tecnologico/form-tecnologico.component';
 import { ModalTableComponenteComponent } from '../shared/modal-table-componente/modal-table-componente.component';
+import { GeneralService } from 'src/app/dashboard/services/general/general.service';
 
 @Component({
   selector: 'app-inv-tecnologico',
@@ -56,7 +57,7 @@ export class InvTecnologicoComponent {
     
   ]
   
- constructor(private dialog:MatDialog,private entidadTecnologico:TecnologicoService ){
+ constructor(private dialog:MatDialog,private entidadTecnologico:TecnologicoService,private entidadGeneral:GeneralService ){
   this.loadTecnologias()
  }
 
@@ -86,13 +87,15 @@ export class InvTecnologicoComponent {
   )
 }
 
-abrirTablaComponentes(fila:any=null){
+abrirTablaComponentes(row:any=null){
   const opciones={
     panelClass: 'panel-container',
     disableClose:true,
-    data:fila
+    id_tec:row.tec_id
   }
   const referencia:MatDialogRef<ModalTableComponenteComponent>=this.dialog.open(ModalTableComponenteComponent,opciones)
+  referencia.componentInstance.id_tec = row.tec_id
+  referencia.componentInstance.row = row
   referencia.afterClosed().subscribe((form)=>{
     if(form.id){
       //editar

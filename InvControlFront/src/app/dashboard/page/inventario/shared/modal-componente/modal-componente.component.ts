@@ -1,6 +1,8 @@
 import { Component, Inject } from '@angular/core';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { DependenciaService } from 'src/app/dashboard/services/dependencia/dependencia.service';
+import { SubcategoriaService } from 'src/app/dashboard/services/subcategoria/subcategoria.service';
 
 @Component({
   selector: 'app-modal-componente',
@@ -9,60 +11,51 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 })
 export class ModalComponenteComponent {
 
-
+  dataDependencia:any[]=[]
+  dataSubcategoria:any[]=[]
   titulo=''
   formulario!:FormGroup
 
-  constructor(private refrencia:MatDialogRef<ModalComponenteComponent>,@Inject(MAT_DIALOG_DATA) public data:any){
+
+  constructor(private refrencia:MatDialogRef<ModalComponenteComponent>,private entidadDependencia:DependenciaService,
+    private entidadSubCategoria:SubcategoriaService,@Inject(MAT_DIALOG_DATA) public data:any){
    this.titulo=data?'EDICION':'NUEVO'
 
-
-   
   }
  ngOnInit(): void {
-   this.cargarFormulario();
-   this.obCambios();
- }
+    this.loadDependencias()
+    this.loadSubCategorias()
+    this.cargarFormulario();
+  }
   grabar(){
    const form=this.formulario.getRawValue();
    this.refrencia.close(form)    
- 
- 
   }
 
   cargarFormulario(){
    this.formulario= new FormGroup({
-    idComponente: new FormControl(this.data?.com_id),
-    serieTecnologico : new FormControl (this.data ? this.data.com_serie :'', Validators.required),
-    serieComponente : new FormControl (this.data ? this.data.com_codigo_bien :'', Validators.required),
-    codigoUta : new FormControl({value: this.data ? this.data.com_codigo_uta:'', disabled: true}, Validators.required),
-    nombreComponente : new FormControl (this.data ? this.data.com_det_cat_id:'', Validators. required),
-    modeloComponente : new FormControl (this.data ? this.data.com_modelo:'', Validators. required),
-    marcaComponente : new FormControl (this.data ? this.data.com_marca:'', Validators. required),
-    caracteristicaComponente : new FormControl (this.data ? this.data.com_caracteristica:'', Validators. required),
-    departamento_idcomponete : new FormControl (this.data ? this.data.om_dep_id:'', Validators. required),
-    anioingreso : new FormControl (this.data ? this.data.com_anio_ingreso:'', Validators. required),
-    descripcion : new FormControl (this.data ? this.data.com_eliminado:'', Validators. required),
-    disponible : new FormControl (this.data ? this.data.com_eliminado:'', Validators. required),
-
-
-     
-
+    com_serie : new FormControl (this.data ? this.data.com_serie:'', Validators. required),
+    com_marca : new FormControl (this.data ? this.data.com_marca:'', Validators. required),
+    com_modelo : new FormControl (this.data ? this.data.com_modelo:'', Validators. required),
+    com_caracteristica : new FormControl (this.data ? this.data.com_caracteristica:'', Validators. required),
+    com_det_cat : new FormControl (this.data ? this.data.com_det_cat:'', Validators. required)
    })
   }
 
-  obCambios() {
-    this.formulario.get('serieComponente')!.valueChanges.subscribe(value => {
-      if (value) {
-        this.formulario.get('codigoUta')!.enable();
-      } else {
-        this.formulario.get('codigoUta')!.disable();
-      }
-    });
+  loadDependencias(){
+    this.entidadDependencia.loadDependencias().subscribe(data => {
+      this.dataDependencia = data
+    },error => {
+      console.log(error)
+    })
   }
 
-
-
- 
+  loadSubCategorias(){
+    this.entidadSubCategoria.loadSubCategorias().subscribe(data => {
+      this.dataSubcategoria = data
+    },error => {
+      console.log(error)
+    })
+  }
 
 }

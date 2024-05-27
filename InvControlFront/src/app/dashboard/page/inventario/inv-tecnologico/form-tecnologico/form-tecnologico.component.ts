@@ -34,6 +34,13 @@ private entidadDependencia:DependenciaService,private entidadTecnologico:Tecnolo
   }
  ngOnInit(): void {
   this.cargarFormulario();
+  if (this.titulo == "EDICION"){
+    this.formulario.get('tec_anio_ingreso')?.disable();
+    this.formulario.get('tec_codigo')?.disable();
+  }else{
+    this.formulario.get('tec_anio_ingreso')?.enable();
+    this.formulario.get('tec_codigo')?.disable();
+  }
  }
 
  cargarFormulario(){
