@@ -1,7 +1,12 @@
 import { Component, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { CategoriaService } from 'src/app/dashboard/services/categoria/categoria.service';
+import { DependenciaService } from 'src/app/dashboard/services/dependencia/dependencia.service';
+import { LocalizacionService } from 'src/app/dashboard/services/localizacion/localizacion.service';
+import { TecnologicoService } from 'src/app/dashboard/services/tecnologico/tecnologico.service';
 import { TipoUbicacionService } from 'src/app/dashboard/services/tipoUbicacion/tipo-ubicacion.service';
+import { UsuarioService } from 'src/app/dashboard/services/usuario/usuario.service';
 
 
 @Component({
@@ -10,54 +15,77 @@ import { TipoUbicacionService } from 'src/app/dashboard/services/tipoUbicacion/t
   styleUrls: ['./form-tecnologico.component.css']
 })
 export class FormTecnologicoComponent {
+  formulario!: FormGroup;
 
   titulo=''
-  formularioT!:FormGroup
   dataTipoUbicacion:any[] = []
-  laboratorioSeleccionado: string = '';
- 
+  dataEncargado:any[] = []
+  dataCategoria:any[] = []
+  dataDependencia:any[]=[]
 
   constructor(private refrencia:MatDialogRef<FormTecnologicoComponent>,@Inject(MAT_DIALOG_DATA) public data:any,
-private entidadTipoUbicacion: TipoUbicacionService){
+private entidadLocalizacion:LocalizacionService,private entidadUsuario:UsuarioService,private entidadCategoria:CategoriaService,
+private entidadDependencia:DependenciaService,private entidadTecnologico:TecnologicoService){
    this.titulo=data?'EDICION':'NUEVO'
-   this.loadTipoUbicaciones()
+   this.loadLocalizaciones()
+   this.loadUsuarios()
+   this.loadCategorias()
+   this.loadDependencias()
   }
  ngOnInit(): void {
-   this.cargarFormulario();
+  this.cargarFormulario();
+ }
+
+ cargarFormulario(){
+  this.formulario= new FormGroup({
+    tec_id: new FormControl(this.data?.tec_id),
+    tec_codigo:new FormControl(this.data ? this.data.tec_codigo:'', Validators.required),
+    tec_serie:new FormControl(this.data ? this.data.tec_serie:'', Validators.required),
+    tec_modelo:new FormControl(this.data ? this.data.tec_modelo:'', Validators.required),
+    tec_marca:new FormControl(this.data ? this.data.tec_marca:'', Validators.required),
+    tec_ip:new FormControl(this.data ? this.data.tec_ip:''),
+    tec_anio_ingreso:new FormControl(this.data ? this.data.tec_anio_ingreso:'', Validators.required),
+    tec_encargado:new FormControl(this.data ? this.data.tec_encargado:'', Validators.required),
+    tec_loc:new FormControl(this.data ? this.data.tec_loc:'', Validators.required),
+    tec_cat:new FormControl(this.data ? this.data.tec_cat:'', Validators.required),
+    tec_dep:new FormControl(this.data ? this.data.tec_dep:'', Validators.required),
+  })
  }
   grabar(){
-   const form=this.formularioT.getRawValue();
+   const form=this.formulario.getRawValue();
    this.refrencia.close(form)    
- 
- 
   }
-
-  cargarFormulario(){
-   this.formularioT= new FormGroup({
-     id: new FormControl(this.data?.tec_id),
-     codigoTec:new FormControl(this.data ? this.data.tec_codigo:'', Validators.required),
-     serieTec:new FormControl(this.data ? this.data.tec_serie:'', Validators.required),
-     modeloTec:new FormControl(this.data ? this.data.tec_modelo:'', Validators.required),
-     marcaTec:new FormControl(this.data ? this.data.tec_marca:'', Validators.required),
-     ipTec:new FormControl(this.data ? this.data.tec_ip:''),
-     anioIngresoTec:new FormControl(this.data ? this.data.tec_anio_ingreso:'', Validators.required),
-     tecnicoEncIdTec:new FormControl(this.data ? this.data.tec_encargado_id:'', Validators.required),
-     localizacionIdTec:new FormControl(this.data ? this.data.sof_tip_ubi:'', Validators.required),
-     categoriaIdTec:new FormControl(this.data ? this.data.tec_cat_id:'', Validators.required),
-     dependenciaIdTec:new FormControl(this.data ? this.data.tec_dep_id:'', Validators.required),
-     eleminadoTec:new FormControl(this.data ? this.data.tec_eliminado:'', Validators.required),
-
-     
-
-   })
-  }
-  loadTipoUbicaciones(){
-    this.entidadTipoUbicacion.loadTipoUbicaciones().subscribe(data => {
+  
+  loadLocalizaciones(){
+    this.entidadLocalizacion.loadLocalizaciones().subscribe(data => {
       this.dataTipoUbicacion = data
     },error => {
       console.log(error)
     })
-  
   }
+
+  loadUsuarios(){
+    this.entidadUsuario.loadUsuarios().subscribe(data => {
+      this.dataEncargado = data
+    },error => {
+      console.log(error)
+    })
+  }
+  loadCategorias(){
+    this.entidadCategoria.loadCategorias().subscribe(data => {
+      this.dataCategoria = data
+    },error => {
+      console.log(error)
+    })
+  }
+
+  loadDependencias(){
+    this.entidadDependencia.loadDependencias().subscribe(data => {
+      this.dataDependencia = data
+    },error => {
+      console.log(error)
+    })
+  }
+
 
 }

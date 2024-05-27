@@ -4,86 +4,69 @@
         <mat-icon>
             close
         </mat-icon>
-
     </button>
 </mat-toolbar>
 <mat-dialog-content class="rounded-lg flex justify-center  ">
-    <form [formGroup]="formularioT"  >
+    <form [formGroup]="formulario">
         <div class="grid grid-cols-2 space-x-6 ">
             <mat-form-field class="mx-4 w-48"  >
                 <mat-label>Código Tecnológico</mat-label>
-                <input type="text" formControlName="codigoTec" matInput placeholder="Ingrese el codigo">
-                <mat-error *ngIf="formularioT.get('codigoTec')?.invalid ">Campo Requerido</mat-error>
+                <input type="text" formControlName="tec_codigo" matInput placeholder="Ingrese el codigo">
                 
             </mat-form-field>
             <mat-form-field class="w-48" >
                 <mat-label>N° Serie Tecnológico</mat-label>
-                <input type="text" formControlName="serieTec" matInput placeholder="Ingrese la serie">
-                <mat-error *ngIf="formularioT.get('serieTec')?.invalid ">Campo Requerido</mat-error>
+                <input type="text" formControlName="tec_serie" matInput placeholder="Ingrese la serie">
               </mat-form-field>
               
               <mat-form-field >
                 <mat-label>Modelo</mat-label>
-                <input type="text" formControlName="modeloTec" matInput placeholder="Ingrese el modelo">
-                <mat-error *ngIf="formularioT.get('modeloTec')?.invalid ">Campo Requerido</mat-error>
+                <input type="text" formControlName="tec_modelo" matInput placeholder="Ingrese el modelo">
               </mat-form-field>
-              
     
             <mat-form-field  >
                 <mat-label>Marca</mat-label>
-                <input type="text" formControlName="marcaTec" required matInput placeholder="Ingrese la marca">
-                <mat-error *ngIf="formularioT.get('marcaTec')?.invalid">Campo Requerido</mat-error>
-               
+                <input type="text" formControlName="tec_marca" required matInput placeholder="Ingrese la marca">
             </mat-form-field>
     
     
-            <mat-form-field  >
+            <mat-form-field>
                 <mat-label>IP</mat-label>
-                <input type="text" formControlName="ipTec"  matInput placeholder="Ingrese la ip">
-                
-                
+                <input type="text" formControlName="tec_ip"  matInput placeholder="Ingrese la ip">
             </mat-form-field>
+
             <mat-form-field >
                 <mat-label>Año de Ingreso</mat-label>
-                <input type="nu" formControlName="anioIngresoTec" required matInput placeholder="Ingrese el año">
-                
-                <mat-error *ngIf="formularioT.get('anioIngresoTec')?.invalid">Campo Requerido</mat-error>
+                <input type="text" formControlName="tec_anio_ingreso" required matInput placeholder="Ingrese el año">
             </mat-form-field>
     
             <mat-form-field >
                 <mat-label>Laboratorista Encargado</mat-label>
-                <input type="text" formControlName="tecnicoEncIdTec" required matInput placeholder="Ingrese las Característica">
-                
-                <mat-error *ngIf="formularioT.get('tecnicoEncIdTec')?.invalid">Campo Requerido</mat-error>
-            </mat-form-field>
-            <mat-form-field >
-                <mat-label>Localización</mat-label>
-                <mat-select [(ngModel)]="laboratorioSeleccionado" name="sof_tip_ubi" id="sof_tip_ubi">
-                <mat-option *ngFor="let ubicacion of dataTipoUbicacion" [value]="ubicacion.tip_ubi_id">{{ ubicacion.tip_ubi_nombre }}</mat-option>
-              </mat-select>
-            
-            <mat-error *ngIf="formularioT.get('tecnicoEncIdTec')?.invalid">Campo Requerido</mat-error>
-       
-            </mat-form-field>
-            <mat-form-field >
-                <mat-label>Categoria</mat-label>
-                <input type="text" formControlName="categoriaIdTec" required matInput placeholder="Ingrese las Característica">
-                
-                <mat-error *ngIf="formularioT.get('categoriaIdTec')?.invalid">Campo Requerido</mat-error>
-            </mat-form-field>
-            <mat-form-field >
-                <mat-label>Dependencia</mat-label>
-                <input type="text" formControlName="dependenciaIdTec" required matInput placeholder="Ingrese las Característica">
-                
-                <mat-error *ngIf="formularioT.get('dependenciaIdTec')?.invalid">Campo Requerido</mat-error>
-            </mat-form-field>
-            <mat-form-field >
-                <mat-label>Eleminado</mat-label>
-                <input type="text" formControlName="eleminadoTec" matInput placeholder="Ingrese las Característica">
-                
-                <mat-error *ngIf="formularioT.get('eleminadoTec')?.invalid">Campo Requerido</mat-error>
+                <mat-select formControlName="tec_encargado">
+                    <mat-option *ngFor="let encargado of dataEncargado" [value]="encargado.usu_id">{{ encargado.usu_nombres }}</mat-option>
+                </mat-select>
             </mat-form-field>
 
+            <mat-form-field >
+                <mat-label>Localización</mat-label>
+                <mat-select formControlName="tec_loc">
+                    <mat-option *ngFor="let ubicacion of dataTipoUbicacion" [value]="ubicacion.loc_id">{{ ubicacion.loc_nombre }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field >
+                <mat-label>Categoria</mat-label>
+                <mat-select formControlName="tec_cat">
+                    <mat-option *ngFor="let categoria of dataCategoria" [value]="categoria.cat_id">{{ categoria.cat_nombre }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field >
+                <mat-label>Dependencia</mat-label>
+                <mat-select formControlName="tec_dep">
+                    <mat-option *ngFor="let dependencia of dataDependencia" [value]="dependencia.dep_id">{{ dependencia.dep_nombre }}</mat-option>
+                </mat-select>
+            </mat-form-field>
         </div>
         
         <div class="flex justify-between px-6 ">
@@ -92,7 +75,7 @@
                 mat-raised-button
                 
                 type="button"
-                [disabled]="formularioT.invalid"
+                [disabled]="formulario!.invalid"
                 (click)="grabar()">
                 <a class="text-white  font-bold no-underline">Grabar</a>
 
@@ -102,13 +85,8 @@
                 mat-button
                 mat-dialog-close>
                 <a class="no-underline text-white font-bold ">Cancelar</a>
-
             </button>
-
         </div>
- 
-
-
     </form>
 </mat-dialog-content>
 
