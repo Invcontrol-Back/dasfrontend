@@ -1,0 +1,118 @@
+
+
+<mat-toolbar class="flex justify-between bg-red-700 rounded-lg text-white">
+    <h3>{{titulo}} COMPONENTE</h3>
+    <button mat-icon-button mat-dialog-close>
+        <mat-icon>
+            close
+        </mat-icon>
+
+    </button>
+</mat-toolbar>
+<mat-dialog-content>
+    <form fxLayout="column" [formGroup]="formulario">
+        <div class="grid grid-cols-2 space-x-6 ">
+
+
+            <mat-form-field class="mx-4 " >
+                <mat-label>N° Serie Tecnológico</mat-label>
+                <input type="text" formControlName="serieTecnologico" matInput placeholder="Ingrese la serie">
+                
+            </mat-form-field>
+            <mat-form-field class="flex-1" >
+                <mat-label>N° Serie Componente</mat-label>
+                <input type="text" formControlName="serieComponente" matInput placeholder="Ingrese la serie">
+              </mat-form-field>
+              
+              <mat-form-field class="flex-1">
+                <mat-label>Codigo UTA</mat-label>
+                <input type="text" formControlName="codigoUta" matInput placeholder="Ingrese el codigo UTA">
+                <mat-error *ngIf="formulario.get('codigoUta')?.invalid && formulario.get('codigoUta')?.touched">Campo Requerido</mat-error>
+              </mat-form-field>
+              
+    
+            <mat-form-field  >
+                <mat-label>Nombre</mat-label>
+                <input type="text" formControlName="nombreComponente" required matInput placeholder="Ingrese el Nombre del Componete">
+                <mat-error *ngIf="formulario.get('nombreComponente')?.invalid">Campo Requerido</mat-error>
+               
+            </mat-form-field>
+    
+    
+            <mat-form-field  >
+                <mat-label>Marca</mat-label>
+                <input type="text" formControlName="marcaComponente" required matInput placeholder="Ingrese la Marca">
+                
+                <mat-error *ngIf="formulario.get('marcaComponente')?.invalid">Campo Requerido</mat-error>
+            </mat-form-field>
+            <mat-form-field >
+                <mat-label>Modelo</mat-label>
+                <input type="text" formControlName="modeloComponente" required matInput placeholder="Ingrese el Modelo">
+                
+                <mat-error *ngIf="formulario.get('modeloComponente')?.invalid">Campo Requerido</mat-error>
+            </mat-form-field>
+    
+            <mat-form-field >
+                <mat-label>Característica</mat-label>
+                <input type="text" formControlName="caracteristicaComponente" required matInput placeholder="Ingrese las Característica">
+                
+                <mat-error *ngIf="formulario.get('caracteristicaComponente')?.invalid">Campo Requerido</mat-error>
+            </mat-form-field>
+
+
+
+
+        </div>
+        
+        <div class="flex justify-between px-6 ">
+            <button
+             class="bg-red-700 rounded-lg hover:bg-red-950"
+            
+                mat-raised-button
+
+                type="button"
+                [disabled]="formulario.invalid"
+                (click)="grabar()">
+                <a class="text-white  font-bold no-underline">Grabar</a>
+
+            </button>
+            <button
+                mat-button
+                class="bg-red-700 rounded-lg hover:bg-red-950"
+
+                type="button"
+               mat-dialog-close>
+               <a class="text-white  font-bold no-underline">Cancelar</a>
+
+            </button>
+
+        </div>
+
+
+
+        
+
+
+    </form>
+</mat-dialog-content>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

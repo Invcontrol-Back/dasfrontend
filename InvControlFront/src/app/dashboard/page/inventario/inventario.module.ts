@@ -10,7 +10,7 @@ import { ShareModule } from '../../share/share.module';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DashboardModule } from '../../dashboard.module';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
@@ -23,6 +23,13 @@ import { InvComponentesComponent } from './inv-componentes/inv-componentes.compo
 import { InvTecnologicoComponent } from './inv-tecnologico/inv-tecnologico.component';
 
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { ModalComponenteComponent } from './shared/modal-componente/modal-componente.component';
+import { ModalTrasferenciaComponent } from './shared/modal-trasferencia/modal-trasferencia.component';
+import { ModalTableComponenteComponent } from './shared/modal-table-componente/modal-table-componente.component';
+import { MatCardModule } from '@angular/material/card';
+import {MatToolbarModule} from '@angular/material/toolbar'
+import {MatDialogModule} from '@angular/material/dialog';
+import { FormTecnologicoComponent } from './inv-tecnologico/form-tecnologico/form-tecnologico.component';
 
 
 
@@ -34,6 +41,10 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     InvSoftwareComponent,
     InvComponentesComponent,
     InvTecnologicoComponent,
+    ModalComponenteComponent,
+    ModalTrasferenciaComponent,
+    ModalTableComponenteComponent,
+    FormTecnologicoComponent,
   ],
   imports: [
     CommonModule,
@@ -49,7 +60,12 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
    MatFormFieldModule,
    MatSelectModule,
    MatCheckboxModule,
-   MatInputModule
+   MatInputModule,
+   MatCardModule,
+   ReactiveFormsModule,
+   MatToolbarModule,
+   MatDialogModule
+   
   ]
 })
 export class InventarioModule { }
