@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { MetaDataColumn } from 'src/app/dashboard/share/interfaces/metacolumn.interface';
 import { ModalComponenteComponent } from '../modal-componente/modal-componente.component';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { GeneralService } from 'src/app/dashboard/services/general/general.service';
+import { ComponenteService } from 'src/app/dashboard/services/componente/componente.service';
+import { DetalleTecnologicoService } from 'src/app/dashboard/services/detalleTecnologico/detalle-tecnologico.service';
 
 
 @Component({
@@ -23,56 +26,48 @@ export class ModalTableComponenteComponent {
   com_eliminado: string =''
   idRow: string =''
 
-data: any[] =[
-  {
-    com_id: '1',
-    com_serie: 'serie1',
-    com_codigo_bien: 'bien1',
-    com_codigo_uta: 'uta1',
-    com_det_cat_id: 'cat1',
-    com_modelo: 'modelo1',
-    com_marca: 'marca1',
-    com_caracteristica: 'caracteristica1',
-    com_dep_id: 'dep1',
-    com_anio_ingreso: '2020',
-    com_eliminado: 'no',
-   
-  },
-  {
-    com_id: '2',
-    com_serie: 'serie2',
-    com_codigo_bien: 'bien2',
-    com_codigo_uta: 'uta2',
-    com_det_cat_id: 'cat2',
-    com_modelo: 'modelo2',
-    com_marca: 'marca2',
-    com_caracteristica: 'caracteristica2',
-    com_dep_id: 'dep2',
-    com_anio_ingreso: '2021',
-    com_eliminado: 'no',
-    
-  },
+  row:any
+  id_tec :any
 
-]
+  data: any[] =[
+  
+  ]
 
   metaDataColumns : MetaDataColumn[]=[
-    {field:"com_id", title:"ID"},
     {field:"com_serie", title:"SERIE"},
     {field:"com_codigo_bien", title:"CODIGO BIEN"},
     {field:"com_codigo_uta", title:"CODIGO UTA"},
-    {field:"com_det_cat_id", title:"DETALLE CATEGORIA ID"},
+    {field:"det_cat_nombre", title:"SUBCATEGORIA"},
     {field:"com_modelo", title:"MODELO"},
     {field:"com_marca", title:"MARCA"},
     {field:"com_caracteristica", title:"CARACTERISTICA"},
-    {field:"com_dep_id", title:"DEPARTAMENTO ID"},
+    {field:"dep_nombre", title:"DEPENDENCIA"},
     {field:"com_anio_ingreso", title:"AÑO DE INGRESO"},
-    {field:"com_eliminado", title:"ELIMINADO"},
   ];
   
 
-  constructor(private dialog:MatDialog ){
-  
+  constructor(private dialog:MatDialog ,private entidadGeneral:GeneralService,private entidadComponente:ComponenteService,
+    private entidadDetalleTecnologico:DetalleTecnologicoService
+  ){
   }
+
+  ngOnInit() {
+    console.log('id_tec en ngOnInit:', this.id_tec);
+    this.cargarComponentesTecnologico(this.id_tec)
+    
+    
+  }
+  
+  cargarComponentesTecnologico(tec_id:any){
+    this.entidadGeneral.loadComponentesDetalleTecnologico(tec_id).subscribe(data => {
+      this.data = data
+    },error => {
+      console.log(error)
+    })
+  }
+
+
+
   abrirFormulario(fila:any=null  ){
    const opciones={
      panelClass: 'panel-container',
@@ -81,20 +76,21 @@ data: any[] =[
    }
    const referencia:MatDialogRef<ModalComponenteComponent>=this.dialog.open(ModalComponenteComponent,opciones)
    referencia.afterClosed().subscribe((form)=>{
-     if(form.id){
-       //editar
-       
-       const ccomponente = { ...form };
-   
-      
-      
-       
-       
-     }else{
-       //this.nuevoCliente(form)
-     }
+    form.com_codigo_uta = null
+    form.com_dep = this.row.tec_dep
+    form.com_codigo_bien = this.row.tec_codigo
+    form.com_anio_ingreso = this.row.tec_anio_ingreso
+    this.entidadComponente.addComponente(form).subscribe(data => {
+      const relacion = {det_tec_tec: this.id_tec, det_tec_com_adquirido: data.com_id,det_tec_com_uso:data.com_id }
+      this.entidadDetalleTecnologico.addDetalleTecnologico(relacion).subscribe(data => {
+        this.cargarComponentesTecnologico(this.id_tec)        
+      },error => {
+        console.log(error)
+      })
+    },error => {
+      console.log(error)
+    })
    }
- 
    )
  }
 
