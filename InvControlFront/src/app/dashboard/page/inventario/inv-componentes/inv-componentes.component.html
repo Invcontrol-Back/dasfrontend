@@ -49,27 +49,27 @@
         <mat-label>Código Bien</mat-label>
         <input type="text" 
                matInput 
-               required 
                placeholder="Ingrese el código del bien"
-               [(ngModel)]="codigoBienText">
+               [(ngModel)]="codigoBienText"
+               [disabled]="isDisabled || !BienVacio"
+               (ngModelChange)="onModelChangeBien($event)">
       </mat-form-field>
       
       <mat-form-field>
         <mat-label>Código UTA</mat-label>
         <input type="text" 
                matInput 
-               required 
                placeholder="Ingrese el código UTA"
-               [(ngModel)]="codigoUtaText">
+               [(ngModel)]="codigoUtaText"
+               [disabled]="isDisabled || !UTAVacio"
+               (ngModelChange)="onModelChangeUTA($event)">
       </mat-form-field>
       
       <mat-form-field>
-        <mat-label>Det Cat ID</mat-label>
-        <input type="number" 
-               matInput 
-               required 
-               placeholder="Ingrese el ID de la categoría"
-               [(ngModel)]="detCatIdText">
+        <mat-label>SUBCATEGORIA</mat-label>
+        <mat-select [(ngModel)]="subcategoriaSeleccionada" name="com_det_cat" id="com_det_cat">
+          <mat-option *ngFor="let subcategoria of dataSubcategoria" [value]="subcategoria.det_cat_id">{{ subcategoria.det_cat_nombre }}</mat-option>
+        </mat-select>
       </mat-form-field>
       
       <mat-form-field>
@@ -100,12 +100,10 @@
       </mat-form-field>
       
       <mat-form-field>
-        <mat-label>Dep ID</mat-label>
-        <input type="number" 
-               matInput 
-               required 
-               placeholder="Ingrese el ID del departamento"
-               [(ngModel)]="depIdText">
+        <mat-label>DEPENDENCIA</mat-label>
+        <mat-select [(ngModel)]="dependenciaSeleccionada" name="com_dep" id="com_dep">
+          <mat-option *ngFor="let dependencia of dataDependencia" [value]="dependencia.dep_id">{{ dependencia.dep_nombre }}</mat-option>
+        </mat-select>
       </mat-form-field>
       
       <mat-form-field>
@@ -117,13 +115,6 @@
                [(ngModel)]="anioIngresoText">
       </mat-form-field>
       
-      <mat-form-field>
-        <mat-label>Disponible</mat-label>
-        <mat-select [(ngModel)]="disponibleText">
-          <mat-option [value]="true">Sí</mat-option>
-          <mat-option [value]="false">No</mat-option>
-        </mat-select>
-      </mat-form-field>
       
       <div class="button-container">
         <button mat-button 

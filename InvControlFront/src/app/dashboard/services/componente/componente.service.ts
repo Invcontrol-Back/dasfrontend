@@ -14,4 +14,16 @@ export class ComponenteService {
   addComponente(entidad:any):Observable<any>{
     return this.http.post(this.url,entidad)
   }
+
+  loadComponentes():Observable<any>{
+    return this.http.get(this.url)
+  }
+
+  updateComponentes(id:any,entidad:any):Observable<any>{
+    return this.http.put(this.url+id+"/",entidad)
+  }
+
+  deleteComponentes(id:any):Observable<any>{
+    return this.http.delete(this.url+id+"/")
+  }
 }
