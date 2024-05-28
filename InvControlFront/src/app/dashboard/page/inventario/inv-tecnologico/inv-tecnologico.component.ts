@@ -2,6 +2,11 @@ import { Component } from '@angular/core';
 import { TecnologicoService } from 'src/app/dashboard/services/tecnologico/tecnologico.service';
 import { MetaDataColumn } from 'src/app/dashboard/share/interfaces/metacolumn.interface';
 import { NgForm } from '@angular/forms';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { ModalComponenteComponent } from '../shared/modal-componente/modal-componente.component';
+import { FormTecnologicoComponent } from './form-tecnologico/form-tecnologico.component';
+import { ModalTableComponenteComponent } from '../shared/modal-table-componente/modal-table-componente.component';
+import { GeneralService } from 'src/app/dashboard/services/general/general.service';
 
 @Component({
   selector: 'app-inv-tecnologico',
@@ -11,47 +16,33 @@ import { NgForm } from '@angular/forms';
 
 
 export class InvTecnologicoComponent {
-
-  titleText: string = 'CREAR TECNOLOGÍA';
   tec_codigo: string = '';
   tec_serie: string = '';
   tec_modelo: string = '';
   tec_marca: string = '';
   tec_ip: string = '';
   tec_anio_ingreso: string = '';
-  tec_encargado_nombre: string = '';
-  tec_categoria_nombre: string = '';
-  tec_loc_nombre: string = '';
-  tec_dep_nombre: string = '';
-  tec_disponible: string = '';
+  tec_encargado_id: string = '';
+  tec_loc_id: string = '';
+  tec_cat_id: string = '';
+  tec_dep_id: string = '';
+  tec_elimnado: string = '';
   idRow: string = '';
 
-  data:any[] = [{
-    tec_codigo: "001",
-    tec_serie: "S123",
-    tec_modelo: "M456",
-    tec_marca: "MarcaX",
-    tec_ip: "192.168.1.1",
-    tec_anio_ingreso: "2020",
-    tec_encargado_nombre: "Juan Perez",
-    tec_categoria_nombre: "Categoria1",
-    tec_loc_nombre: "Localizacion1",
-    tec_dep_nombre: "Dependencia1",
-    tec_disponible: "Si"
-  },
-  {
-    tec_codigo: "002",
-    tec_serie: "S12347",
-    tec_modelo: "M4568",
-    tec_marca: "DELL",
-    tec_ip: "192.168.1.15",
-    tec_anio_ingreso: "2022",
-    tec_encargado_nombre: "Juan Perez",
-    tec_categoria_nombre: "Categoria1",
-    tec_loc_nombre: "Localizacion1",
-    tec_dep_nombre: "Dependencia1",
-    tec_disponible: "Si"
-  },]
+  data:any[] =[{
+    tec_id: 1,
+    tec_codigo: "codigo1",
+    tec_serie: "serie1",
+    tec_modelo: "modelo1",
+    tec_marca: "marca1",
+    tec_ip: '129.166.25',
+    tec_anio_ingreso: 2020,
+    tec_encargado: 10,
+    tec_loc: 20,
+    tec_cat: 30,
+    tec_dep: 40,
+  }]
+
   metaDataColumns:MetaDataColumn[] = [
     {field:"tec_codigo", title:"CODIGO"},
     {field:"tec_serie", title:"SERIE"},
@@ -59,14 +50,79 @@ export class InvTecnologicoComponent {
     {field:"tec_marca", title:"MARCA"},
     {field:"tec_ip", title:"IP"},
     {field:"tec_anio_ingreso", title:"AÑO DE INGRESO"},
-    {field:"tec_encargado_nombre", title:"ENCARGADO"},
-    {field:"tec_categoria_nombre", title:"CATEGORIA"},
-    {field:"tec_loc_nombre", title:"LOCALIZACION"},
-    {field:"tec_dep_nombre", title:"DEPENDENCIA"},
-    {field:"tec_disponible", title:"DISPONIBLE"},
+    {field:"usu_nombres", title:"ENCARGADO"},
+    {field:"cat_nombre", title:"CATEGORIA"},
+    {field:"loc_nombre", title:"LOCALIZACION"},
+    {field:"dep_nombre", title:"DEPENDENCIA"},
     
   ]
   
+ constructor(private dialog:MatDialog,private entidadTecnologico:TecnologicoService,private entidadGeneral:GeneralService ){
+  this.loadTecnologias()
+ }
+
+ abrirFormulario(fila:any=null  ){
+  const opciones={
+    panelClass: 'panel-container',
+    disableClose:true,
+    data:fila
+  }
+  const referencia:MatDialogRef<FormTecnologicoComponent>=this.dialog.open(FormTecnologicoComponent,opciones)
+  referencia.afterClosed().subscribe((form)=>{
+    if(form.tec_id){
+      this.entidadTecnologico.updateTecnologia(form.tec_id,form).subscribe(data => {
+        this.loadTecnologias()
+      },error => {
+        console.log(error)
+      })
+    }else{
+      this.entidadTecnologico.addTecnologia(form).subscribe(data => {
+        this.loadTecnologias()
+      },error => {
+        console.log(error)
+      })
+    }
+  }
+
+  )
+}
+
+abrirTablaComponentes(row:any=null){
+  const opciones={
+    panelClass: 'panel-container',
+    disableClose:true,
+    id_tec:row.tec_id
+  }
+  const referencia:MatDialogRef<ModalTableComponenteComponent>=this.dialog.open(ModalTableComponenteComponent,opciones)
+  referencia.componentInstance.id_tec = row.tec_id
+  referencia.componentInstance.row = row
+  referencia.afterClosed().subscribe((form)=>{
+    if(form.id){
+      //editar
+      const ccomponente = { ...form };
+    }else{
+      //this.nuevoCliente(form)
+    }
+  }
+
+  )
+}
  
-  
+loadTecnologias(){
+  this.entidadTecnologico.getTecnologias().subscribe(data => {
+    this.data = data
+    console.log(data)
+  },error => {
+    console.log(error)
+  })
+}
+
+eliminarRegistro(row:any){
+  this.entidadTecnologico.deleteTecnologia(row.tec_id).subscribe(data => {
+    this.loadTecnologias()
+  },error => {
+    console.log(error)
+  })
+}
+
 }

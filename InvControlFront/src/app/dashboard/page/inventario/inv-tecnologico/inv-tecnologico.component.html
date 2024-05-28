@@ -1,7 +1,7 @@
 <div>
     <h2>Tecnológico</h2>
     <div class="container">
-        <button>Agregar</button>
+        <button (click)='abrirFormulario()'>Agregar</button>
         <app-container>
             <app-table [data]="data" [metaDataColumns]="metaDataColumns">
                 <ng-container matColumnDef="actions">
@@ -10,7 +10,7 @@
                         <button 
                             mat-icon-button
                             color="primary"
-                            
+                            (click)="abrirFormulario(row)"
                             matTooltip="EDITAR">
                             <mat-icon>edit</mat-icon>
                         </button>
@@ -18,7 +18,7 @@
                             mat-icon-button
                             color="accent"
                             matTooltip="ELIMINAR"
-                            
+                            (click)="eliminarRegistro(row)"
                             >
                             <mat-icon>delete</mat-icon>
                         </button>
@@ -26,6 +26,7 @@
                         mat-icon-button
                         color="accent"
                         matTooltip="DISPOSITIVOS"
+                        (click)="abrirTablaComponentes(row)"
                         
                     >
                         <mat-icon>devices</mat-icon>

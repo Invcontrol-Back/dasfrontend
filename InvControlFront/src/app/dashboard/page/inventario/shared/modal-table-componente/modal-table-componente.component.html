@@ -1,0 +1,32 @@
+<mat-toolbar class="flex justify-between justify-center bg-red-700 rounded-lg text-white">
+    <h3>Componentes Tecnologicos</h3>
+    <button mat-icon-button mat-dialog-close>
+        <mat-icon>
+            close
+        </mat-icon>
+
+    </button>
+</mat-toolbar>
+<mat-dialog-content>
+    <div>
+       
+        <div class="container">
+            <div class="sticky">
+                <button (click)='abrirFormulario()'>Agregar</button>
+            </div>
+            
+            <app-container >
+                <app-table [data]="data" [metaDataColumns]="metaDataColumns">
+                    <ng-container matColumnDef="actions">
+                        <th mat-header-cell *matHeaderCellDef ></th>
+                        <td mat-cell *matCellDef="let row" class="alignButton">
+                        </td>
+                    </ng-container>
+                </app-table> 
+            </app-container>
+        </div>
+    </div>
+
+</mat-dialog-content>
+
+

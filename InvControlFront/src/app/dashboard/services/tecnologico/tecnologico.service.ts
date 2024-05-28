@@ -11,7 +11,7 @@ export class TecnologicoService {
   constructor(private http:HttpClient) {
    }
 
-   getTecnologias():Observable<any> {
+  getTecnologias():Observable<any> {
     return this.http.get(this.url)
   }
 
@@ -28,6 +28,6 @@ export class TecnologicoService {
   }
 
   deleteTecnologia(id:string):Observable<any> {
-    return this.http.delete(this.url+id)
+    return this.http.delete(this.url+id+"/")
   }
 }

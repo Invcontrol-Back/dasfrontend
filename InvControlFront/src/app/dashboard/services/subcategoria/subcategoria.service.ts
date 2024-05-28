@@ -5,18 +5,12 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class UsuarioService {
-
-  url = 'http://127.0.0.1:8000/api/usuario/'
-  url_login = 'http://127.0.0.1:8000/api/login/'
+export class SubcategoriaService {
+  url = 'http://127.0.0.1:8000/api/detalleCategoria/'
   constructor(private http:HttpClient) {
    }
 
-  login(entidad:any):Observable<any>{
-    return this.http.post(this.url_login,entidad)
-  }
-
-  loadUsuarios():Observable<any> {
+   loadSubCategorias():Observable<any> {
     return this.http.get(this.url)
   }
 }
