@@ -14,4 +14,16 @@ export class LocalizacionService {
    loadLocalizaciones():Observable<any> {
     return this.http.get(this.url)
   }
+
+  addLocalizacion(entidad:any):Observable<any>{
+    return this.http.post(this.url,entidad)
+  }
+
+  updateLocalizacion(row:any,entidad:any):Observable<any>{
+    return this.http.put(this.url+row+'/',entidad)
+  }
+
+  deleteLocalizacion(id:any):Observable<any>{
+    return this.http.delete(this.url+id+'/')
+  }
 }
