@@ -25,6 +25,7 @@ import { MatOptionModule } from '@angular/material/core';
 import { UbicacionesComponent } from './page/areas/ubicaciones/ubicaciones.component';
 import { ReportPageComponent } from './page/report-page/report-page.component';
 import { MatCardModule } from '@angular/material/card';
+import { LocalizacionesComponent } from './page/areas/localizaciones/localizaciones.component';
 
 
 
@@ -36,6 +37,7 @@ import { MatCardModule } from '@angular/material/card';
     BloquesComponent,
     UbicacionesComponent,
     ReportPageComponent,
+    LocalizacionesComponent,
 
 
 

@@ -28,6 +28,6 @@ export class UbicacionService {
   }
 
   deleteLocation(id:string):Observable<any> {
-    return this.http.delete(this.url+id)
+    return this.http.delete(this.url+id+'/')
   }
 }
