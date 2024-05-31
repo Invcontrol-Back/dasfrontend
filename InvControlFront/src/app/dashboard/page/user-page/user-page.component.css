@@ -1,13 +1,217 @@
 .container {
-    margin: 20px;
+  background-color: rgb(255, 255, 255);
+  height: calc(100vh - 114px);
+}
+
+h2 {
+  margin-left: 20px;
+}
+
+button {
+  background-color: brown;
+  color: white !important;
+  border: 1px solid #7f7f7f;
+  padding: 10px 20px;
+  border-radius: 10px;
+  margin: 10px;
+}
+
+.agregar-button {
+  margin-bottom: 10px;
+}
+
+.search-field {
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 20px;
+  margin-left: 10px; /* To align with the button */
+}
+
+.Cancelar {
+  background-color: rgb(96, 87, 87);
+  color: rgb(255, 255, 255) !important;
+  border: 1px solid #7f7f7f;
+  padding: 10px 20px;
+  border-radius: 10px;
+  margin: 10px;
+}
+
+.Cancelar:hover {
+  background-color: rgb(155, 146, 146);
+}
+
+.invalid-button {
+  background-color: rgb(96, 87, 87);
+  color: rgb(255, 255, 255) !important;
+}
+
+button:hover {
+  background-color: red;
+}
+
+.modal {
+  display: block;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  width: auto; /* Ancho automático para adaptarse al contenido */
+  background-color: #fff; /* Color de fondo del modal */
+  padding: 20px; /* Espacio interno para los bordes */
+  border-radius: 20px; /* Borde redondeado para hacer la caja circular */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra del modal */
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.button-container button {
+  flex-grow: 1;
+  margin-right: 10px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.transferir-bienes-button {
+  background-color: brown;
+  color: white;
+  border: 1px solid #7f7f7f;
+  padding: 10px 20px;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+.transferir-bienes-button:hover {
+  background-color: red;
+}
+
+.modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+}
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 60%;
+  max-width: 800px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Estilo para la disposición del formulario */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.form-group {
+  display: contents;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.invalid-button {
+  cursor: not-allowed;
+  background-color: #ccc;
+}
+
+.Cancelar {
+  background-color: #f44336;
+  color: #fff;
+}
+
+.transferir-bienes-button {
+  margin-top: 10px;
+}
+
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 600px) {
+  .modal-content {
+    width: 90%;
   }
-  
-  .search-field, .role-field, .status-field {
-    margin: 0 10px;
+
+  .form-grid {
+    grid-template-columns: 1fr;
   }
-  
-  table {
-    width: 100%;
-    margin-top: 20px;
-  }
-  
+}

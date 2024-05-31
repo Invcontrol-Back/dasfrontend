@@ -1,65 +1,192 @@
-<div class="container">
-    <button mat-raised-button color="primary" (click)="openDialog()">AGREGAR</button>
-  
-    <mat-form-field appearance="outline" class="search-field">
-      <mat-label>Buscar</mat-label>
-      <input matInput>
+<div>
+  <h2>Usuarios</h2>
+  <div class="container">
+    <button (click)="openModal('crear', '')" class="agregar-button">Agregar</button>
+    <br>
+    <mat-form-field class="search-field">
+      <mat-label>Buscar por Cédula</mat-label>
+      <input matInput (input)="applyFilter($event)" placeholder="Ingrese la cédula">
     </mat-form-field>
-  
-    <mat-form-field appearance="outline" class="role-field">
-      <mat-label>Seleccionar por rol</mat-label>
-      <mat-select>
-        <mat-option *ngFor="let role of roles" [value]="role">{{ role }}</mat-option>
-      </mat-select>
-    </mat-form-field>
-  
-    <mat-form-field appearance="outline" class="status-field">
-      <mat-label>Seleccionar estado</mat-label>
-      <mat-select>
-        <mat-option *ngFor="let status of statuses" [value]="status">{{ status }}</mat-option>
-      </mat-select>
-    </mat-form-field>
-  
-    <table mat-table [dataSource]="usuarios" class="mat-elevation-z8">
+    <table mat-table [dataSource]="filteredData" class="mat-elevation-z8">
+      <!-- Cédula Column -->
       <ng-container matColumnDef="cedula">
         <th mat-header-cell *matHeaderCellDef> Cédula </th>
-        <td mat-cell *matCellDef="let usuario"> {{usuario.cedula}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.cedula}} </td>
       </ng-container>
-  
+
+      <!-- Usuario Column -->
       <ng-container matColumnDef="usuario">
         <th mat-header-cell *matHeaderCellDef> Usuario </th>
-        <td mat-cell *matCellDef="let usuario"> {{usuario.usuario}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.usuario}} </td>
       </ng-container>
-  
+
+      <!-- Nombres Column -->
       <ng-container matColumnDef="nombres">
         <th mat-header-cell *matHeaderCellDef> Nombres </th>
-        <td mat-cell *matCellDef="let usuario"> {{usuario.nombres}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.nombres}} </td>
       </ng-container>
-  
+
+      <!-- Apellidos Column -->
       <ng-container matColumnDef="apellidos">
         <th mat-header-cell *matHeaderCellDef> Apellidos </th>
-        <td mat-cell *matCellDef="let usuario"> {{usuario.apellidos}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.apellidos}} </td>
       </ng-container>
-  
+
+      <!-- Rol Column -->
       <ng-container matColumnDef="rol">
         <th mat-header-cell *matHeaderCellDef> Rol </th>
-        <td mat-cell *matCellDef="let usuario"> {{usuario.rol}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.rol}} </td>
       </ng-container>
-  
-      <ng-container matColumnDef="acciones">
-        <th mat-header-cell *matHeaderCellDef> Acciones </th>
-        <td mat-cell *matCellDef="let usuario">
-          <button mat-icon-button color="accent">
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let row" class="alignButton">
+          <button mat-icon-button color="primary" (click)="openModal('actualizar', row)" matTooltip="EDITAR">
             <mat-icon>edit</mat-icon>
           </button>
-          <button mat-icon-button color="warn">
+          <button mat-icon-button color="accent" matTooltip="ELIMINAR" (click)="openDeleteModal(row)">
             <mat-icon>delete</mat-icon>
           </button>
         </td>
       </ng-container>
-  
+
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
   </div>
-  
+</div>
+
+<!-- Modal para Agregar Usuario -->
+<div *ngIf="modalOpen && action === 'crear'" class="modal">
+  <div class="modal-content">
+    <span class="close" (click)="closeModal()">&times;</span>
+    <h2>Crear Usuario</h2>
+    <div class="form-grid">
+      <div class="form-group">
+        <mat-form-field>
+          <mat-label>Cédula</mat-label>
+          <input type="text" matInput required placeholder="Ingrese la cédula" [(ngModel)]="selectedUser.cedula">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Usuario</mat-label>
+          <input type="text" matInput required placeholder="Ingrese el usuario" [(ngModel)]="selectedUser.usuario">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Nombres</mat-label>
+          <input type="text" matInput required placeholder="Ingrese los nombres" [(ngModel)]="selectedUser.nombres">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Apellidos</mat-label>
+          <input type="text" matInput required placeholder="Ingrese los apellidos" [(ngModel)]="selectedUser.apellidos">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Teléfono</mat-label>
+          <input type="text" matInput required placeholder="Ingrese el teléfono" [(ngModel)]="selectedUser.telefono">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Contraseña</mat-label>
+          <input type="password" matInput required placeholder="Ingrese la contraseña" [(ngModel)]="selectedUser.password">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Rol</mat-label>
+          <mat-select [(ngModel)]="selectedUser.rol">
+            <mat-option value="Técnico">Técnico</mat-option>
+            <mat-option value="Administrativo">Administrativo</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Estado</mat-label>
+          <mat-select [(ngModel)]="selectedUser.estado">
+            <mat-option value="Activo">Activo</mat-option>
+            <mat-option value="Inactivo">Inactivo</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="button-container">
+      <button mat-button (click)="saveData()" [disabled]="!isFormValid()" [ngClass]="{'invalid-button': !isFormValid()}">Guardar</button>
+      <button mat-button (click)="closeModal()" class="Cancelar">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para Editar Usuario -->
+<div *ngIf="modalOpen && action === 'actualizar'" class="modal">
+  <div class="modal-content">
+    <span class="close" (click)="closeModal()">&times;</span>
+    <h2>Editar Usuario</h2>
+    <div class="form-grid">
+      <div class="form-group">
+        <mat-form-field>
+          <mat-label>Cédula</mat-label>
+          <input type="text" matInput required placeholder="Ingrese la cédula" [(ngModel)]="selectedUser.cedula">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Usuario</mat-label>
+          <input type="text" matInput required placeholder="Ingrese el usuario" [(ngModel)]="selectedUser.usuario">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Nombres</mat-label>
+          <input type="text" matInput required placeholder="Ingrese los nombres" [(ngModel)]="selectedUser.nombres">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Apellidos</mat-label>
+          <input type="text" matInput required placeholder="Ingrese los apellidos" [(ngModel)]="selectedUser.apellidos">
+        </mat-form-field>
+      </div>
+      <div class="form-group">
+        <mat-form-field>
+          <mat-label>Teléfono</mat-label>
+          <input type="text" matInput required placeholder="Ingrese el teléfono" [(ngModel)]="selectedUser.telefono">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Contraseña</mat-label>
+          <input type="password" matInput required placeholder="Ingrese la contraseña" [(ngModel)]="selectedUser.password">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Rol</mat-label>
+          <mat-select [(ngModel)]="selectedUser.rol">
+            <mat-option value="Técnico">Técnico</mat-option>
+            <mat-option value="Administrativo">Administrativo</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Estado</mat-label>
+          <mat-select [(ngModel)]="selectedUser.estado">
+            <mat-option value="Activo">Activo</mat-option>
+            <mat-option value="Inactivo">Inactivo</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="form-group">
+        <mat-form-field>
+          <mat-label>Bienes Asignados</mat-label>
+          <textarea matInput readonly>
+18521362 - Computadora de escritorio
+18521362 - Computadora de escritorio
+18521362 - Computadora de escritorio
+18521362 - Computadora de escritorio
+          </textarea>
+        </mat-form-field>
+        <button mat-button class="transferir-bienes-button" (click)="transferirBienes()">TRANSFERIR BIENES</button>
+      </div>
+    </div>
+    <div class="button-container">
+      <button mat-button (click)="updateData()" [disabled]="!isFormValid()" [ngClass]="{'invalid-button': !isFormValid()}">Actualizar</button>
+      <button mat-button (click)="closeModal()" class="Cancelar">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="modalDeleteOpen" class="modal">
+  <div class="modal-content">
+    <span class="close" (click)="closeDeleteModal()">&times;</span>
+    <h2>Eliminar Usuario</h2>
+    <span>¿Está seguro de dar de baja este usuario?</span>
+    <div class="button-container">
+      <button mat-button (click)="deleteData()">Eliminar</button>
+      <button mat-button (click)="closeDeleteModal()" class="Cancelar">Cancelar</button>
+    </div>
+  </div>
+</div>
