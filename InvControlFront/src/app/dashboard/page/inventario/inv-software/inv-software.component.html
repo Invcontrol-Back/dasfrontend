@@ -50,14 +50,16 @@
                 placeholder="Ingrese el nombre del software"
                 [(ngModel)]="versionText">
         </mat-form-field>
+        
         <mat-form-field>
             <mat-label>Tipo</mat-label>
-            <input type="text" 
-                matInput 
-                required 
-                placeholder="Ingrese el nombre del software"
-                [(ngModel)]="tipoText">
+            <mat-select required [(ngModel)]="tipoText" placeholder="Seleccione el tipo">
+                <mat-option *ngFor="let tipo of tipos" [value]="tipo">
+                    {{ tipo }}
+                </mat-option>
+            </mat-select>
         </mat-form-field>
+        
         <mat-form-field>
             <mat-label>Duracion</mat-label>
             <input type="text" 

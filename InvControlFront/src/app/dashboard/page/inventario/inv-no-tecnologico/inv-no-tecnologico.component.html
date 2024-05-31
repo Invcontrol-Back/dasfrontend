@@ -34,7 +34,7 @@
     <span class="close" (click)="closeModal()">&times;</span>
     <h2>{{ titleText }}</h2>
     <mat-form-field>
-      <mat-label>Código</mat-label>
+      <mat-label>CODIGO</mat-label>
       <input type="text" 
              matInput 
              required 
@@ -42,7 +42,7 @@
              [(ngModel)]="codigoText">
     </mat-form-field>
     <mat-form-field>
-      <mat-label>Serie</mat-label>
+      <mat-label>SERIE</mat-label>
       <input type="text" 
              matInput 
              required 
@@ -50,7 +50,7 @@
              [(ngModel)]="serieText">
     </mat-form-field>
     <mat-form-field>
-      <mat-label>Modelo</mat-label>
+      <mat-label>MODELO</mat-label>
       <input type="text" 
              matInput 
              required 
@@ -58,45 +58,40 @@
              [(ngModel)]="modeloText">
     </mat-form-field>
     <mat-form-field>
-      <mat-label>Marca</mat-label>
+      <mat-label>MARCA</mat-label>
       <input type="text" 
              matInput 
              required 
              placeholder="Ingrese la marca"
              [(ngModel)]="marcaText">
     </mat-form-field>   
+
     <mat-form-field>
-      <mat-label>Categoría</mat-label>
-      <input type="text" 
-             matInput 
-             required 
-             placeholder="Ingrese la categoría"
-             [(ngModel)]="categoriaText">
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Año de Ingreso</mat-label>
+      <mat-label>AÑO DE INGRESO</mat-label>
       <input type="number" 
              matInput 
              required 
              placeholder="Ingrese el año"
              [(ngModel)]="anioIngresoText">
     </mat-form-field>
-    <div class="checkbox-container">
-      <mat-checkbox [(ngModel)]="disponibleText">Disponible</mat-checkbox>
-    </div>
+
     <mat-form-field>
-      <mat-label>Encargado</mat-label>
-      <mat-select [(ngModel)]="encargadoIdText" name="encargado_id" id="encargado_id">
-        <mat-option *ngFor="let encargado of dataTipoUbicacion" [value]="encargado.id">{{ encargado.nombre }}</mat-option>
+      <mat-label>ENCARGADO</mat-label>
+      <mat-select [(ngModel)]="encargadoIdText" name="encargadoIdText" id="encargadoIdText">
+        <mat-option *ngFor="let encargado of dataUsuarios" [value]="encargado.usu_id">{{ encargado.usu_nombres }}</mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field>
-      <mat-label>Departamento</mat-label>
-      <input type="number" 
-             matInput 
-             required 
-             placeholder="Ingrese el ID del departamento"
-             [(ngModel)]="depIdText">
+      <mat-label>CATEGORIA</mat-label>
+      <mat-select [(ngModel)]="categoriaText" name="categoriaText" id="categoriaText">
+        <mat-option *ngFor="let categoria of dataCategoria" [value]="categoria.cat_id">{{ categoria.cat_nombre }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>DEPENDENCIA</mat-label>
+      <mat-select [(ngModel)]="dependenciaText" name="dependenciaText" id="dependenciaText">
+        <mat-option *ngFor="let dependencia of dataDependencia" [value]="dependencia.dep_id">{{ dependencia.dep_nombre }}</mat-option>
+      </mat-select>
     </mat-form-field>
     <div class="button-container">
       <button mat-button 
