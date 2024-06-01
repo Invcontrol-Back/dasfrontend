@@ -24,6 +24,7 @@ export class InvSoftwareComponent {
   laboratorioSeleccionado: string = '';
   idRow:string = '';
   dataTipoUbicacion:any[] = []
+  tipos: string[] = ['LIBRE', 'LICENCIA'];
 
   data:any[] = []
   metaDataColumns:MetaDataColumn[] = [

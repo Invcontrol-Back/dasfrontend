@@ -25,6 +25,10 @@ export class ModalTableComponenteComponent {
   com_anio_ingreso: string =''
   com_eliminado: string =''
   idRow: string =''
+  selectedItem: any = '';
+  individuoComponente:any
+  componentes:any [] = []
+  modalAumentarOpen:boolean = false
 
   row:any
   id_tec :any
@@ -49,24 +53,72 @@ export class ModalTableComponenteComponent {
   constructor(private dialog:MatDialog ,private entidadGeneral:GeneralService,private entidadComponente:ComponenteService,
     private entidadDetalleTecnologico:DetalleTecnologicoService
   ){
+    
   }
 
   ngOnInit() {
     console.log('id_tec en ngOnInit:', this.id_tec);
     this.cargarComponentesTecnologico(this.id_tec)
-    
-    
+    this.cargarComponentesRepotencia()
   }
   
-  cargarComponentesTecnologico(tec_id:any){
-    this.entidadGeneral.loadComponentesDetalleTecnologico(tec_id).subscribe(data => {
-      this.data = data
-    },error => {
-      console.log(error)
+  cargarComponentesTecnologico(tec_id: any) {
+    this.entidadGeneral.loadComponentesDetalleTecnologico(tec_id).subscribe(
+      (data) => {
+        this.data = data.map((item:any) => {
+          if (item.det_tec_com_uso_id === null) {
+            return {
+              com_serie: 'Componente retirado',
+              det_tec_id: item.det_tec_id
+            };
+          } else {
+            return item;
+          }
+        });
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  cargarComponentesRepotencia(){
+    this.entidadComponente.loadComponentes().subscribe(data=>{
+      this.componentes = data
     })
   }
 
+  quitarComponente(componente:any){
+    this.entidadDetalleTecnologico.removeDetalleTecnologico(componente).subscribe(()=>{
+      this.cargarComponentesTecnologico(this.id_tec)
+    })
+  }
 
+  openAumentarModal(component:any){
+    this.individuoComponente = component
+    this.modalAumentarOpen = true
+  }
+
+  closeAumentarModal(){
+    this.modalAumentarOpen = false
+  }
+
+  selectItem(item: any) {
+    if (this.selectedItem === item) {
+      this.selectedItem = null;
+    } else {
+      this.selectedItem = item;
+    }
+    console.log('Item seleccionado:', this.selectedItem);
+  }
+
+  repotenciar(){
+    const entidad = {componente_id:this.selectedItem.com_id, det_tec_id:this.individuoComponente.det_tec_id}
+    this.entidadDetalleTecnologico.repotenciaComponente(entidad).subscribe(()=>{
+      this.cargarComponentesTecnologico(this.id_tec)
+      this.closeAumentarModal()
+    })
+  }
 
   abrirFormulario(fila:any=null  ){
    const opciones={

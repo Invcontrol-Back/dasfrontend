@@ -16,4 +16,12 @@ export class DetalleTecnologicoService {
     return this.http.post(this.url,entidad)
   }
 
+  removeDetalleTecnologico(entidad:any):Observable<any>{
+    return this.http.delete(this.url+entidad.com_id+'/')
+  }
+
+  repotenciaComponente(entidad:any):Observable<any>{
+    const url_complementaria = 'repotenciar/'
+    return this.http.patch(this.url+url_complementaria,entidad)
+  }
 }
