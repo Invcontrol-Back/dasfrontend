@@ -83,3 +83,8 @@ button:hover{
     flex-grow: 1;
     margin-right: 10px;
   }
+
+  .selection-list-container {
+    max-height: 200px;
+    overflow-y: auto;
+  }
