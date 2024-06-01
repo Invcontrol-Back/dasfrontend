@@ -14,4 +14,9 @@ export class GeneralService {
     let url = 'http://127.0.0.1:8000/api/detalleC/?parametro='
     return this.http.get(url+idTecnologico)
   }
+
+  loadReporteEtiqueta(ubicacion:any){
+    let url = 'http://localhost:8000/api/reporte/reporte_etiquetas/?ubicacion='
+    return this.http.get(url+ubicacion)
+  }
 }

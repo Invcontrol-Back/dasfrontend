@@ -2,7 +2,14 @@ import { Component } from '@angular/core';
 import { MetaDataColumn } from '../../share/interfaces/metacolumn.interface';
 import { TipoUbicacionService } from '../../services/tipoUbicacion/tipo-ubicacion.service';
 import { SoftwareService } from '../../services/software/software.service';
-
+import { MatSelectChange } from '@angular/material/select';
+import { UsuarioService } from '../../services/usuario/usuario.service';
+import { UbicacionService } from '../../services/ubicacion/ubicacion.service';
+import { GeneralService } from '../../services/general/general.service';
+import * as pdfMake from "pdfmake/build/pdfmake";
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import { TecnologicoService } from '../../services/tecnologico/tecnologico.service';
+import { PageOrientation } from 'pdfmake/interfaces';
 
 @Component({
   selector: 'app-report-page',
@@ -18,25 +25,25 @@ export class ReportPageComponent {
   titleText: string = 'GENERAR REPORTES';
   encargadoText: string = '';
   encargadoDisplayText: string = 'Encargado';
-  tipoBienSeleccionado: string = '';
-  bloqueSeleccionado: string = '';
+  tipoReporteSeleccionado: string = '';
+  detalleSeleccionado: string = '';
+  encargadoSeleccionado: string = '';
   laboratorioSeleccionado: string = '';
   idRow: string = '';
 
-  tiposBien: any[] = [
-    { id: '1', nombre: 'Tipo 1' },
-    { id: '2', nombre: 'Tipo 2' }
+  mostrarTipoInformacion:boolean = false
+  mostrarEncargados:boolean= false
+  mostrarUbicaciones:boolean=false
+
+  tipoReporte: any[] = [
+    { id: 'TECNOLOGICO', nombre: 'TECNOLOGICO' },
+    { id: 'INMOBILIARIO', nombre: 'INMOBILIARIO' },
+    { id: 'SOFTWARE', nombre: 'SOFTWARE' },
   ];
 
-  bloques: any[] = [
-    { id: '1', nombre: 'Bloque 1' },
-    { id: '2', nombre: 'Bloque 2' }
-  ];
-
-  laboratorios: any[] = [
-    { id: '1', nombre: 'Laboratorio 1' },
-    { id: '2', nombre: 'Laboratorio 2' }
-  ];
+  detalleUno: any[] = [];
+  encargados: any[] = [];
+  laboratorios: any[] = [];
 
   data: any[] = [
     { codigo: '663131', generadoPor: 'Kevin Saquinga', fechaGenerado: '14/04/2024' },
@@ -50,22 +57,72 @@ export class ReportPageComponent {
     { field: "fechaGenerado", title: "Fecha generado" }
   ];
 
-  constructor() {}
+  constructor(private entidadEncargado:UsuarioService,private entidadUbicacion:UbicacionService,private entidadGeneral:GeneralService,
+    private entidadTecnologico:TecnologicoService
+  ) {
+    this.loadUsuarios()
+    this.loadUbicaciones()
+  }
+
+  loadUsuarios(){
+    this.entidadEncargado.loadUsuarios().subscribe(data=>{
+      this.encargados = data
+    })
+  }
+  loadUbicaciones(){
+    this.entidadUbicacion.loadLocations().subscribe(data=>{
+      this.laboratorios = data
+    })
+  }
+
+  onTipoReporteChange(event: MatSelectChange) {
+    console.log('El tipo de reporte seleccionado es:', event.value);
+    this.mostrarTipoInformacion = true
+    if (event.value=='TECNOLOGICO'){
+      this.detalleUno = [
+        {id:"UBICACION",nombre:"UBICACION"},
+        {id:"ENCARGADO",nombre:"ENCARGADO"},
+        {id:"ETIQUETAS",nombre:"ETIQUETAS"},
+        {id:"GENERAL",nombre:"GENERAL"},
+      ]
+    }else if (event.value=='INMOBILIARIO'){
+      this.detalleUno = [
+        {id:"ENCARGADO",nombre:"ENCARGADO"},
+        {id:"GENERAL",nombre:"GENERAL"},
+      ]
+    }else if(event.value=='SOFTWARE'){
+      this.detalleUno = [
+        {id:"GENERAL",nombre:"GENERAL"},
+      ]  
+    }else{
+      console.log("reporte no especificado")
+    }
+  }
+
+  onTipoInformacionChange(event:MatSelectChange){
+    if (event.value == 'ENCARGADO'){
+      this.mostrarEncargados = true
+      this.mostrarUbicaciones = false
+    }else if (event.value == 'UBICACION'){
+      this.mostrarEncargados = false
+      this.mostrarUbicaciones = true
+    }else if(event.value=='ETIQUETAS'){
+      this.mostrarEncargados = false
+      this.mostrarUbicaciones = true
+    }
+    else{
+      this.mostrarEncargados = false
+      this.mostrarUbicaciones = false
+    }
+  }
 
   openModal(action: string, row: any) {
     if (action === 'crear') {
       this.titleText = 'GENERAR REPORTES';
       this.encargadoText = '';
-      this.tipoBienSeleccionado = '';
-      this.bloqueSeleccionado = '';
-      this.laboratorioSeleccionado = '';
-    } else {
-      this.titleText = 'ACTUALIZAR REPORTE';
-      this.encargadoText = row.encargado;
-      this.tipoBienSeleccionado = row.tipoBien;
-      this.bloqueSeleccionado = row.bloque;
-      this.laboratorioSeleccionado = row.laboratorio;
-      this.idRow = row.codigo;
+      this.tipoReporteSeleccionado = '';
+      this.detalleSeleccionado = '';
+      this.encargadoSeleccionado = '';
     }
     this.modalOpen = true;
   }
@@ -89,29 +146,103 @@ export class ReportPageComponent {
   }
 
   generateReport() {
-    const report = {
-      codigo: 'new-code', // Cambia esto para generar un código único
-      generadoPor: this.encargadoText,
-      fechaGenerado: new Date().toLocaleDateString(),
-    };
-    this.data.push(report);
-    this.closeModal();
+
+    if (this.tipoReporteSeleccionado =='TECNOLOGICO'){
+      if(this.detalleSeleccionado == 'ETIQUETAS'){
+        if(this.laboratorioSeleccionado !=''){
+          this.reporteEtiquetas()
+        }
+      }else if(this.detalleSeleccionado == 'GENERAL'){
+          this.reporteGeneralTecnologico()
+      }
+
+    }else if (this.tipoReporteSeleccionado =='INMOBILIARIO'){
+
+    }else if (this.tipoReporteSeleccionado == 'SOFTWARE'){
+
+    }else{
+      console.log("no especificado")
+    }
+
+  }
+  //REPORTE GENERAL
+
+  reporteGeneralTecnologico() {
+    this.entidadTecnologico.getTecnologias().subscribe(data => {
+      const content: any =  [
+        {
+          layout: 'lightHorizontalLines', // opcional
+          table: {
+            headerRows: 1,
+            widths: [ '*', 'auto', 100, '*','auto' ],
+            body: this.lecturaFilasTecnologicos(data)
+            
+          }
+        }
+      ];
+      const documentDefinition: any = {
+        pageOrientation: 'landscape',
+        content: content,
+      };
+
+      (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
+      pdfMake.createPdf(documentDefinition).download('reporte.pdf');
+    });
   }
 
-  downloadReport(row: any) {
-    // Implementa la lógica para descargar el reporte
-    // Por ejemplo, puedes crear un enlace temporal y hacer que el navegador lo descargue
-    const element = document.createElement('a');
-    const file = new Blob([JSON.stringify(row)], {type: 'application/json'});
-    element.href = URL.createObjectURL(file);
-    element.download = `reporte_${row.codigo}.json`;
-    document.body.appendChild(element);
-    element.click();
-    document.body.removeChild(element);
+  lecturaFilasTecnologicos(data:any){
+    const json:any = []
+    data.forEach((row: any) => {
+      json.push(
+        [ row.tec_codigo, row.cat_nombre, row.tec_serie,row.tec_modelo,row.tec_marca]
+      )
+    })
+    return json;
   }
+
+  //FIN REPORTE GENERAL
+
+  //REPORTE ETIQUETAS
+  reporteEtiquetas() {
+    this.entidadGeneral.loadReporteEtiqueta(this.laboratorioSeleccionado).subscribe((data: any) => {
+      const contenido = [
+        {
+          columns: 
+              this.agregarColumnaReporteEtiqueta(data)
+          ,
+          columnGap: 10
+        },
+      ];
+      const documentDefinition = {
+        content: contenido,
+      };
+      (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
+      pdfMake.createPdf(documentDefinition).download('reporte.pdf');
+    });
+  }
+  
+  agregarColumnaReporteEtiqueta(data:any){
+    const json:any = []
+    data.forEach((row: any) => {
+      json.push(
+        {
+          width: 'auto',
+          text: "UNIVERSIDAD TECNICA DE AMBATO\nCodigo : " 
+            + row.tec_codigo + "\nEtiqueta :" 
+            + row.loc_nombre,
+        },{
+          width: 'auto',
+          qr: row.tec_codigo,alignment: 'center',margin:5, fit: '50'
+        },
+      )
+    })
+    return json;
+  }
+  //FIN REPORTE ETIQUETAS
+
 
   isFormValid(): boolean {
-    return this.encargadoText.trim() !== '' && this.tipoBienSeleccionado.trim() !== '' && this.bloqueSeleccionado.trim() !== '' && this.laboratorioSeleccionado.trim() !== '';
+    return this.tipoReporteSeleccionado.trim() !== '' && this.detalleSeleccionado.trim() !== '';
   }
 
 }
