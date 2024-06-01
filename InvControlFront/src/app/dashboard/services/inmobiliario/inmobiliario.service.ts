@@ -26,4 +26,9 @@ export class InmobiliarioService {
   deleteInmobiliario(id:any):Observable<any>{
     return this.http.delete(this.url+id+'/')
   }
+
+  obtenerInmueblesEncargado(encargado:any):Observable<any>{
+    const url_complementaria = 'obtener_inmuebles_encargado/?encargado='
+    return this.http.get(this.url+url_complementaria+encargado)
+  }
 }

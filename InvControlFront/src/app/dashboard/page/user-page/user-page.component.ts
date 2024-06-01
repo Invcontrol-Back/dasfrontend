@@ -3,16 +3,12 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalcomponenteComponent } from './componentes/modalcomponente/modalcomponente.component';
 import { MatTableDataSource } from '@angular/material/table';
+import { MetaDataColumn } from '../../share/interfaces/metacolumn.interface';
+import { UsuarioService } from '../../services/usuario/usuario.service';
+import { RolService } from '../../services/rol/rol.service';
+import { InmobiliarioService } from '../../services/inmobiliario/inmobiliario.service';
+import { TecnologicoService } from '../../services/tecnologico/tecnologico.service';
 
-
-
-interface Usuario {
-  cedula: string;
-  usuario: string;
-  nombres: string;
-  apellidos: string;
-  rol: string;
-}
 @Component({
   selector: 'app-user-page',
   templateUrl: './user-page.component.html',
@@ -20,27 +16,58 @@ interface Usuario {
 })
 
 export class UserPageComponent {
-  data = [
-    { cedula: '1805873456', usuario: 'juanza9753@uta.edu.ec', nombres: 'Juan Francisco', apellidos: 'Zapata Pauker', rol: 'Técnico', telefono: '123456789', password: 'password', estado: 'Activo' },
-    { cedula: '1805873457', usuario: 'ana9753@uta.edu.ec', nombres: 'Ana Maria', apellidos: 'Lopez Perez', rol: 'Administrativo', telefono: '987654321', password: 'password', estado: 'Activo' }
-  ];
 
-  filteredData = new MatTableDataSource(this.data);
-  displayedColumns: string[] = ['cedula', 'usuario', 'nombres', 'apellidos', 'rol', 'actions'];
+  data:any[] = []
+  metaDataColumns:MetaDataColumn[] = [
+    {field:"usu_cedula", title:"CEDULA"},
+    {field:"usu_nombres", title:"NOMBRES"},
+    {field:"usu_apellidos", title:"APELLIDOS"},
+    {field:"usu_correo", title:"CORREO"},
+    {field:"usu_habilitado", title:"HABILITADO"},
+    {field:"rol_nombre", title:"ROL"}
+  ]
+  dataRoles:any[] = []
+  inmueblesTexto: string = '';
+  tecnologicoTexto: string = '';
+  inmuebles: any[] = [];
+  tecnologicos: any[] = [];
+
   modalOpen = false;
   modalDeleteOpen = false;
+  modalTransferOpen = false;
   selectedUser: any = {};
   titleText = '';
   action = '';
+  encargado_objetivo = '';
   showButtonCreate = false;
   showButtonEdit = false;
 
-  constructor() {}
+  constructor(private entidadUsuario:UsuarioService,private entidadRol:RolService,private entidadInmueble:InmobiliarioService,
+    private entidadTecnologico:TecnologicoService
+  ) {
+    this.loadUsuarios()
+    this.loadRoles()
+  }
+
+  loadUsuarios(){
+    this.entidadUsuario.loadUsuarios().subscribe(data => {
+      this.data = data
+    })
+  }
+
+  loadRoles(){
+    this.entidadRol.loadRoles().subscribe(data =>{
+      this.dataRoles = data
+    })
+  }
 
   ngOnInit(): void {}
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.filteredData.filter = filterValue.trim().toLowerCase();
+    console.log(filterValue)
+    this.entidadUsuario.loadUsuariosCedula(filterValue).subscribe(data=>{
+      this.data = data
+    })
   }
 
   openModal(action: string, user: any) {
@@ -67,30 +94,72 @@ export class UserPageComponent {
   closeDeleteModal(): void {
     this.modalDeleteOpen = false;
   }
+  openTransferModal(user:any):void{
+    this.entidadInmueble.obtenerInmueblesEncargado(user.usu_id).subscribe(
+      response => {
+        this.inmuebles = response;
+        this.actualizarTextoInmuebles();
+      },
+      error => {
+        console.error('Error al buscar inmuebles', error);
+      }
+    );
+    this.entidadTecnologico.obtenerTecnologicoEncargado(user.usu_id).subscribe(
+      response => {
+        this.tecnologicos = response;
+        this.actualizarTextoTecnologico();
+      },
+      error => {
+        console.error('Error al buscar inmuebles', error);
+      }
+    );
+    this.modalTransferOpen = true;
+    this.selectedUser = { ...user };
+  }
+  closeTransferModal(): void {
+    this.modalTransferOpen = false;
+  }
+
+  actualizarTextoInmuebles() {
+    this.inmueblesTexto = this.inmuebles.map(inmueble => `${inmueble.inm_codigo} - ${inmueble.cat_nombre}`).join('\n');
+  }
+  actualizarTextoTecnologico() {
+    this.tecnologicoTexto = this.tecnologicos.map(tecnologico => `${tecnologico.tec_codigo} - ${tecnologico.cat_nombre}`).join('\n');
+  }
 
   saveData(): void {
-
-    this.data.push(this.selectedUser);
-    this.closeModal();
+    this.entidadUsuario.addUsuario(this.selectedUser).subscribe(()=>{
+      this.closeModal();
+      this.loadUsuarios();      
+    })
   }
 
   updateData(): void {
    
-    const index = this.data.findIndex(user => user.cedula === this.selectedUser.cedula);
-    if (index !== -1) {
-      this.data[index] = this.selectedUser;
-    }
-    this.closeModal();
+    this.entidadUsuario.updateUsuario(this.selectedUser.usu_id,this.selectedUser).subscribe(()=>{
+      this.closeModal();
+      this.loadUsuarios();
+    })
   }
 
   deleteData(): void {
-   
-    this.data = this.data.filter(user => user.cedula !== this.selectedUser.cedula);
-    this.closeDeleteModal();
+    this.entidadUsuario.deleteUsuario(this.selectedUser.usu_id).subscribe(()=>{
+      this.closeDeleteModal();
+      this.loadUsuarios()
+    })
   }
 
-   transferirBienes() {
-  
+  transferData() {
+    console.log(this.selectedUser)
+    const entidad = {encargado_anterior:this.selectedUser.usu_id,encargado_nuevo:this.encargado_objetivo}
+    this.entidadUsuario.transferirBienesGenerales(entidad).subscribe(
+      response => {
+        this.closeTransferModal()
+      },
+      error => {
+        console.error('Error al actualizar bienes', error);
+      }
+    );
   }
   resetSelectedUser() {
     this.selectedUser = {
@@ -106,6 +175,11 @@ export class UserPageComponent {
   }
   isFormValid(): boolean {
  
-    return this.selectedUser.cedula && this.selectedUser.usuario && this.selectedUser.nombres && this.selectedUser.apellidos && this.selectedUser.rol;
+    return this.selectedUser.usu_cedula && this.selectedUser.usu_nombres && this.selectedUser.usu_apellidos 
+    && this.selectedUser.usu_habilitado && this.selectedUser.usu_rol && this.selectedUser.usu_correo && this.selectedUser.usu_contrasenia;
   } 
+
+  isValid():boolean{
+    return this.encargado_objetivo != ''
+  }
 }

@@ -39,7 +39,7 @@ private entidadDependencia:DependenciaService,private entidadTecnologico:Tecnolo
     this.formulario.get('tec_codigo')?.disable();
   }else{
     this.formulario.get('tec_anio_ingreso')?.enable();
-    this.formulario.get('tec_codigo')?.disable();
+    this.formulario.get('tec_codigo')?.enable();
   }
  }
 

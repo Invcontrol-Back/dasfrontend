@@ -30,4 +30,9 @@ export class TecnologicoService {
   deleteTecnologia(id:string):Observable<any> {
     return this.http.delete(this.url+id+"/")
   }
+
+  obtenerTecnologicoEncargado(encargado:any):Observable<any>{
+    const url_complementaria = 'obtener_tecnologico_encargado/?encargado='
+    return this.http.get(this.url+url_complementaria+encargado)
+  }
 }
