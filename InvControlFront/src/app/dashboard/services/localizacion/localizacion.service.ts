@@ -26,4 +26,9 @@ export class LocalizacionService {
   deleteLocalizacion(id:any):Observable<any>{
     return this.http.delete(this.url+id+'/')
   }
+
+  loadFilterLocalizacionesLaboratorio(id:string):Observable<any>{
+    const url_complementaria = 'obtener_etiquetas_laboratorio/?ubicacion='
+    return this.http.get(this.url+url_complementaria+id)
+  }
 }
