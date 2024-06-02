@@ -29,19 +29,7 @@ export class InvTecnologicoComponent {
   tec_elimnado: string = '';
   idRow: string = '';
 
-  data:any[] =[{
-    tec_id: 1,
-    tec_codigo: "codigo1",
-    tec_serie: "serie1",
-    tec_modelo: "modelo1",
-    tec_marca: "marca1",
-    tec_ip: '129.166.25',
-    tec_anio_ingreso: 2020,
-    tec_encargado: 10,
-    tec_loc: 20,
-    tec_cat: 30,
-    tec_dep: 40,
-  }]
+  data:any[] =[]
 
   metaDataColumns:MetaDataColumn[] = [
     {field:"tec_codigo", title:"CODIGO"},

@@ -11,7 +11,6 @@
                             mat-icon-button
                             color="primary"
                             matTooltip="DESCARGAR"
-                            (click)="downloadReport(row)"
                             >
                             <mat-icon>download</mat-icon>
                         </button>
@@ -37,33 +36,31 @@
 
         <div class="form-group">
             <mat-form-field>
-                <mat-label>Encargado</mat-label>
-                <input type="text" matInput required placeholder="Buscar" [(ngModel)]="encargadoText">
+                <mat-label>Tipo de Reporte</mat-label>
+                <mat-select [(ngModel)]="tipoReporteSeleccionado" (selectionChange)="onTipoReporteChange($event)" name="tipoBien" id="tipoBien">
+                    <mat-option *ngFor="let tipo of tipoReporte" [value]="tipo.id">{{ tipo.nombre }}</mat-option>
+                </mat-select>
             </mat-form-field>
-            <mat-form-field>
-                <input type="text" matInput disabled placeholder="Daniel Noboa - 0723123112" [(ngModel)]="encargadoDisplayText">
+            
+            <mat-form-field *ngIf="mostrarTipoInformacion">
+                <mat-label>Tipo de Información</mat-label>
+                <mat-select [(ngModel)]="detalleSeleccionado" name="tipoInformacion" id="tipoInformacion" (selectionChange)="onTipoInformacionChange($event)">
+                    <mat-option *ngFor="let detalle of detalleUno" [value]="detalle.id">{{ detalle.nombre }}</mat-option>
+                </mat-select>
             </mat-form-field>
         </div>
 
-        <div class="form-group">
-            <mat-form-field>
-                <mat-label>Tipo de Bien</mat-label>
-                <mat-select [(ngModel)]="tipoBienSeleccionado" name="tipoBien" id="tipoBien">
-                    <mat-option *ngFor="let tipo of tiposBien" [value]="tipo.id">{{ tipo.nombre }}</mat-option>
+            <mat-form-field *ngIf="mostrarEncargados">
+                <mat-label>Encargado</mat-label>
+                <mat-select [(ngModel)]="encargadoSeleccionado" name="encargado" id="encargado">
+                    <mat-option *ngFor="let encargado of encargados" [value]="encargado.usu_id">{{ encargado.usu_cedula }}-{{ encargado.usu_nombres }} - {{ encargado.usu_apellidos }}</mat-option>
                 </mat-select>
             </mat-form-field>
-            <mat-form-field>
-                <mat-label>Bloque</mat-label>
-                <mat-select [(ngModel)]="bloqueSeleccionado" name="bloque" id="bloque">
-                    <mat-option *ngFor="let bloque of bloques" [value]="bloque.id">{{ bloque.nombre }}</mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-       
-            <mat-form-field>
-                <mat-label>Laboratorio</mat-label>
-                <mat-select [(ngModel)]="laboratorioSeleccionado" name="laboratorio" id="laboratorio">
-                    <mat-option *ngFor="let laboratorio of laboratorios" [value]="laboratorio.id">{{ laboratorio.nombre }}</mat-option>
+
+            <mat-form-field *ngIf="mostrarUbicaciones">
+                <mat-label>Ubicacion</mat-label>
+                <mat-select [(ngModel)]="laboratorioSeleccionado" name="ubicacion" id="ubicacion">
+                    <mat-option *ngFor="let laboratorio of laboratorios" [value]="laboratorio.ubi_id">{{ laboratorio.ubi_nombre}}</mat-option>
                 </mat-select>
             </mat-form-field>
 
