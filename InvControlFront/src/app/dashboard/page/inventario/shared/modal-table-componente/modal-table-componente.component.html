@@ -54,9 +54,14 @@
           </mat-list-option>
         </mat-selection-list>
       </div>
+
+      <div>
+        <label for="exampleTextarea">Descripción de Repotenciación:</label>
+        <textarea id="exampleTextarea" [(ngModel)]="detalleRepotencia" rows="4" cols="50"></textarea>
+      </div>
   
       <div class="button-container">
-        <button mat-button (click)="repotenciar()">Repotenciar</button>
+        <button mat-button (click)="repotenciar()" [disabled]="!isFormValid()" [ngClass]="{'invalid-button': !isFormValid()}">Repotenciar</button>
         <button mat-button (click)="closeAumentarModal()" class="Cancelar">Cancelar</button>
       </div>
     </div>
