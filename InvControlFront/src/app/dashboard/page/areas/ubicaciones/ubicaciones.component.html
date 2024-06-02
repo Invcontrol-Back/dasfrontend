@@ -2,6 +2,13 @@
     <h2>Ubicación</h2>
     <div class="container">
         <button (click)="openModal('crear','')">Agregar</button>
+        <mat-form-field>
+            <mat-label>Bloques</mat-label>
+            <mat-select [(ngModel)]="filtroBloque" (ngModelChange)="onFiltroBloqueChange()">
+                <mat-option value="TODOS">TODOS</mat-option>
+                <mat-option *ngFor="let bloque of dataFiltroBloques" [value]="bloque.blo_id">{{ bloque.blo_nombre }}</mat-option>
+            </mat-select>
+        </mat-form-field>
         <app-container>
             <app-table [data]="data" [metaDataColumns]="metaDataColumns">
                 <ng-container matColumnDef="actions">

@@ -20,6 +20,9 @@ export class UbicacionesComponent {
   data:any[] = []
   dataBuilding:any[] = []
   dataTypeLocation:any[] = []
+  dataFiltroBloques:any []= []
+
+  filtroBloque = ''
   
   showButtonCreate: boolean = false;
   showButtonEdit: boolean = false;
@@ -32,7 +35,7 @@ export class UbicacionesComponent {
     {field:"tip_ubi_nombre", title:"TIPO DE UBICACION"}
   ]
 
-  constructor(private buildingEntity:BloqueService,private typeLocationEntity:TipoUbicacionService,private locationEntity:UbicacionService){
+  constructor(private buildingEntity:BloqueService,private typeLocationEntity:TipoUbicacionService,private locationEntity:UbicacionService,){
     this.loadBuildings();
     this.loadTypeLocations();
     this.loadLocations();
@@ -41,6 +44,7 @@ export class UbicacionesComponent {
   loadBuildings(){
     this.buildingEntity.loadBuildings().subscribe(data => {
       this.dataBuilding = data
+      this.dataFiltroBloques = data
     },error => {
       console.log(error)
     })
@@ -116,5 +120,19 @@ export class UbicacionesComponent {
 
   isFormValid(): boolean {
     return this.locationText.trim() !== '' && !!this.typeOption && !!this.buildingOption;
+  }
+
+  onFiltroBloqueChange() {
+    if (this.filtroBloque == 'TODOS'){
+      this.loadLocations()
+    }else{
+      this.loadFiltroBloques()
+    }
+  }
+
+  loadFiltroBloques(){
+    this.locationEntity.loadFilterLocationBuildings(this.filtroBloque).subscribe(data=>{
+      this.data = data
+    })
   }
 }

@@ -30,4 +30,9 @@ export class UbicacionService {
   deleteLocation(id:string):Observable<any> {
     return this.http.delete(this.url+id+'/')
   }
+
+  loadFilterLocationBuildings(id:string):Observable<any>{
+    const url_complementaria = 'obtener_laboratorio_bloque/?bloque='
+    return this.http.get(this.url+url_complementaria+id)
+  }
 }
