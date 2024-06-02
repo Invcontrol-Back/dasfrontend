@@ -19,6 +19,11 @@ export class ComponenteService {
     return this.http.get(this.url)
   }
 
+  loadComponente(id:any):Observable<any>{
+    const url_complementaria = 'obtenerComponentesEspecificos/?componente='
+    return this.http.get(this.url+url_complementaria+id)
+  }
+
   updateComponentes(id:any,entidad:any):Observable<any>{
     return this.http.put(this.url+id+"/",entidad)
   }

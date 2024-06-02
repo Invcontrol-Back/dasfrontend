@@ -10,6 +10,11 @@ import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { TecnologicoService } from '../../services/tecnologico/tecnologico.service';
 import { PageOrientation } from 'pdfmake/interfaces';
+import * as XLSX from 'xlsx';
+import { ComponenteService } from '../../services/componente/componente.service';
+import { of, forkJoin } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-report-page',
@@ -57,8 +62,8 @@ export class ReportPageComponent {
     { field: "fechaGenerado", title: "Fecha generado" }
   ];
 
-  constructor(private entidadEncargado:UsuarioService,private entidadUbicacion:UbicacionService,private entidadGeneral:GeneralService,
-    private entidadTecnologico:TecnologicoService
+  constructor(private entidadEncargado:UsuarioService,private entidadUbicacion:UbicacionService,private entidadGeneral:GeneralService,private entidadComponentes:ComponenteService
+
   ) {
     this.loadUsuarios()
     this.loadUbicaciones()
@@ -154,8 +159,11 @@ export class ReportPageComponent {
         }
       }else if(this.detalleSeleccionado == 'GENERAL'){
           this.reporteGeneralTecnologico()
+      }else if(this.detalleSeleccionado == 'UBICACION'){
+          this.reporteUbicacionTecnologico()
+      }else if(this.detalleSeleccionado =='ENCARGADO'){
+          this.reporteEncargadoTecnologico()
       }
-
     }else if (this.tipoReporteSeleccionado =='INMOBILIARIO'){
 
     }else if (this.tipoReporteSeleccionado == 'SOFTWARE'){
@@ -165,42 +173,120 @@ export class ReportPageComponent {
     }
 
   }
-  //REPORTE GENERAL
+  
+  //REPORTE ENCARGADO TECNOLOGICO
+  reporteEncargadoTecnologico(){
+    this.entidadGeneral.loadReporteTecnologicoEncargado(this.encargadoSeleccionado).subscribe(data=>{
+      this.reporteTecnologico(data)
+    })
+  }
+  //FIN REPORTE ENCARGADO TECNOLOGICO
 
+  //REPORTE UBICAICON TECNOLOGICO
+  reporteUbicacionTecnologico(){
+    this.entidadGeneral.loadReporteTecnologicoUbicacion(this.laboratorioSeleccionado).subscribe(data=>{
+      this.reporteTecnologico(data)
+    })
+  }
+  //FIN REPORTE UBICACION TECNOLOGICO
+
+  //REPORTE GENERAL TECNOLOGICO
   reporteGeneralTecnologico() {
-    this.entidadTecnologico.getTecnologias().subscribe(data => {
-      const content: any =  [
-        {
-          layout: 'lightHorizontalLines', // opcional
-          table: {
-            headerRows: 1,
-            widths: [ '*', 'auto', 100, '*','auto' ],
-            body: this.lecturaFilasTecnologicos(data)
-            
-          }
-        }
-      ];
-      const documentDefinition: any = {
-        pageOrientation: 'landscape',
-        content: content,
-      };
-
-      (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
-      pdfMake.createPdf(documentDefinition).download('reporte.pdf');
+    this.entidadGeneral.loadReporteTecnologicoGeneral().subscribe(data => {
+      this.reporteTecnologico(data)
     });
   }
+  //FIN REPORTE GENERAL TECNOLOGICO
 
-  lecturaFilasTecnologicos(data:any){
-    const json:any = []
-    data.forEach((row: any) => {
-      json.push(
-        [ row.tec_codigo, row.cat_nombre, row.tec_serie,row.tec_modelo,row.tec_marca]
-      )
-    })
-    return json;
+  //METODO REPORTES TECNOLOGICOS
+  reporteTecnologico(data:any){
+    if (!Array.isArray(data)) {
+      console.error('La data recibida no es un array:', data);
+      return;
+    }
+    const dataObservables = data.map(row => {
+      return this.entidadGeneral.loadComponentesDetalleTecnologico(row.tec_id).pipe(
+        switchMap(dataComponentes => {
+          console.log(dataComponentes)
+          const componentesObservables = dataComponentes.map((componentesRow: any) => {
+            const repotencia = of({ descripcion: componentesRow.det_tec_descripcion_repotencia ?? 'Sin descripción' });
+            const repotenciado = of({ estado: componentesRow.det_tec_estado_repotencia === 0 ? 'no repotenciado' : 'repotenciado' });
+            return forkJoin({
+              componenteAnterior: this.entidadComponentes.loadComponente(componentesRow.det_tec_com_adquirido_id),
+              componenteNuevo: this.entidadComponentes.loadComponente(componentesRow.det_tec_com_uso_id),
+              repotencia: repotencia,
+              repotenciado: repotenciado
+            }).pipe(
+              map(componentes => ({
+                componenteAnterior: componentes.componenteAnterior,
+                componenteNuevo: componentes.componenteNuevo,
+                repotencia:componentes.repotencia,
+                repotenciado:componentes.repotenciado
+              }))
+            );
+          });
+
+          console.log(componentesObservables)
+          return forkJoin(componentesObservables).pipe(
+            
+            map((componentes:any) => {
+              console.log('Valores de repotencia y repotenciado:', componentes);
+              const componentesAnterior = componentes.map((comp:any) => 
+                `Anterior: ${JSON.stringify(comp.componenteAnterior)}`
+              ).join(' | ');
+              const componenteNuevo = componentes.map((comp:any) => 
+                `Nuevo: ${JSON.stringify(comp.componenteNuevo)}`
+              ).join(' | ');
+              const rep = componentes.map((comp:any) => 
+                `${JSON.stringify(comp.repotencia)}`
+              ).join(' | ');
+              const repo = componentes.map((comp:any) => 
+                `${JSON.stringify(comp.repotenciado)}`
+              ).join(' | ');
+              row.componentesA = componentesAnterior;
+              row.componentesN = componenteNuevo;
+              row.repotencia = rep
+              row.repotenciado = repo
+              return row;
+            })
+          );
+        })
+      );
+    });
+
+    forkJoin(dataObservables).subscribe(mergedData => {
+      const filteredData = mergedData.map(item => {
+        return {
+          codigo: item.tec_codigo,
+          serie: item.tec_serie,
+          modelo: item.tec_modelo,
+          marca: item.tec_marca,
+          ip: item.tec_ip,
+          año_ingreso: item.tec_anio_ingreso,
+          dependencia: item.dep_nombre,
+          categoria: item.cat_nombre,
+          encargado: item.usu_persona,
+          bloque: item.blo_nombre,
+          ubicacion: item.ubi_nombre,
+          etiqueta: item.loc_nombre,
+          componentesAnterior: item.componentesA,
+          componentesNuevo: item.componentesN ,
+          repotencia:item.repotencia,
+          repotenciado:item.repotenciado
+        };
+      });
+
+      const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(filteredData);
+      const workbook: XLSX.WorkBook = {
+        Sheets: { 'Datos Tecnologicos': worksheet },
+        SheetNames: ['Datos Tecnologicos']
+      };
+
+      // Escribir el archivo de Excel
+      XLSX.writeFile(workbook, 'reporte_tecnologico.xlsx');
+    });
   }
-
-  //FIN REPORTE GENERAL
+  //FIN METODO REPORTES TECNOLOGICOS
 
   //REPORTE ETIQUETAS
   reporteEtiquetas() {
