@@ -14,6 +14,7 @@ import * as XLSX from 'xlsx';
 import { ComponenteService } from '../../services/componente/componente.service';
 import { of, forkJoin } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
+import { InmobiliarioService } from '../../services/inmobiliario/inmobiliario.service';
 
 
 @Component({
@@ -62,7 +63,8 @@ export class ReportPageComponent {
     { field: "fechaGenerado", title: "Fecha generado" }
   ];
 
-  constructor(private entidadEncargado:UsuarioService,private entidadUbicacion:UbicacionService,private entidadGeneral:GeneralService,private entidadComponentes:ComponenteService
+  constructor(private entidadEncargado:UsuarioService,private entidadUbicacion:UbicacionService,private entidadGeneral:GeneralService,private entidadComponentes:ComponenteService,
+    private entidadInmueble:InmobiliarioService,private entidadSoftware:SoftwareService
 
   ) {
     this.loadUsuarios()
@@ -165,15 +167,122 @@ export class ReportPageComponent {
           this.reporteEncargadoTecnologico()
       }
     }else if (this.tipoReporteSeleccionado =='INMOBILIARIO'){
-
+      if(this.detalleSeleccionado =='GENERAL'){
+        this.reporteGeneralInmobiliario()
+      }else if (this.detalleSeleccionado == 'ENCARGADO'){
+        this.reporteEncargadoInmobiliario()
+      }
     }else if (this.tipoReporteSeleccionado == 'SOFTWARE'){
-
+      this.reporteSoftwareGeneral()
     }else{
       console.log("no especificado")
     }
 
   }
   
+  //REPORTE SOFTWARE GENERAL
+  reporteSoftwareGeneral() {
+    this.entidadSoftware.loadSoftwares().subscribe(data => {
+      const content: any = [
+        {text: 'ESPECIALIZACION', fontSize: 15,bold: true }
+        ,
+        {
+          
+          layout: 'lightHorizontalLines',
+          table: {
+            headerRows: 1,
+            widths: ['*', '*', '*', '*', '*', '*'],
+            body: this.lecturaFilasSoftware(data, 'ESPECIALIZACION')
+  
+          }
+        }
+        ,
+        {text: 'COMPUTACION', fontSize: 15,bold: true }
+        ,
+        {
+          
+          layout: 'lightHorizontalLines',
+          table: {
+            headerRows: 1,
+            widths: ['*', '*', '*', '*', '*', '*'],
+            body: this.lecturaFilasSoftware(data, 'COMPUTACION')
+  
+          }
+        }
+      ];
+  
+      const documentDefinition: any = {
+        pageOrientation: 'landscape',
+        content: content,
+      };
+  
+      (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
+      pdfMake.createPdf(documentDefinition).download('reporte.pdf');
+    })
+  }
+  
+
+  lecturaFilasSoftware(data:any,tipo:string){
+    const json:any = [ ['NOMBRE','VERSION','TIPO','DURACION','DESCRIPCION'] ]
+    data.forEach((row: any) => {
+      if(row.tip_ubi_nombre == tipo){
+        json.push(
+          [ row.sof_nombre,row.sof_version,row.sof_tipo,row.sof_duracion,row.sof_descripcion]
+        )
+      }
+    })
+    return json;
+  }
+
+  //FIN REPORTE SOFTWARE GENERAL
+
+  //REPORTE GENERAL INMUEBLE
+  reporteGeneralInmobiliario(){
+    this.entidadInmueble.loadInmobiliarios().subscribe(data=>{
+      this.configuracionInmueble(data)
+    })
+  }
+  //FIN REPORTE GENERAL INMUEBLE
+
+  //REPORTE ENCARGADO INMUEBLE
+  reporteEncargadoInmobiliario(){
+    this.entidadInmueble.obtenerInmueblesEncargado(this.encargadoSeleccionado).subscribe(data=>{
+      this.configuracionInmueble(data)
+    })
+  }
+  //FIN REPORTE ENCARGADO INMUEBLE
+
+  configuracionInmueble(data:any){
+    const content: any =  [
+      {
+        layout: 'lightHorizontalLines',
+        table: {
+          headerRows: 1,
+          widths: [ '*', '*', '*', '*','*','*', '*', '*', '*'],
+          body: this.lecturaFilas(data)
+          
+        }
+      }
+    ];
+    const documentDefinition: any = {
+      pageOrientation: 'landscape',
+      content: content,
+    };
+
+    (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
+    pdfMake.createPdf(documentDefinition).download('reporte.pdf');
+  }
+
+  lecturaFilas(data:any){
+    const json:any = [ ['CODIGO','CATEGORIA','SERIE','MODELO','MARCA','AÑO INGRESO','DEPENDENCIA','ENCARGADO'] ]
+    data.forEach((row: any) => {
+      json.push(
+        [ row.inm_codigo, row.cat_nombre,row.inm_serie,row.inm_modelo,row.inm_marca,row.inm_anio_ingreso,row.dep_nombre,row.usu_nombres + ' ' +row.usu_apellidos]
+      )
+    })
+    return json;
+  }
+
   //REPORTE ENCARGADO TECNOLOGICO
   reporteEncargadoTecnologico(){
     this.entidadGeneral.loadReporteTecnologicoEncargado(this.encargadoSeleccionado).subscribe(data=>{
