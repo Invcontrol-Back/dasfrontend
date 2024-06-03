@@ -24,6 +24,11 @@ export class ComponenteService {
     return this.http.get(this.url+url_complementaria+id)
   }
 
+loadComponenteFiltro(codigo:any):Observable<any> {
+  const url_complementaria = 'buscar_por_codigo/?codigo='
+  return this.http.get(this.url+url_complementaria+codigo)
+}
+
   updateComponentes(id:any,entidad:any):Observable<any>{
     return this.http.put(this.url+id+"/",entidad)
   }

@@ -37,9 +37,11 @@ private entidadDependencia:DependenciaService,private entidadTecnologico:Tecnolo
   if (this.titulo == "EDICION"){
     this.formulario.get('tec_anio_ingreso')?.disable();
     this.formulario.get('tec_codigo')?.disable();
+    this.formulario.get('tec_loc')?.disable()
   }else{
     this.formulario.get('tec_anio_ingreso')?.enable();
     this.formulario.get('tec_codigo')?.enable();
+    this.formulario.get('tec_loc')?.disable()
   }
  }
 
