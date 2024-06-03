@@ -78,3 +78,9 @@ button:hover{
     flex-grow: 1;
     margin-right: 10px;
   }
+  .search-field {
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 20px;
+    margin-left: 10px;
+  }
