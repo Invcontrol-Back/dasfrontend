@@ -3,6 +3,11 @@
     <h2>Componentes</h2>
     <div class="container">
         <button (click)="openModal('crear','')">Agregar</button>
+        <br>
+        <mat-form-field class="search-field">
+          <mat-label>Buscar por Código</mat-label>
+          <input matInput (input)="applyFilter($event)" placeholder="Ingrese el código">
+        </mat-form-field>
         <app-container>
             <app-table [data]="data" [metaDataColumns]="metaDataColumns">
                 <ng-container matColumnDef="actions">

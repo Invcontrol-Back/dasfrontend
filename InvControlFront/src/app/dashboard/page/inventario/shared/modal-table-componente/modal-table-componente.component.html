@@ -46,17 +46,27 @@
     <div class="modal-content">
       <span class="close" (click)="closeAumentarModal()">&times;</span>
       <h2>Repotenciar</h2>
+
+      <mat-form-field class="search-field">
+        <mat-label>Buscar por Código</mat-label>
+        <input matInput (input)="applyFilter($event)" placeholder="Ingrese el código">
+      </mat-form-field>
       
       <div class="selection-list-container">
         <mat-selection-list [(ngModel)]="selectedItem">
           <mat-list-option *ngFor="let componente of componentes" [value]="componente.com_id" (click)="selectItem(componente)">
-            {{ componente.com_codigo_bien }} - {{ componente.com_codigo_uta }} - {{ componente.cat_nombre }}
+            {{ componente.com_codigo_bien }} - {{ componente.com_codigo_uta }} - {{ componente.det_cat_nombre }}
           </mat-list-option>
         </mat-selection-list>
       </div>
+
+      <div>
+        <label for="exampleTextarea">Descripción de Repotenciación:</label>
+        <textarea id="exampleTextarea" [(ngModel)]="detalleRepotencia" rows="4" cols="50"></textarea>
+      </div>
   
       <div class="button-container">
-        <button mat-button (click)="repotenciar()">Repotenciar</button>
+        <button mat-button (click)="repotenciar()" [disabled]="!isFormValid()" [ngClass]="{'invalid-button': !isFormValid()}">Repotenciar</button>
         <button mat-button (click)="closeAumentarModal()" class="Cancelar">Cancelar</button>
       </div>
     </div>

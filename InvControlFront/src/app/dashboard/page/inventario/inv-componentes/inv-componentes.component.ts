@@ -199,5 +199,13 @@ export class InvComponentesComponent {
       this.dependenciaSeleccionada !== null &&
       this.anioIngresoText !== null;
   }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    console.log(filterValue)
+    this.entidadComponente.loadComponenteFiltro(filterValue).subscribe((data) => {
+      this.data = data;
+    });
+  }
 }
 

@@ -1,7 +1,14 @@
 <div>
-    <h2>Localizaciones</h2>
+    <h2>Etiquetas</h2>
     <div class="container">
         <button (click)="openModal('crear','')">Agregar</button>
+        <mat-form-field>
+            <mat-label>Ubicacion</mat-label>
+            <mat-select [(ngModel)]="filtroUbicacion" name="blo_fac" id="blo_fac" (ngModelChange)="onFiltroUbicacionChange()">
+                <mat-option value="TODOS">TODOS</mat-option>
+                <mat-option *ngFor="let ubicacion of datosUbicaciones" [value]="ubicacion.ubi_id">{{ ubicacion.ubi_nombre }}</mat-option>
+            </mat-select>
+        </mat-form-field>
         <app-container>
             <app-table [data]="data" [metaDataColumns]="metaDataColumns">
                 <ng-container matColumnDef="actions">
@@ -41,11 +48,11 @@
       <span class="close" (click)="closeModal()">&times;</span>
         <h2>{{ titleText }}</h2>
         <mat-form-field>
-            <mat-label>Localizacion</mat-label>
+            <mat-label>Etiqueta</mat-label>
             <input type="text" 
                 matInput 
                 required 
-                placeholder="Ingrese el nombre del bloque"
+                placeholder="Ingrese el nombre de la etiqueta"
                 [(ngModel)]="nombreText">
         </mat-form-field>
         <mat-form-field>

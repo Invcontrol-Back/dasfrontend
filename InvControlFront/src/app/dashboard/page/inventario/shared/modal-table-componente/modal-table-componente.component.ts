@@ -29,6 +29,7 @@ export class ModalTableComponenteComponent {
   individuoComponente:any
   componentes:any [] = []
   modalAumentarOpen:boolean = false
+  detalleRepotencia = ''
 
   row:any
   id_tec :any
@@ -113,9 +114,10 @@ export class ModalTableComponenteComponent {
   }
 
   repotenciar(){
-    const entidad = {componente_id:this.selectedItem.com_id, det_tec_id:this.individuoComponente.det_tec_id}
+    const entidad = {componente_id:this.selectedItem.com_id, det_tec_id:this.individuoComponente.det_tec_id, det_repotencia:this.detalleRepotencia}
     this.entidadDetalleTecnologico.repotenciaComponente(entidad).subscribe(()=>{
       this.cargarComponentesTecnologico(this.id_tec)
+      this.cargarComponentesRepotencia()
       this.closeAumentarModal()
     })
   }
@@ -146,4 +148,19 @@ export class ModalTableComponenteComponent {
    )
  }
 
+ isFormValid(){
+  if(this.detalleRepotencia == '' || this.selectedItem == ''){
+    return false
+  }else{
+    return true
+  }
+ }
+
+ applyFilter(event: Event) {
+  const filterValue = (event.target as HTMLInputElement).value;
+  console.log(filterValue)
+  this.entidadComponente.loadComponenteFiltro(filterValue).subscribe((data) => {
+    this.componentes = data;
+  });
+}
 }

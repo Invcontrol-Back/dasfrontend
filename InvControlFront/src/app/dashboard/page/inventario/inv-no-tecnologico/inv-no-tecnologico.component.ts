@@ -34,6 +34,7 @@ export class InvNoTecnologicoComponent {
   dataDependencia:any[] = []
   dataCategoria:any[] = []
   data: any[] = [];
+  disableInput: boolean = true;
 
   metaDataColumns: MetaDataColumn[] = [
     { field: "inm_codigo", title: "CÓDIGO" },
@@ -92,6 +93,7 @@ export class InvNoTecnologicoComponent {
       this.dependenciaText = '';
       this.showButtonCreate = true;
       this.showButtonEdit = false;
+      this.disableInput = false
     } else {
       this.titleText = 'ACTUALIZAR INMUEBLE';
       this.codigoText = row.inm_codigo;
@@ -105,6 +107,8 @@ export class InvNoTecnologicoComponent {
       this.showButtonCreate = false;
       this.showButtonEdit = true;
       this.idRow = row.inm_id;
+      this.disableInput = true
+
     }
     this.modalOpen = true;
   }
@@ -174,6 +178,14 @@ export class InvNoTecnologicoComponent {
       !!this.anioIngresoText &&
       this.encargadoIdText !== '' &&
       this.dependenciaText !== '';
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    console.log(filterValue)
+    this.entidadInmueble.loadInmuebleFiltro(filterValue).subscribe((data) => {
+      this.data = data;
+    });
   }
 }
 

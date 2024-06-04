@@ -24,7 +24,7 @@ export class SideVarComponent {
     {label:'Áreas', icon: 'account_tree', routerLink: './user',
     items: [{label:'Bloques', icon: 'computer', routerLink:'./building'},
     {label:'Ubicacion', icon: 'chair', routerLink:'./location'},
-    {label:'Localizacion', icon: 'chair', routerLink:'./label'},
+    {label:'Etiquetas', icon: 'label', routerLink:'./label'},
     
       ] },
     {label:'Reportes', icon: 'book_5', routerLink: './report'},

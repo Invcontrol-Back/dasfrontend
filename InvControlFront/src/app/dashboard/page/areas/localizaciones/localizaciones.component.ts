@@ -24,6 +24,7 @@ export class LocalizacionesComponent {
   idRow:string = '';
   bienTecnologico:any
   titleText:string = '';
+  filtroUbicacion:string = '';
 
   data:any[] = []
   datosUbicaciones:any[] = []
@@ -156,5 +157,19 @@ export class LocalizacionesComponent {
 
   isFormValid(): boolean {
     return this.nombreText.trim() !== '' && !!this.ubicacionSeleccion;
+  }
+
+  onFiltroUbicacionChange(){
+    if (this.filtroUbicacion == 'TODOS'){
+      this.loadLocalizaciones()
+    }else{
+      this.loadLocalizacionesUbicacion()
+    }
+  }
+
+  loadLocalizacionesUbicacion(){
+    this.entidadLocalizacion.loadFilterLocalizacionesLaboratorio(this.filtroUbicacion).subscribe(data=>{
+      this.data = data
+    })
   }
 }

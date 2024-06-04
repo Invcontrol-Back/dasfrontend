@@ -35,4 +35,9 @@ export class TecnologicoService {
     const url_complementaria = 'obtener_tecnologico_encargado/?encargado='
     return this.http.get(this.url+url_complementaria+encargado)
   }
+
+  loadTecnologicoFiltro(codigo:any):Observable<any> {
+    const url_complementaria = 'buscar_por_codigo/?codigo='
+    return this.http.get(this.url+url_complementaria+codigo)
+  }
 }

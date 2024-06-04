@@ -113,4 +113,12 @@ eliminarRegistro(row:any){
   })
 }
 
+applyFilter(event: Event) {
+  const filterValue = (event.target as HTMLInputElement).value;
+  console.log(filterValue)
+  this.entidadTecnologico.loadTecnologicoFiltro(filterValue).subscribe((data) => {
+    this.data = data;
+  });
+}
+
 }

@@ -31,4 +31,9 @@ export class InmobiliarioService {
     const url_complementaria = 'obtener_inmuebles_encargado/?encargado='
     return this.http.get(this.url+url_complementaria+encargado)
   }
+
+  loadInmuebleFiltro(codigo:any):Observable<any> {
+    const url_complementaria = 'buscar_por_codigo/?codigo='
+    return this.http.get(this.url+url_complementaria+codigo)
+  }
 }
