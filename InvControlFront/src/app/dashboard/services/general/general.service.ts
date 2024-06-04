@@ -31,4 +31,22 @@ export class GeneralService {
     let url = 'http://localhost:8000/api/reporte/reporte_tecnologico_encargado/?encargado='
     return this.http.get(url+encargado)
   }
+
+  loadDashboardTecnologico(){
+    let url = 'http://localhost:8000/api/reporte/estadistica_tecnologico/'
+    return this.http.get(url)
+  }
+  loadDashboardSoftware(){
+    let url = 'http://localhost:8000/api/reporte/estadistica_software/'
+    return this.http.get(url)
+  }
+  loadDashboardInmueble(){
+    let url = 'http://localhost:8000/api/reporte/estadistica_inmueble/'
+    return this.http.get(url)
+  }
+  loadDashboardUsuario(){
+    let url = 'http://localhost:8000/api/reporte/estadistica_usuario/'
+    return this.http.get(url)
+  }
+
 }

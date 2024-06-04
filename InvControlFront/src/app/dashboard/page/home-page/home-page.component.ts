@@ -1,4 +1,5 @@
 import { Component} from '@angular/core';
+import { GeneralService } from '../../services/general/general.service';
 
 @Component({
   selector: 'app-home-page',
@@ -7,11 +8,16 @@ import { Component} from '@angular/core';
 })
 export class HomePageComponent {
 
+  datoSof:any = []
+  datoUsu:any = []
+  datoTec:any = []
+  datoInm:any = []
+
   items = [
-    { titulo: 'Tecnológicos', disponibles: '3',nodisponibles: '3',icono:"computer" },
-    { titulo: 'Inmobiliarios', disponibles: '4',nodisponibles: '3',icono:"chair" },
-    { titulo: 'Software', disponibles: '5',nodisponibles: '3',icono:"devices" },
-    { titulo: 'Usuario', disponibles: '6',nodisponibles: '3',icono:"person" },
+    { titulo: 'Tecnológicos', disponibles: '0',nodisponibles: '0',icono:"computer" },
+    { titulo: 'Inmobiliarios', disponibles: '0',nodisponibles: '0',icono:"chair" },
+    { titulo: 'Software', disponibles: '0',nodisponibles: '0',icono:"devices" },
+    { titulo: 'Usuario', disponibles: '0',nodisponibles: '0',icono:"person" },
   ];
 
   datos: { nombre: string, valor: number }[] = [
@@ -21,9 +27,51 @@ export class HomePageComponent {
   ];
   escala = 5;
 
-  constructor() { }
+  constructor(private entidadGeneral:GeneralService) { }
 
   ngOnInit(): void {
+    this.datosTecnologico()
+    this.datosInmueble()
+    this.datosUsuario()
+    this.datosSoftware()
   }
 
+  datosTecnologico(){
+    this.entidadGeneral.loadDashboardTecnologico().subscribe(data=>{
+      this.datoTec = data
+      this.actualizarItems()  
+    })
+  }
+
+  datosInmueble(){
+    this.entidadGeneral.loadDashboardInmueble().subscribe(data=>{
+      this.datoInm = data
+      this.actualizarItems()  
+    })
+  }
+
+  datosSoftware(){
+    this.entidadGeneral.loadDashboardSoftware().subscribe(data=>{
+      this.datoSof = data
+      this.actualizarItems()  
+    })
+  }
+
+  datosUsuario(){
+    this.entidadGeneral.loadDashboardUsuario().subscribe(data=>{
+      this.datoUsu = data    
+      this.actualizarItems()  
+    })
+  }
+
+  actualizarItems() {
+    if (this.datoTec && this.datoInm && this.datoSof && this.datoUsu) {
+      this.items = [
+        { titulo: 'Tecnológicos', disponibles: this.datoTec.cantidad_activo, nodisponibles: this.datoTec.cantidad_inactivo, icono: "computer" },
+        { titulo: 'Inmobiliarios', disponibles: this.datoInm.cantidad_activo, nodisponibles: this.datoInm.cantidad_inactivo, icono: "chair" },
+        { titulo: 'Software', disponibles: this.datoSof.cantidad_activo, nodisponibles: this.datoSof.cantidad_inactivo, icono: "devices" },
+        { titulo: 'Usuario', disponibles: this.datoUsu.cantidad_activo, nodisponibles: this.datoUsu.cantidad_inactivo, icono: "person" },
+      ];
+    }
+  }
 }
