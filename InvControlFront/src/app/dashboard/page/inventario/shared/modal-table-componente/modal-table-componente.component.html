@@ -46,11 +46,16 @@
     <div class="modal-content">
       <span class="close" (click)="closeAumentarModal()">&times;</span>
       <h2>Repotenciar</h2>
+
+      <mat-form-field class="search-field">
+        <mat-label>Buscar por Código</mat-label>
+        <input matInput (input)="applyFilter($event)" placeholder="Ingrese el código">
+      </mat-form-field>
       
       <div class="selection-list-container">
         <mat-selection-list [(ngModel)]="selectedItem">
           <mat-list-option *ngFor="let componente of componentes" [value]="componente.com_id" (click)="selectItem(componente)">
-            {{ componente.com_codigo_bien }} - {{ componente.com_codigo_uta }} - {{ componente.cat_nombre }}
+            {{ componente.com_codigo_bien }} - {{ componente.com_codigo_uta }} - {{ componente.det_cat_nombre }}
           </mat-list-option>
         </mat-selection-list>
       </div>
