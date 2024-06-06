@@ -32,7 +32,7 @@ export class InvSoftwareComponent {
     {field:"sof_version", title:"VERSIÓN"},
     {field:"sof_tipo", title:"TIPO"},
     {field:"sof_duracion", title:"DURACIÓN"},
-    {field:"sof_descripcion", title:"DESCRIPCION"},
+    {field:"sof_descripcion", title:"DESCRIPCIÓN"},
     {field:"tip_ubi_nombre", title:"LABORATORIO"}
   ]
 
