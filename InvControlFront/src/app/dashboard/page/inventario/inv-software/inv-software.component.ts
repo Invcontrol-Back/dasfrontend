@@ -29,10 +29,10 @@ export class InvSoftwareComponent {
   data:any[] = []
   metaDataColumns:MetaDataColumn[] = [
     {field:"sof_nombre", title:"NOMBRE"},
-    {field:"sof_version", title:"VERSION"},
+    {field:"sof_version", title:"VERSIÓN"},
     {field:"sof_tipo", title:"TIPO"},
-    {field:"sof_duracion", title:"DURACION"},
-    {field:"sof_descripcion", title:"DESCRIPCION"},
+    {field:"sof_duracion", title:"DURACIÓN"},
+    {field:"sof_descripcion", title:"DESCRIPCIÓN"},
     {field:"tip_ubi_nombre", title:"LABORATORIO"}
   ]
 
