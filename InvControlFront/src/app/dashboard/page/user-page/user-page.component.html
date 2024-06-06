@@ -36,7 +36,7 @@
       <div class="form-group">
         <mat-form-field>
           <mat-label>Cédula</mat-label>
-          <input type="text" matInput required placeholder="Ingrese la cédula" [(ngModel)]="selectedUser.usu_cedula" (keydown)="onKeyDown($event)">
+          <input type="text" matInput required placeholder="Ingrese la cédula" [(ngModel)]="selectedUser.usu_cedula" (keydown)="onKeyDown($event)" maxlength="10">
         </mat-form-field>
         
 
