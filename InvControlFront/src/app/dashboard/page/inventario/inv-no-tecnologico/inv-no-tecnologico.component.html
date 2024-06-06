@@ -71,7 +71,6 @@
              placeholder="Ingrese la marca"
              [(ngModel)]="marcaText">
     </mat-form-field>   
-
     <mat-form-field>
       <mat-label>AÑO DE INGRESO</mat-label>
       <input type="number" 
@@ -80,7 +79,6 @@
              placeholder="Ingrese el año"
              [(ngModel)]="anioIngresoText">
     </mat-form-field>
-
     <mat-form-field>
       <mat-label>ENCARGADO</mat-label>
       <mat-select [(ngModel)]="encargadoIdText" name="encargadoIdText" id="encargadoIdText">
@@ -105,19 +103,18 @@
               [disabled]="!isFormValid()" 
               [ngClass]="{'invalid-button': !isFormValid()}"
               *ngIf="showButtonCreate">Guardar</button>
-
       <button mat-button 
               (click)="updateData()" 
               [disabled]="!isFormValid()" 
               [ngClass]="{'invalid-button': !isFormValid()}"
               *ngIf="showButtonEdit">Actualizar</button>
-
       <button mat-button 
               (click)="closeModal()" 
               class="Cancelar">Cancelar</button>
     </div>
   </div>
 </div>
+
 
 <div *ngIf="modalDeleteOpen" class="modal">
     <div class="modal-content">
