@@ -97,3 +97,18 @@ button:hover {
   margin-bottom: 20px;
   margin-left: 10px;
 }
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.form-field {
+  flex: 1;
+  min-width: calc(50% - 15px);
+}
+
+.form-field.full-width {
+  flex-basis: 100%;
+}
