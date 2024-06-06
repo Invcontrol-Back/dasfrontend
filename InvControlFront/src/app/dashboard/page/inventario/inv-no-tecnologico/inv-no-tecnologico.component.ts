@@ -13,6 +13,7 @@ import { CategoriaService } from 'src/app/dashboard/services/categoria/categoria
   templateUrl: './inv-no-tecnologico.component.html',
   styleUrls: ['./inv-no-tecnologico.component.css']
 })
+
 export class InvNoTecnologicoComponent {
   modalOpen: boolean = false;
   modalDeleteOpen: boolean = false;
@@ -44,7 +45,7 @@ export class InvNoTecnologicoComponent {
     { field: "cat_nombre", title: "CATEGORÍA" },
     { field: "dep_nombre", title: "DEPENDENCIA" },
     { field: "usu_nombres", title: "ENCARGADO" },
-    { field: "inm_anio_ingreso", title: "AÑO DE INGRESO" },
+    { field: "inm_anio_ingreso", title: "AÑO INGRESO" },
   ];
 
   constructor(private entidadInmueble:InmobiliarioService,private entidadDependencia:DependenciaService,
