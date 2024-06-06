@@ -14,13 +14,13 @@
           </div>
           <div class="login-field">
             <mat-form-field appearance="fill" class="full-width">
-              <mat-label>Contrasena</mat-label>
-              <input matInput placeholder="Contrasena" type="password" [(ngModel)]="passText" required>
+              <mat-label>Contraseña</mat-label>
+              <input matInput placeholder="Contraseña" type="password" [(ngModel)]="passText" required>
             </mat-form-field>
           </div>
           <span *ngIf="errorVisible" class="texto-rojo">Credenciales incorrectas</span>
           <div class="login-button">
-            <button mat-flat-button color="warn" class="full-width" (click)="onLogin()">Iniciar Sesion</button>
+            <button mat-flat-button color="warn" class="full-width" (click)="onLogin()">Iniciar Sesión</button>
           </div>
         </div>
       </div>
