@@ -32,75 +32,77 @@
 
 <div *ngIf="modalOpen" class="modal">
     <div class="modal-content">
-      <span class="close" (click)="closeModal()">&times;</span>
+        <span class="close" (click)="closeModal()">&times;</span>
         <h2>{{ titleText }}</h2>
-        <mat-form-field>
-            <mat-label>Software</mat-label>
-            <input type="text" 
-                matInput 
-                required 
-                placeholder="Ingrese el nombre del software"
-                [(ngModel)]="softwareText">
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>Version</mat-label>
-            <input type="text" 
-                matInput 
-                required 
-                placeholder="Ingrese el nombre del software"
-                [(ngModel)]="versionText">
-        </mat-form-field>
-        
-        <mat-form-field>
-            <mat-label>Tipo</mat-label>
-            <mat-select required [(ngModel)]="tipoText" placeholder="Seleccione el tipo">
-                <mat-option *ngFor="let tipo of tipos" [value]="tipo">
-                    {{ tipo }}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-        
-        <mat-form-field>
-            <mat-label>Duracion</mat-label>
-            <input type="text" 
-                matInput 
-                required 
-                placeholder="Ingrese el nombre del software"
-                [(ngModel)]="duracionText">
-        </mat-form-field>   
-        <mat-form-field>
-            <mat-label>Descripcion</mat-label>
-            <input type="text" 
-                matInput 
-                required 
-                placeholder="Ingrese el nombre del software"
-                [(ngModel)]="descripcionText">
-        </mat-form-field>    
-
-        <mat-form-field>
-            <mat-label>Laboratorio</mat-label>
-            <mat-select [(ngModel)]="laboratorioSeleccionado" name="sof_tip_ubi" id="sof_tip_ubi">
-              <mat-option *ngFor="let ubicacion of dataTipoUbicacion" [value]="ubicacion.tip_ubi_id">{{ ubicacion.tip_ubi_nombre }}</mat-option>
-            </mat-select>
-        </mat-form-field>
+        <div class="form-row">
+            <mat-form-field class="form-field">
+                <mat-label>Software</mat-label>
+                <input type="text" 
+                       matInput 
+                       required 
+                       placeholder="Ingrese el nombre del software"
+                       [(ngModel)]="softwareText">
+            </mat-form-field>
+            <mat-form-field class="form-field">
+                <mat-label>Version</mat-label>
+                <input type="text" 
+                       matInput 
+                       required 
+                       placeholder="Ingrese la versión del software"
+                       [(ngModel)]="versionText">
+            </mat-form-field>
+        </div>
+        <div class="form-row">
+            <mat-form-field class="form-field">
+                <mat-label>Tipo</mat-label>
+                <mat-select required [(ngModel)]="tipoText" placeholder="Seleccione el tipo">
+                    <mat-option *ngFor="let tipo of tipos" [value]="tipo">
+                        {{ tipo }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="form-field">
+                <mat-label>Duración</mat-label>
+                <input type="text" 
+                       matInput 
+                       required 
+                       placeholder="Ingrese la duración del software"
+                       [(ngModel)]="duracionText">
+            </mat-form-field>
+        </div>   
+        <div class="form-row">
+            <mat-form-field class="form-field">
+                <mat-label>Descripción</mat-label>
+                <input type="text" 
+                       matInput 
+                       required 
+                       placeholder="Ingrese la descripción del software"
+                       [(ngModel)]="descripcionText">
+            </mat-form-field>
+            <mat-form-field class="form-field">
+                <mat-label>Laboratorio</mat-label>
+                <mat-select [(ngModel)]="laboratorioSeleccionado" name="sof_tip_ubi" id="sof_tip_ubi">
+                    <mat-option *ngFor="let ubicacion of dataTipoUbicacion" [value]="ubicacion.tip_ubi_id">{{ ubicacion.tip_ubi_nombre }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
         <div class="button-container">
             <button mat-button 
-            (click)="saveData()" 
-            [disabled]="!isFormValid()" 
-            [ngClass]="{'invalid-button': !isFormValid()}"
-            *ngIf="showButtonCreate">Guardar</button>
-
+                    (click)="saveData()" 
+                    [disabled]="!isFormValid()" 
+                    [ngClass]="{'invalid-button': !isFormValid()}"
+                    *ngIf="showButtonCreate">Guardar</button>
             <button mat-button 
-            (click)="updateData()" 
-            [disabled]="!isFormValid()" 
-            [ngClass]="{'invalid-button': !isFormValid()}"
-            *ngIf="showButtonEdit">Actualizar</button>
-
+                    (click)="updateData()" 
+                    [disabled]="!isFormValid()" 
+                    [ngClass]="{'invalid-button': !isFormValid()}"
+                    *ngIf="showButtonEdit">Actualizar</button>
             <button mat-button 
-            (click)="closeModal()" class="Cancelar">Cancelar</button>
+                    (click)="closeModal()" class="Cancelar">Cancelar</button>
         </div>
     </div>
 </div>
+
 
 <div *ngIf="modalDeleteOpen" class="modal">
     <div class="modal-content">
