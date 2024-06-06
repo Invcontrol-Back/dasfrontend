@@ -69,7 +69,13 @@ export class UserPageComponent {
       this.data = data
     })
   }
-
+  onKeyDown(event: KeyboardEvent): void {
+    // Permitir solo números (0-9) y teclas de control como Enter, Flechas, etc.
+    if (!(event.key >= '0' && event.key <= '9') && !['Backspace', 'ArrowLeft', 'ArrowRight', 'Delete', 'Tab'].includes(event.key)) {
+      event.preventDefault();
+    }
+  }
+  
   openModal(action: string, user: any) {
     this.modalOpen = true;
     this.action = action;

@@ -36,8 +36,9 @@
       <div class="form-group">
         <mat-form-field>
           <mat-label>Cédula</mat-label>
-          <input type="text" matInput required placeholder="Ingrese la cédula" [(ngModel)]="selectedUser.usu_cedula">
+          <input type="text" matInput required placeholder="Ingrese la cédula" [(ngModel)]="selectedUser.usu_cedula" (keydown)="onKeyDown($event)">
         </mat-form-field>
+        
 
         <mat-form-field>
           <mat-label>Estado</mat-label>
@@ -90,9 +91,9 @@
       <div class="form-group">
         <mat-form-field>
           <mat-label>Cédula</mat-label>
-          <input type="text" matInput required placeholder="Ingrese la cédula" [(ngModel)]="selectedUser.usu_cedula">
+          <input type="text" matInput required placeholder="Ingrese la cédula" [(ngModel)]="selectedUser.usu_cedula" pattern="\d*" maxlength="10">
         </mat-form-field>
-
+        
         <mat-form-field>
           <mat-label>Estado</mat-label>
           <mat-select [(ngModel)]="selectedUser.usu_habilitado">
@@ -176,5 +177,5 @@
       <button mat-button (click)="transferData()" [disabled]="!isValid()" [ngClass]="{'invalid-button': !isValid()}">Transferir</button>
       <button mat-button (click)="closeTransferModal()" class="Cancelar">Cancelar</button>
     </div>
-  </div>
+  </div>
 </div>
