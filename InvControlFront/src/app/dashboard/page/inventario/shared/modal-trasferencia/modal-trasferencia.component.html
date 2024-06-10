@@ -1,1 +1,92 @@
-<p>modal-trasferencia works!</p>
+
+
+<mat-toolbar class="flex justify-between bg-red-700 rounded-lg text-white">
+    <h3>{{titulo}} COMPONENTE</h3>
+    <button mat-icon-button mat-dialog-close>
+        <mat-icon>
+            close
+        </mat-icon>
+
+    </button>
+</mat-toolbar>
+<mat-dialog-content>
+    <form fxLayout="column" [formGroup]="formulario">
+        <div class="grid grid-cols-2 space-x-6 ">
+
+            <mat-form-field class="flex-1" >
+                <mat-label>N° Serie Componente</mat-label>
+                <input type="text" formControlName="com_serie" matInput placeholder="Ingrese la serie">
+            </mat-form-field>
+              
+            <mat-form-field class="flex-1" >
+                <mat-label>Marca</mat-label>
+                <input type="text" formControlName="com_marca" matInput placeholder="Ingrese la marca">
+            </mat-form-field>
+
+            <mat-form-field class="flex-1" >
+                <mat-label>Modelo</mat-label>
+                <input type="text" formControlName="com_modelo" matInput placeholder="Ingrese el modelo">
+            </mat-form-field>
+
+            <mat-form-field class="flex-1" >
+                <mat-label>Caracteristica</mat-label>
+                <input type="text" formControlName="com_caracteristica" matInput placeholder="Ingrese la caraacterística">
+            </mat-form-field>
+
+            
+       
+
+
+        </div>
+        
+        <div class="flex justify-between px-6 ">
+            <button
+             class="bg-red-700 rounded-lg hover:bg-red-950"
+            
+                mat-raised-button
+
+                type="button"
+                (click)="grabar()">
+                <a class="text-white  font-bold no-underline">Grabar</a>
+
+            </button>
+            <button
+                mat-button
+                class="bg-red-700 rounded-lg hover:bg-red-950"
+
+                type="button"
+               mat-dialog-close>
+               <a class="text-white  font-bold no-underline">Cancelar</a>
+
+            </button>
+
+        </div>
+
+
+
+        
+
+
+    </form>
+</mat-dialog-content>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
