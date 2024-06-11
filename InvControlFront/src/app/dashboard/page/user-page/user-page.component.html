@@ -5,7 +5,7 @@
     <br>
     <mat-form-field class="search-field">
       <mat-label>Buscar por Cédula</mat-label>
-      <input matInput (input)="applyFilter($event)" placeholder="Ingrese la cédula">
+      <input matInput (input)="applyFilter($event)" placeholder="Ingrese la cédula" (keydown)="onKeyDown($event)">
     </mat-form-field>
     <app-table [data]="data" [metaDataColumns]="metaDataColumns">
       
@@ -36,7 +36,7 @@
       <div class="form-group">
         <mat-form-field>
           <mat-label>Cédula</mat-label>
-          <input type="text" matInput required placeholder="Ingrese la cédula" [(ngModel)]="selectedUser.usu_cedula">
+          <input type="text" matInput required placeholder="Ingrese la cédula" [(ngModel)]="selectedUser.usu_cedula" (keydown)="onKeyDown($event)" maxlength="10">
         </mat-form-field>
 
         <mat-form-field>
