@@ -167,16 +167,22 @@ export class ModalTableComponenteComponent {
   const referencia:MatDialogRef<ModalRepotenciaComponent>=this.dialog.open(ModalRepotenciaComponent,opciones)
   referencia.afterClosed().subscribe((form)=>{
    form.com_codigo_bien = this.row.tec_codigo
-   this.entidadComponente.addComponente(form).subscribe(data => {
-     const relacion = {det_tec_tec: this.id_tec, det_tec_com_adquirido: data.com_id,det_tec_com_uso:data.com_id,det_tec_descripcion_repotencia: form.det_tec_descripcion_repotencia,det_tec_estado_repotencia : 1  }
-     this.entidadDetalleTecnologico.addDetalleTecnologico(relacion).subscribe(data => {
-       this.cargarComponentesTecnologico(this.id_tec)        
-     },error => {
-       console.log(error)
-     })
-   },error => {
-     console.log(error)
-   })
+   if (form.com_id == null){
+    this.entidadComponente.addComponente(form).subscribe(data => {
+      const relacion = {det_tec_tec: this.id_tec, det_tec_com_adquirido: data.com_id,det_tec_com_uso:data.com_id,det_tec_descripcion_repotencia: form.det_tec_descripcion_repotencia,det_tec_estado_repotencia : 1  }
+      this.entidadDetalleTecnologico.addDetalleTecnologico(relacion).subscribe(data => {
+        this.cargarComponentesTecnologico(this.id_tec)        
+      },error => {
+        console.log(error)
+      })
+    },error => {
+      console.log(error)
+    })
+   }else{
+    this.entidadComponente.updateComponentes(form.com_id,form).subscribe(()=>{
+      this.cargarComponentesTecnologico(this.id_tec)
+    })
+   }
   }
   )
 }

@@ -37,15 +37,16 @@ export class ModalRepotenciaComponent {
 
   cargarFormulario(){
    this.formulario= new FormGroup({
-    com_codigo_uta : new FormControl (this.data ? this.data.com_codigo_uta:'', Validators. required),
-    com_mar : new FormControl (this.data ? this.data.com_mar:'', Validators. required),
-    com_modelo : new FormControl (this.data ? this.data.com_modelo:'', Validators. required),
-    com_serie : new FormControl (this.data ? this.data.com_serie:'', Validators. required),
-    com_anio_ingreso : new FormControl (this.data ? this.data.com_anio_ingreso:'', Validators. required),
-    com_caracteristica : new FormControl (this.data ? this.data.com_caracteristica:'', Validators. required),
-    com_det_cat : new FormControl (this.data ? this.data.com_det_cat:'', Validators. required),
-    com_dep : new FormControl (this.data ? this.data.com_dep:'', Validators. required),
-    com_estado : new FormControl (this.data ? this.data.com_estado:'', Validators. required),
+    com_id : new FormControl (this.data ? this.data.componenteNuevo.com_id:null),
+    com_codigo_uta : new FormControl (this.data ? this.data.componenteNuevo.com_codigo_uta:'', Validators. required),
+    com_mar : new FormControl (this.data ? this.data.componenteNuevo.com_mar:'', Validators. required),
+    com_modelo : new FormControl (this.data ? this.data.componenteNuevo.com_modelo:'', Validators. required),
+    com_serie : new FormControl (this.data ? this.data.componenteNuevo.com_serie:'', Validators. required),
+    com_anio_ingreso : new FormControl (this.data ? this.data.componenteNuevo.com_anio_ingreso:'', Validators. required),
+    com_caracteristica : new FormControl (this.data ? this.data.componenteNuevo.com_caracteristica:'', Validators. required),
+    com_det_cat : new FormControl (this.data ? this.data.componenteNuevo.com_det_cat:'', Validators. required),
+    com_dep : new FormControl (this.data ? this.data.componenteNuevo.com_dep:'', Validators. required),
+    com_estado : new FormControl (this.data ? this.data.componenteNuevo.com_estado:'', Validators. required),
     det_tec_descripcion_repotencia : new FormControl (this.data ? this.data.det_tec_descripcion_repotencia:'', Validators. required),
    })
   }
