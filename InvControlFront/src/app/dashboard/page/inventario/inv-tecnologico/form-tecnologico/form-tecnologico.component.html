@@ -7,31 +7,47 @@
     </button>
 </mat-toolbar>
 <mat-dialog-content class="rounded-lg flex justify-center  ">
+    <mat-form-field >
+        <mat-label>Bloque</mat-label>
+        <mat-select (selectionChange)="onSelectionChangeBloque($event)">
+            <mat-option *ngFor="let bloque of dataBloque" [value]="bloque.blo_id">{{ bloque.blo_nombre }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field >
+        <mat-label>Ubicacion</mat-label>
+        <mat-select (selectionChange)="onSelectionChangeUbicacion($event)">
+            <mat-option *ngFor="let ubicacion of dataUbicacion" [value]="ubicacion.ubi_id">{{ ubicacion.ubi_nombre }}</mat-option>
+        </mat-select>
+    </mat-form-field>
     <form [formGroup]="formulario">
         <div class="grid grid-cols-2 space-x-6 ">
+
             <mat-form-field class="mx-4 w-48"  >
                 <mat-label>Código Tecnológico</mat-label>
                 <input type="text" formControlName="tec_codigo" matInput placeholder="Ingrese el codigo">
                 
             </mat-form-field>
+
+            <mat-form-field >
+                <mat-label>Marca</mat-label>
+                <mat-select formControlName="tec_mar">
+                    <mat-option *ngFor="let marca of dataMarca" [value]="marca.mar_id">{{ marca.mar_nombre }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field >
+                <mat-label>Modelo</mat-label>
+                <input type="text" formControlName="tec_modelo" matInput placeholder="Ingrese el modelo">
+            </mat-form-field>
+    
+
             <mat-form-field class="w-48" >
                 <mat-label>N° Serie Tecnológico</mat-label>
                 <input type="text" formControlName="tec_serie" matInput placeholder="Ingrese la serie">
               </mat-form-field>
               
-              <mat-form-field >
-                <mat-label>Modelo</mat-label>
-                <input type="text" formControlName="tec_modelo" matInput placeholder="Ingrese el modelo">
-              </mat-form-field>
-    
-            <mat-form-field  >
-                <mat-label>Marca</mat-label>
-                <input type="text" formControlName="tec_marca" required matInput placeholder="Ingrese la marca">
-            </mat-form-field>
-    
-    
             <mat-form-field>
-                <mat-label>IP</mat-label>
+                <mat-label>IP (opcional)</mat-label>
                 <input type="text" formControlName="tec_ip"  matInput placeholder="Ingrese la ip">
             </mat-form-field>
 
@@ -66,6 +82,11 @@
                 <mat-select formControlName="tec_dep">
                     <mat-option *ngFor="let dependencia of dataDependencia" [value]="dependencia.dep_id">{{ dependencia.dep_nombre }}</mat-option>
                 </mat-select>
+            </mat-form-field>
+
+            <mat-form-field >
+                <mat-label>Descripción (opcional)</mat-label>
+                <input type="text" formControlName="tec_descripcion" matInput placeholder="Ingrese una descripción">
             </mat-form-field>
         </div>
         

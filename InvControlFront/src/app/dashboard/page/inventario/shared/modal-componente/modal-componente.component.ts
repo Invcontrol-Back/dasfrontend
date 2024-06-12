@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DependenciaService } from 'src/app/dashboard/services/dependencia/dependencia.service';
+import { MarcaService } from 'src/app/dashboard/services/marca/marca.service';
 import { SubcategoriaService } from 'src/app/dashboard/services/subcategoria/subcategoria.service';
 
 @Component({
@@ -13,12 +14,13 @@ export class ModalComponenteComponent {
 
   dataDependencia:any[]=[]
   dataSubcategoria:any[]=[]
+  dataMarca:any[]=[]
   titulo=''
   formulario!:FormGroup
-
+  tipos: string[] = ['ACTIVO', 'INACTIVO'];
 
   constructor(private refrencia:MatDialogRef<ModalComponenteComponent>,private entidadDependencia:DependenciaService,
-    private entidadSubCategoria:SubcategoriaService,@Inject(MAT_DIALOG_DATA) public data:any){
+    private entidadSubCategoria:SubcategoriaService,private entidadMarca:MarcaService,@Inject(MAT_DIALOG_DATA) public data:any){
    this.titulo=data?'EDICION':'NUEVO'
 
   }
@@ -26,6 +28,7 @@ export class ModalComponenteComponent {
     this.loadDependencias()
     this.loadSubCategorias()
     this.cargarFormulario();
+    this.loadMarcas()
   }
   grabar(){
    const form=this.formulario.getRawValue();
@@ -35,10 +38,11 @@ export class ModalComponenteComponent {
   cargarFormulario(){
    this.formulario= new FormGroup({
     com_serie : new FormControl (this.data ? this.data.com_serie:'', Validators. required),
-    com_marca : new FormControl (this.data ? this.data.com_marca:'', Validators. required),
+    com_mar : new FormControl (this.data ? this.data.com_mar:'', Validators. required),
     com_modelo : new FormControl (this.data ? this.data.com_modelo:'', Validators. required),
     com_caracteristica : new FormControl (this.data ? this.data.com_caracteristica:'', Validators. required),
-    com_det_cat : new FormControl (this.data ? this.data.com_det_cat:'', Validators. required)
+    com_det_cat : new FormControl (this.data ? this.data.com_det_cat:'', Validators. required),
+    com_estado : new FormControl (this.data ? this.data.com_estado:'', Validators. required)
    })
   }
 
@@ -58,4 +62,11 @@ export class ModalComponenteComponent {
     })
   }
 
+  loadMarcas(){
+    this.entidadMarca.loadMarcas().subscribe(data => {
+      this.dataMarca = data
+    },error => {
+      console.log(error)
+    })
+  }
 }

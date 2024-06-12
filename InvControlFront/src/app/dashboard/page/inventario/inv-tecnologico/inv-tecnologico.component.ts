@@ -33,15 +33,16 @@ export class InvTecnologicoComponent {
 
   metaDataColumns:MetaDataColumn[] = [
     {field:"tec_codigo", title:"CODIGO"},
-    {field:"tec_serie", title:"SERIE"},
+    {field:"mar_nombre", title:"MARCA"},
     {field:"tec_modelo", title:"MODELO"},
-    {field:"tec_marca", title:"MARCA"},
+    {field:"tec_serie", title:"SERIE"},
     {field:"tec_ip", title:"IP"},
     {field:"tec_anio_ingreso", title:"AÑO DE INGRESO"},
-    {field:"usu_nombres", title:"ENCARGADO"},
+    {field:"fullName", title:"ENCARGADO"},
     {field:"cat_nombre", title:"CATEGORIA"},
     {field:"loc_nombre", title:"LOCALIZACION"},
     {field:"dep_nombre", title:"DEPENDENCIA"},
+    {field:"tec_descripcion", title:"DESCRIPCION"},
     
   ]
   
@@ -98,7 +99,10 @@ abrirTablaComponentes(row:any=null){
  
 loadTecnologias(){
   this.entidadTecnologico.getTecnologias().subscribe(data => {
-    this.data = data
+    this.data = data.map((item:any) => ({
+      ...item,
+      fullName: `${item.usu_nombres} ${item.usu_apellidos}`
+    }));
     console.log(data)
   },error => {
     console.log(error)

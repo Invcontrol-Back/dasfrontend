@@ -11,7 +11,9 @@
     <div>
         <div class="container">
             <div class="sticky">
-                <button (click)='abrirFormulario()'>Crear nuevo</button>
+              <button (click)='abrirFormulario()'>Crear nuevo</button>
+              <button (click)='abrirFormularioRepotencia()'>Repotenciar</button>
+              <h1>{{row.tec_codigo}} - {{row.cat_nombre}}</h1>
             </div>
             <app-container >
                 <app-table [data]="data" [metaDataColumns]="metaDataColumns">
@@ -29,9 +31,9 @@
                         <button 
                         mat-icon-button
                         color="primary"
-                        (click)="openAumentarModal(row)"
-                        matTooltip="REPOTENCIAR">
-                        <mat-icon>construction</mat-icon>
+                        (click)="abrirFormularioRepotencia(row)"
+                        matTooltip="EDITAR">
+                        <mat-icon>edit</mat-icon>
                         </button>
                         </td>
                     </ng-container>
