@@ -30,6 +30,7 @@ import { MatCardModule } from '@angular/material/card';
 import {MatToolbarModule} from '@angular/material/toolbar'
 import {MatDialogModule} from '@angular/material/dialog';
 import { FormTecnologicoComponent } from './inv-tecnologico/form-tecnologico/form-tecnologico.component';
+import { ModalRepotenciaComponent } from './shared/modal-repotencia/modal-repotencia.component';
 
 
 
@@ -45,6 +46,7 @@ import { FormTecnologicoComponent } from './inv-tecnologico/form-tecnologico/for
     ModalTrasferenciaComponent,
     ModalTableComponenteComponent,
     FormTecnologicoComponent,
+    ModalRepotenciaComponent,
   ],
   imports: [
     CommonModule,

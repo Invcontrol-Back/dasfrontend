@@ -14,6 +14,11 @@
         <div class="grid grid-cols-2 space-x-6 ">
 
             <mat-form-field >
+                <mat-label>Codigo UTA</mat-label>
+                <input type="text" formControlName="com_codigo_uta" required matInput placeholder="Ingrese el codigo uta">
+            </mat-form-field>
+
+            <mat-form-field >
                 <mat-label>Marca</mat-label>
                 <mat-select formControlName="com_mar">
                     <mat-option *ngFor="let marca of dataMarca" [value]="marca.mar_id">{{ marca.mar_nombre }}</mat-option>
@@ -29,6 +34,11 @@
                 <mat-label>N° Serie Componente</mat-label>
                 <input type="text" formControlName="com_serie" matInput placeholder="Ingrese la serie">
             </mat-form-field>
+
+            <mat-form-field >
+                <mat-label>Año de Ingreso</mat-label>
+                <input type="text" formControlName="com_anio_ingreso" required matInput placeholder="Ingrese el año">
+            </mat-form-field>
               
             <mat-form-field class="flex-1" >
                 <mat-label>Caracteristica</mat-label>
@@ -42,6 +52,13 @@
                 </mat-select>
             </mat-form-field>
 
+            <mat-form-field >
+                <mat-label>Dependencia</mat-label>
+                <mat-select formControlName="com_dep">
+                    <mat-option *ngFor="let dependencia of dataDependencia" [value]="dependencia.dep_id">{{ dependencia.dep_nombre }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
             <mat-form-field class="form-field">
                 <mat-label>Estado</mat-label>
                 <mat-select formControlName="com_estado" placeholder="Seleccione el Estado">
@@ -49,6 +66,11 @@
                         {{ tipo }}
                     </mat-option>
                 </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="flex-1" >
+                <mat-label>Descripcion Repotencia</mat-label>
+                <input type="text" formControlName="det_tec_descripcion_repotencia" matInput placeholder="Ingrese la descripción de repotencia">
             </mat-form-field>
 
         </div>
@@ -78,24 +100,4 @@
 
     </form>
 </mat-dialog-content>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
