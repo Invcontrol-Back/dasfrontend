@@ -12,6 +12,7 @@
         <div class="container">
             <div class="sticky">
                 <button (click)='abrirFormulario()'>Crear nuevo</button>
+                <h1>{{row.tec_codigo}} - {{row.cat_nombre}}</h1>
             </div>
             <app-container >
                 <app-table [data]="data" [metaDataColumns]="metaDataColumns">

@@ -13,14 +13,11 @@
     <form fxLayout="column" [formGroup]="formulario">
         <div class="grid grid-cols-2 space-x-6 ">
 
-            <mat-form-field class="flex-1" >
-                <mat-label>N° Serie Componente</mat-label>
-                <input type="text" formControlName="com_serie" matInput placeholder="Ingrese la serie">
-            </mat-form-field>
-              
-            <mat-form-field class="flex-1" >
+            <mat-form-field >
                 <mat-label>Marca</mat-label>
-                <input type="text" formControlName="com_marca" matInput placeholder="Ingrese la marca">
+                <mat-select formControlName="com_mar">
+                    <mat-option *ngFor="let marca of dataMarca" [value]="marca.mar_id">{{ marca.mar_nombre }}</mat-option>
+                </mat-select>
             </mat-form-field>
 
             <mat-form-field class="flex-1" >
@@ -28,6 +25,11 @@
                 <input type="text" formControlName="com_modelo" matInput placeholder="Ingrese el modelo">
             </mat-form-field>
 
+            <mat-form-field class="flex-1" >
+                <mat-label>N° Serie Componente</mat-label>
+                <input type="text" formControlName="com_serie" matInput placeholder="Ingrese la serie">
+            </mat-form-field>
+              
             <mat-form-field class="flex-1" >
                 <mat-label>Caracteristica</mat-label>
                 <input type="text" formControlName="com_caracteristica" matInput placeholder="Ingrese la caraacterística">
@@ -40,6 +42,14 @@
                 </mat-select>
             </mat-form-field>
 
+            <mat-form-field class="form-field">
+                <mat-label>Tipo</mat-label>
+                <mat-select formControlName="com_estado" placeholder="Seleccione el tipo">
+                    <mat-option *ngFor="let tipo of tipos" [value]="tipo">
+                        {{ tipo }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
 
         </div>
         

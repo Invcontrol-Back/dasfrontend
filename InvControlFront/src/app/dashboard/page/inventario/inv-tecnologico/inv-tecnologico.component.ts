@@ -33,9 +33,9 @@ export class InvTecnologicoComponent {
 
   metaDataColumns:MetaDataColumn[] = [
     {field:"tec_codigo", title:"CODIGO"},
-    {field:"tec_serie", title:"SERIE"},
-    {field:"tec_modelo", title:"MODELO"},
     {field:"mar_nombre", title:"MARCA"},
+    {field:"tec_modelo", title:"MODELO"},
+    {field:"tec_serie", title:"SERIE"},
     {field:"tec_ip", title:"IP"},
     {field:"tec_anio_ingreso", title:"AÑO DE INGRESO"},
     {field:"fullName", title:"ENCARGADO"},
