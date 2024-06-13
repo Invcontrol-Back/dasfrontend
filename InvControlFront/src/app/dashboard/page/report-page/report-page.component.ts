@@ -226,7 +226,14 @@ export class ReportPageComponent {
   //REPORTE ENCARGADO INMUEBLE
   reporteEncargadoInmobiliario(){
     this.entidadInmueble.obtenerInmueblesEncargado(this.encargadoSeleccionado).subscribe(data=>{
-      const dataEstructurado = this.estructuraInmueble(data)
+      if (this.documentoSeleccionado==='EXCEL'){
+        const dataEstructurado = this.estructuraInmueble(data)
+        this.exportToExcel(dataEstructurado,'reporteInmobiliarioEncargado')
+      }else{
+        const dataEstructurado = this.estructuraInmueble(data)
+        const definicion = this.PDFInmueble(dataEstructurado)
+        this.exportToPdf(definicion,'reporteInmobiliarioEncargado.pdf')
+      }
     })
   }
   //FIN REPORTE ENCARGADO INMUEBLE
