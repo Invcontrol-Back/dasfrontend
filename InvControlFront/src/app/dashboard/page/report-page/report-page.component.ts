@@ -116,18 +116,23 @@ export class ReportPageComponent {
     if (event.value == 'ENCARGADO'){
       this.mostrarEncargados = true
       this.mostrarUbicaciones = false
+      this.mostrarDocumento = true
     }else if (event.value == 'UBICACION'){
       this.mostrarEncargados = false
       this.mostrarUbicaciones = true
+      this.mostrarDocumento = true
     }else if(event.value=='ETIQUETAS'){
       this.mostrarEncargados = false
       this.mostrarUbicaciones = true
+      this.mostrarDocumento = false
+      this.documentoSeleccionado='PDF'
     }
     else{
       this.mostrarEncargados = false
       this.mostrarUbicaciones = false
+      this.mostrarDocumento = true
     }
-    this.mostrarDocumento = true
+    
   }
 
   openModal(action: string, row: any) {
@@ -191,70 +196,29 @@ export class ReportPageComponent {
   reporteSoftwareGeneral() {
     this.entidadSoftware.loadSoftwares().subscribe(data => {
       if (this.documentoSeleccionado==='EXCEL'){
-
+        const datosEstructurados = this.estructuraSoftware(data)
+        this.exportToExcel(datosEstructurados,'reporteSoftwareGeneral')
       }else{
-        const definicion = this.estructuraSoftwareGeneral(data)
+        const definicion = this.PDFSoftware(data)
         this.exportToPdf(definicion,'reporteSoftwareGeneral.pdf')
       }
 
     })
   }
-  
-  estructuraSoftwareGeneral(data:any){
-    const content: any = [
-      {text: 'ESPECIALIZACION', fontSize: 15,bold: true }
-      ,
-      {
-        
-        layout: 'lightHorizontalLines',
-        table: {
-          headerRows: 1,
-          widths: ['*', '*', '*', '*', '*', '*'],
-          body: this.lecturaFilasSoftware(data, 'ESPECIALIZACION')
-
-        }
-      }
-      ,
-      {text: 'COMPUTACION', fontSize: 15,bold: true }
-      ,
-      {
-        
-        layout: 'lightHorizontalLines',
-        table: {
-          headerRows: 1,
-          widths: ['*', '*', '*', '*', '*', '*'],
-          body: this.lecturaFilasSoftware(data, 'COMPUTACION')
-
-        }
-      }
-    ];
-
-    const documentDefinition: any = {
-      pageOrientation: 'landscape',
-      content: content,
-    };
-
-    return documentDefinition
-  }
-
-  lecturaFilasSoftware(data:any,tipo:string){
-    const json:any = [ ['NOMBRE','VERSION','TIPO','DURACION','DESCRIPCION'] ]
-    data.forEach((row: any) => {
-      if(row.tip_ubi_nombre == tipo){
-        json.push(
-          [ row.sof_nombre,row.sof_version,row.sof_tipo,row.sof_duracion,row.sof_descripcion]
-        )
-      }
-    })
-    return json;
-  }
-
   //FIN REPORTE SOFTWARE GENERAL
 
   //REPORTE GENERAL INMUEBLE
   reporteGeneralInmobiliario(){
     this.entidadInmueble.loadInmobiliarios().subscribe(data=>{
-      this.configuracionInmueble(data)
+      if (this.documentoSeleccionado==='EXCEL'){
+        const dataEstructurado = this.estructuraInmueble(data)
+        this.exportToExcel(dataEstructurado,'reporteInmobiliarioGeneral')
+      }else{
+        const dataEstructurado = this.estructuraInmueble(data)
+        const definicion = this.PDFInmueble(dataEstructurado)
+        this.exportToPdf(definicion,'reporteInmobiliarioGeneral.pdf')
+      }
+
     })
   }
   //FIN REPORTE GENERAL INMUEBLE
@@ -262,50 +226,21 @@ export class ReportPageComponent {
   //REPORTE ENCARGADO INMUEBLE
   reporteEncargadoInmobiliario(){
     this.entidadInmueble.obtenerInmueblesEncargado(this.encargadoSeleccionado).subscribe(data=>{
-      this.configuracionInmueble(data)
+      const dataEstructurado = this.estructuraInmueble(data)
     })
   }
   //FIN REPORTE ENCARGADO INMUEBLE
-
-  configuracionInmueble(data:any){
-    const content: any =  [
-      {
-        layout: 'lightHorizontalLines',
-        table: {
-          headerRows: 1,
-          widths: [ '*', '*', '*', '*','*','*', '*', '*', '*'],
-          body: this.lecturaFilas(data)
-          
-        }
-      }
-    ];
-    const documentDefinition: any = {
-      pageOrientation: 'landscape',
-      content: content,
-    };
-
-    (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
-    pdfMake.createPdf(documentDefinition).download('reporte.pdf');
-  }
-
-  lecturaFilas(data:any){
-    const json:any = [ ['CODIGO','CATEGORIA','SERIE','MODELO','MARCA','AÑO INGRESO','DEPENDENCIA','ENCARGADO'] ]
-    data.forEach((row: any) => {
-      json.push(
-        [ row.inm_codigo, row.cat_nombre,row.inm_serie,row.inm_modelo,row.inm_marca,row.inm_anio_ingreso,row.dep_nombre,row.usu_nombres + ' ' +row.usu_apellidos]
-      )
-    })
-    return json;
-  }
 
   //REPORTE ENCARGADO TECNOLOGICO
   reporteEncargadoTecnologico(){
     this.entidadGeneral.loadReporteTecnologicoEncargado(this.encargadoSeleccionado).subscribe(data=>{
       if (this.documentoSeleccionado === 'EXCEL'){
-        const dataEstructurado = this.estructuraExcelTecnologico(data)
+        const dataEstructurado = this.estructuraTecnologico(data)
         this.exportToExcel(dataEstructurado,'reporteEncargadoTecnologico')
       }else{
-
+        const dataEstructurado = this.estructuraTecnologico(data)
+        const definicion = this.PDFTecnologico(dataEstructurado)
+        this.exportToPdf(definicion,'reporteEncargadoTecnologico.pdf')
       }
     })
   }
@@ -315,10 +250,12 @@ export class ReportPageComponent {
   reporteUbicacionTecnologico(){
     this.entidadGeneral.loadReporteTecnologicoUbicacion(this.laboratorioSeleccionado).subscribe(data=>{
       if (this.documentoSeleccionado === 'EXCEL'){
-        const dataEstructurado = this.estructuraExcelTecnologico(data)
+        const dataEstructurado = this.estructuraTecnologico(data)
         this.exportToExcel(dataEstructurado,'reporteUbicacionTecnologico')
       }else{
-
+        const dataEstructurado = this.estructuraTecnologico(data)
+        const definicion = this.PDFTecnologico(dataEstructurado)
+        this.exportToPdf(definicion,'reporteUbicacionTecnologico.pdf')
       }
     })
   }
@@ -328,20 +265,16 @@ export class ReportPageComponent {
   reporteGeneralTecnologico() {
     this.entidadGeneral.loadReporteTecnologicoGeneral().subscribe(data => {
       if (this.documentoSeleccionado === 'EXCEL'){
-        const dataEstructurado = this.estructuraExcelTecnologico(data)
+        const dataEstructurado = this.estructuraTecnologico(data)
         this.exportToExcel(dataEstructurado,'reporteGeneralTecnologico')
       }else{
-
+        const dataEstructurado = this.estructuraTecnologico(data)
+        const definicion = this.PDFTecnologico(dataEstructurado)
+        this.exportToPdf(definicion,'reporteGeneralTecnologico.pdf')
       }
     });
   }
   //FIN REPORTE GENERAL TECNOLOGICO
-
-  //METODO REPORTES TECNOLOGICOS
-  reporteTecnologico(data:any){
-    this.exportToExcel(data,'reportexd')
-  }
-  //FIN METODO REPORTES TECNOLOGICOS
 
   //REPORTE ETIQUETAS
   reporteEtiquetas() {
@@ -402,7 +335,7 @@ export class ReportPageComponent {
     pdfMake.createPdf(definicion).download(fileName);
   }
   
-  estructuraExcelTecnologico(data:any){
+  estructuraTecnologico(data:any){
     const datosFiltrados = data.map((item:any) => {
       const componentes = item.detalles.map((detalle: any) => {
         const codigoUta = detalle.com_codigo_uta !== null ? `-${detalle.com_codigo_uta}` : '';
@@ -433,5 +366,139 @@ export class ReportPageComponent {
       };
     });
     return datosFiltrados
+  }
+  estructuraSoftware(data:any){
+    const datosFiltrados = data.map((item:any) => {
+      return {
+        software: item.sof_nombre,
+        version: item.sof_version,
+        tipo: item.sof_tipo,
+        duracion: item.sof_duracion,
+        descripcion: item.sof_descripcion,
+        laboratorio: item.tip_ubi_nombre,
+      };
+    });
+    return datosFiltrados
+  }
+  estructuraInmueble(data:any){
+    const datosFiltrados = data.map((item:any) => {
+      return {
+        codigo: item.inm_codigo,
+        categoria: item.cat_nombre,
+        marca: item.mar_nombre,
+        modelo: item.inm_modelo,
+        serie: item.inm_serie,
+        año_ingreso: item.inm_anio_ingreso,
+        dependencia:item.dep_nombre,
+        encargado: item.usu_nombres + ' '+item.usu_apellidos
+      };
+    });
+    return datosFiltrados 
+  }
+
+  PDFSoftware(data:any){
+    const content: any = [
+      {text: 'ESPECIALIZACION', fontSize: 15,bold: true }
+      ,
+      {
+        
+        layout: 'lightHorizontalLines',
+        table: {
+          headerRows: 1,
+          widths: ['*', '*', '*', '*', '*', '*'],
+          body: this.lecturaFilasSoftware(data, 'ESPECIALIZACION')
+
+        }
+      }
+      ,
+      {text: 'COMPUTACION', fontSize: 15,bold: true }
+      ,
+      {
+        
+        layout: 'lightHorizontalLines',
+        table: {
+          headerRows: 1,
+          widths: ['*', '*', '*', '*', '*', '*'],
+          body: this.lecturaFilasSoftware(data, 'COMPUTACION')
+
+        }
+      }
+    ];
+
+    const documentDefinition: any = {
+      pageOrientation: 'landscape',
+      content: content,
+    };
+
+    return documentDefinition
+  }
+
+  lecturaFilasSoftware(data:any,tipo:string){
+    const json:any = [ ['NOMBRE','VERSION','TIPO','DURACION','DESCRIPCION'] ]
+    data.forEach((row: any) => {
+      if(row.tip_ubi_nombre == tipo){
+        json.push(
+          [ row.sof_nombre,row.sof_version,row.sof_tipo,row.sof_duracion,row.sof_descripcion]
+        )
+      }
+    })
+    return json;
+  }
+
+  PDFInmueble(data:any){
+    const content: any =  [
+      {
+        layout: 'lightHorizontalLines',
+        table: {
+          headerRows: 1,
+          widths: [ '*', '*', '*', '*','*','*', '*', '*', '*'],
+          body: this.lecturaFilas(data)
+          
+        }
+      }
+    ];
+    const documentDefinition: any = {
+      pageOrientation: 'landscape',
+      content: content,
+    };
+
+    return documentDefinition
+  }
+
+  lecturaFilas(data:any){
+    const json:any = [ ['CODIGO','CATEGORIA','MARCA','MODELO','SERIE','AÑO INGRESO','DEPENDENCIA','ENCARGADO'] ]
+    data.forEach((row: any) => {
+      json.push(
+        [ row.codigo, row.categoria,row.marca,row.modelo,row.serie,row.año_ingreso,row.dependencia,row.encargado]
+      )
+    })
+    return json;
+  }
+  PDFTecnologico(data:any){
+    const content: any =  [
+      {
+        layout: 'lightHorizontalLines',
+        table: {
+          headerRows: 1,
+          widths: [ '*', '*', '*', '*','*','*'],
+          body: this.lecturaFilasTecnologico(data)
+          
+        }
+      }
+    ];
+    const documentDefinition: any = {
+      pageOrientation: 'landscape',
+      content: content,
+    };
+    return documentDefinition
+  }
+  lecturaFilasTecnologico(data:any){
+    const json:any = [ ['CODIGO','CARACTERISTICAS','ENCARGADO','UBICACION','COMPONENTES','REPOTENCIA'] ]
+    data.forEach((row: any) => {
+      json.push(
+        [ row.codigo, (row.categoria+'\n'+row.marca +'\n'+ row.modelo +'\n'+row.serie +'\n'+row.ip + '\n' + row.año_ingreso +'\n'+row.dependencia),row.encargado,(row.bloque +'\n'+row.ubicacion +'\n'+ row.etiqueta),row.componentes,row.repotencia]
+      )
+    })
+    return json;
   }
 }
