@@ -35,11 +35,13 @@ export class ReportPageComponent {
   detalleSeleccionado: string = '';
   encargadoSeleccionado: string = '';
   laboratorioSeleccionado: string = '';
+  documentoSeleccionado:string = '';
   idRow: string = '';
 
   mostrarTipoInformacion:boolean = false
   mostrarEncargados:boolean= false
   mostrarUbicaciones:boolean=false
+  mostrarDocumento:boolean = false
 
   tipoReporte: any[] = [
     { id: 'TECNOLOGICO', nombre: 'TECNOLOGICO' },
@@ -50,6 +52,10 @@ export class ReportPageComponent {
   detalleUno: any[] = [];
   encargados: any[] = [];
   laboratorios: any[] = [];
+  documento:any[] =[
+    { id: 'PDF', nombre: 'PDF' },
+    { id: 'EXCEL', nombre: 'EXCEL' },
+  ]
 
   data: any[] = [
     { codigo: '663131', generadoPor: 'Kevin Saquinga', fechaGenerado: '14/04/2024' },
@@ -121,6 +127,7 @@ export class ReportPageComponent {
       this.mostrarEncargados = false
       this.mostrarUbicaciones = false
     }
+    this.mostrarDocumento = true
   }
 
   openModal(action: string, row: any) {
@@ -286,7 +293,12 @@ export class ReportPageComponent {
   //REPORTE ENCARGADO TECNOLOGICO
   reporteEncargadoTecnologico(){
     this.entidadGeneral.loadReporteTecnologicoEncargado(this.encargadoSeleccionado).subscribe(data=>{
-      this.reporteTecnologico(data)
+      if (this.documentoSeleccionado === 'EXCEL'){
+        const dataEstructurado = this.estructuraExcelTecnologico(data)
+        this.exportToExcel(dataEstructurado,'reporteEncargadoTecnologico')
+      }else{
+
+      }
     })
   }
   //FIN REPORTE ENCARGADO TECNOLOGICO
@@ -294,7 +306,12 @@ export class ReportPageComponent {
   //REPORTE UBICAICON TECNOLOGICO
   reporteUbicacionTecnologico(){
     this.entidadGeneral.loadReporteTecnologicoUbicacion(this.laboratorioSeleccionado).subscribe(data=>{
-      this.reporteTecnologico(data)
+      if (this.documentoSeleccionado === 'EXCEL'){
+        const dataEstructurado = this.estructuraExcelTecnologico(data)
+        this.exportToExcel(dataEstructurado,'reporteUbicacionTecnologico')
+      }else{
+
+      }
     })
   }
   //FIN REPORTE UBICACION TECNOLOGICO
@@ -302,98 +319,19 @@ export class ReportPageComponent {
   //REPORTE GENERAL TECNOLOGICO
   reporteGeneralTecnologico() {
     this.entidadGeneral.loadReporteTecnologicoGeneral().subscribe(data => {
-      this.reporteTecnologico(data)
+      if (this.documentoSeleccionado === 'EXCEL'){
+        const dataEstructurado = this.estructuraExcelTecnologico(data)
+        this.exportToExcel(dataEstructurado,'reporteGeneralTecnologico')
+      }else{
+
+      }
     });
   }
   //FIN REPORTE GENERAL TECNOLOGICO
 
   //METODO REPORTES TECNOLOGICOS
   reporteTecnologico(data:any){
-    if (!Array.isArray(data)) {
-      console.error('La data recibida no es un array:', data);
-      return;
-    }
-    const dataObservables = data.map(row => {
-      return this.entidadGeneral.loadComponentesDetalleTecnologico(row.tec_id).pipe(
-        switchMap(dataComponentes => {
-          console.log(dataComponentes)
-          const componentesObservables = dataComponentes.map((componentesRow: any) => {
-            const repotencia = of({ descripcion: componentesRow.det_tec_descripcion_repotencia ?? 'Sin descripción' });
-            const repotenciado = of({ estado: componentesRow.det_tec_estado_repotencia === 0 ? 'no repotenciado' : 'repotenciado' });
-            return forkJoin({
-              componenteAnterior: this.entidadComponentes.loadComponente(componentesRow.det_tec_com_adquirido_id),
-              componenteNuevo: this.entidadComponentes.loadComponente(componentesRow.det_tec_com_uso_id),
-              repotencia: repotencia,
-              repotenciado: repotenciado
-            }).pipe(
-              map(componentes => ({
-                componenteAnterior: componentes.componenteAnterior,
-                componenteNuevo: componentes.componenteNuevo,
-                repotencia:componentes.repotencia,
-                repotenciado:componentes.repotenciado
-              }))
-            );
-          });
-
-          console.log(componentesObservables)
-          return forkJoin(componentesObservables).pipe(
-            
-            map((componentes:any) => {
-              console.log('Valores de repotencia y repotenciado:', componentes);
-              const componentesAnterior = componentes.map((comp:any) => 
-                `Anterior: ${JSON.stringify(comp.componenteAnterior)}`
-              ).join(' | ');
-              const componenteNuevo = componentes.map((comp:any) => 
-                `Nuevo: ${JSON.stringify(comp.componenteNuevo)}`
-              ).join(' | ');
-              const rep = componentes.map((comp:any) => 
-                `${JSON.stringify(comp.repotencia)}`
-              ).join(' | ');
-              const repo = componentes.map((comp:any) => 
-                `${JSON.stringify(comp.repotenciado)}`
-              ).join(' | ');
-              row.componentesA = componentesAnterior;
-              row.componentesN = componenteNuevo;
-              row.repotencia = rep
-              row.repotenciado = repo
-              return row;
-            })
-          );
-        })
-      );
-    });
-
-    forkJoin(dataObservables).subscribe(mergedData => {
-      const filteredData = mergedData.map(item => {
-        return {
-          codigo: item.tec_codigo,
-          serie: item.tec_serie,
-          modelo: item.tec_modelo,
-          marca: item.tec_marca,
-          ip: item.tec_ip,
-          año_ingreso: item.tec_anio_ingreso,
-          dependencia: item.dep_nombre,
-          categoria: item.cat_nombre,
-          encargado: item.usu_persona,
-          bloque: item.blo_nombre,
-          ubicacion: item.ubi_nombre,
-          etiqueta: item.loc_nombre,
-          componentesAnterior: item.componentesA,
-          componentesNuevo: item.componentesN ,
-          repotencia:item.repotencia,
-          repotenciado:item.repotenciado
-        };
-      });
-
-      const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(filteredData);
-      const workbook: XLSX.WorkBook = {
-        Sheets: { 'Datos Tecnologicos': worksheet },
-        SheetNames: ['Datos Tecnologicos']
-      };
-
-      // Escribir el archivo de Excel
-      XLSX.writeFile(workbook, 'reporte_tecnologico.xlsx');
-    });
+    this.exportToExcel(data,'reportexd')
   }
   //FIN METODO REPORTES TECNOLOGICOS
 
@@ -437,7 +375,50 @@ export class ReportPageComponent {
 
 
   isFormValid(): boolean {
-    return this.tipoReporteSeleccionado.trim() !== '' && this.detalleSeleccionado.trim() !== '';
+    return this.tipoReporteSeleccionado.trim() !== '' && this.detalleSeleccionado.trim() !== '' && this.documentoSeleccionado.trim() !== '';
   }
 
+  exportToExcel(data: any, fileName: string): void {
+  
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
+    const workbook: XLSX.WorkBook = {
+      Sheets: { 'Datos Tecnologicos': worksheet },
+      SheetNames: ['Datos Tecnologicos']
+    };
+  
+    XLSX.writeFile(workbook, `${fileName}.xlsx`);
+  }
+  
+  estructuraExcelTecnologico(data:any){
+    const datosFiltrados = data.map((item:any) => {
+      const componentes = item.detalles.map((detalle: any) => {
+        const codigoUta = detalle.com_codigo_uta !== null ? `-${detalle.com_codigo_uta}` : '';
+        return `${detalle.com_codigo_bien}${codigoUta}-${detalle.det_cat_nombre}`;
+      }).join('\n'); 
+
+      const repotencia = item.detalles
+      .filter((detalle: any) => detalle.det_tec_estado_repotencia === '1')
+      .map((detalle: any) => 
+        detalle.det_tec_descripcion_repotencia
+      ).join('\n')
+  
+      return {
+        codigo: item.tec_codigo,
+        marca: item.mar_nombre,
+        modelo: item.tec_modelo,
+        serie: item.tec_serie,
+        ip: item.tec_ip,
+        año_ingreso: item.tec_anio_ingreso,
+        dependencia: item.dep_nombre,
+        categoria: item.cat_nombre,
+        encargado: item.usu_nombres + ' ' + item.usu_apellidos,
+        bloque: item.blo_nombre,
+        ubicacion: item.ubi_nombre,
+        etiqueta: item.loc_nombre,
+        componentes: componentes,
+        repotencia:repotencia
+      };
+    });
+    return datosFiltrados
+  }
 }

@@ -66,6 +66,13 @@
                 </mat-select>
             </mat-form-field>
 
+            <mat-form-field *ngIf="mostrarDocumento">
+                <mat-label>Tipo Documento</mat-label>
+                <mat-select [(ngModel)]="documentoSeleccionado" name="documento" id="documento">
+                    <mat-option *ngFor="let doc of documento" [value]="doc.id">{{ doc.nombre}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
         <div class="button-container">
             <button mat-button (click)="generateReport()" [disabled]="!isFormValid()">Generar</button>
             <button mat-button 
