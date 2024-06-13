@@ -190,44 +190,52 @@ export class ReportPageComponent {
   //REPORTE SOFTWARE GENERAL
   reporteSoftwareGeneral() {
     this.entidadSoftware.loadSoftwares().subscribe(data => {
-      const content: any = [
-        {text: 'ESPECIALIZACION', fontSize: 15,bold: true }
-        ,
-        {
-          
-          layout: 'lightHorizontalLines',
-          table: {
-            headerRows: 1,
-            widths: ['*', '*', '*', '*', '*', '*'],
-            body: this.lecturaFilasSoftware(data, 'ESPECIALIZACION')
-  
-          }
-        }
-        ,
-        {text: 'COMPUTACION', fontSize: 15,bold: true }
-        ,
-        {
-          
-          layout: 'lightHorizontalLines',
-          table: {
-            headerRows: 1,
-            widths: ['*', '*', '*', '*', '*', '*'],
-            body: this.lecturaFilasSoftware(data, 'COMPUTACION')
-  
-          }
-        }
-      ];
-  
-      const documentDefinition: any = {
-        pageOrientation: 'landscape',
-        content: content,
-      };
-  
-      (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
-      pdfMake.createPdf(documentDefinition).download('reporte.pdf');
+      if (this.documentoSeleccionado==='EXCEL'){
+
+      }else{
+        const definicion = this.estructuraSoftwareGeneral(data)
+        this.exportToPdf(definicion,'reporteSoftwareGeneral.pdf')
+      }
+
     })
   }
   
+  estructuraSoftwareGeneral(data:any){
+    const content: any = [
+      {text: 'ESPECIALIZACION', fontSize: 15,bold: true }
+      ,
+      {
+        
+        layout: 'lightHorizontalLines',
+        table: {
+          headerRows: 1,
+          widths: ['*', '*', '*', '*', '*', '*'],
+          body: this.lecturaFilasSoftware(data, 'ESPECIALIZACION')
+
+        }
+      }
+      ,
+      {text: 'COMPUTACION', fontSize: 15,bold: true }
+      ,
+      {
+        
+        layout: 'lightHorizontalLines',
+        table: {
+          headerRows: 1,
+          widths: ['*', '*', '*', '*', '*', '*'],
+          body: this.lecturaFilasSoftware(data, 'COMPUTACION')
+
+        }
+      }
+    ];
+
+    const documentDefinition: any = {
+      pageOrientation: 'landscape',
+      content: content,
+    };
+
+    return documentDefinition
+  }
 
   lecturaFilasSoftware(data:any,tipo:string){
     const json:any = [ ['NOMBRE','VERSION','TIPO','DURACION','DESCRIPCION'] ]
@@ -387,6 +395,11 @@ export class ReportPageComponent {
     };
   
     XLSX.writeFile(workbook, `${fileName}.xlsx`);
+  }
+
+  exportToPdf(definicion:any,fileName:string):void{
+    (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
+    pdfMake.createPdf(definicion).download(fileName);
   }
   
   estructuraExcelTecnologico(data:any){
