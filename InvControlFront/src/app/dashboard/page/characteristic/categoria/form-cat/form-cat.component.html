@@ -1,0 +1,43 @@
+<mat-toolbar class="flex justify-between bg-red-700 rounded-sm text-white">
+    <h3>{{ titulo }} CATEGORÍA</h3>
+    <button mat-icon-button mat-dialog-close class="hover:bg-red-900">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-toolbar>
+  
+  <mat-dialog-content class="rounded-lg flex justify-center">
+    <form [formGroup]="formulario">
+      <div class="grid grid-cols-1 space-x-6">
+  
+        <mat-form-field class="">
+          <mat-label>Nombre de la Categoría</mat-label>
+          <input type="text" formControlName="cat_nombre" matInput placeholder="Ingrese el nombre">
+        </mat-form-field>
+  
+        <mat-form-field>
+          <mat-label>Tipo de Bien</mat-label>
+          <mat-select formControlName="cat_tipoBien">
+            <mat-option *ngFor="let tipo of tipoBienOptions" [value]="tipo">{{ tipo }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+  
+      </div>
+      <div class="flex justify-between px-6 mt-4">
+        <button
+          class="bg-red-700 rounded-lg hover:bg-red-950"
+          mat-raised-button
+          type="button"
+          [disabled]="formulario.invalid"
+          (click)="grabar()">
+          <span class="text-white font-bold no-underline">Grabar</span>
+        </button>
+        <button
+          class="bg-red-700 rounded-lg hover:bg-red-950"
+          mat-button
+          mat-dialog-close>
+          <span class="no-underline text-white font-bold">Cancelar</span>
+        </button>
+      </div>
+    </form>
+  </mat-dialog-content>
+  

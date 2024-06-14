@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { InventarioRoutingModule } from './inventario-routing.module';
-import { LayoutInventarioComponent } from './layout-inventario/layout-inventario.component';
+
 
 import { InvNoTecnologicoComponent } from './inv-no-tecnologico/inv-no-tecnologico.component';
 import { InvSoftwareComponent } from './inv-software/inv-software.component';
@@ -11,7 +11,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { DashboardModule } from '../../dashboard.module';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
@@ -36,7 +35,7 @@ import { ModalRepotenciaComponent } from './shared/modal-repotencia/modal-repote
 
 @NgModule({
   declarations: [
-    LayoutInventarioComponent,
+  
     
     InvNoTecnologicoComponent,
     InvSoftwareComponent,

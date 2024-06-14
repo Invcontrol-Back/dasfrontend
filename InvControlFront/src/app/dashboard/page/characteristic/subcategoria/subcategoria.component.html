@@ -1,0 +1,34 @@
+<div>
+    <h2>Sub Categoría</h2>
+    <div class="container">
+        <button (click)=" openSubcatForm()">Agregar</button>
+        <br>
+
+        <app-container>
+            <app-table [data]="data" [metaDataColumns]="metaDataColumns">
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef></th>
+                    <td mat-cell *matCellDef="let row" class="alignButton">
+                        <button 
+                            mat-icon-button
+                            color="primary"
+                            (click)=" openSubcatForm(row)"
+                            matTooltip="EDITAR">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button 
+                            mat-icon-button
+                            color="accent"
+                            matTooltip="ELIMINAR"
+                            (click)="openDeleteModal(row)"
+                           
+                            >
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                                     
+                    </td>
+                </ng-container>
+            </app-table> 
+        </app-container>
+    </div>
+</div>

@@ -18,6 +18,14 @@ export class SideVarComponent {
       {label:'Componentes', icon: 'devices', routerLink:'./component'}
       ]
     },
+     
+    {label:'Característica', icon: 'rebase_edit', routerLink: './characteristic',
+      items: [{label:'Categoria', icon: 'category', routerLink:'./categoria'},
+      {label:'SubCategoria', icon: 'segment', routerLink:'./subcategoria'},
+      {label:'Marca', icon: 'star_rate_half', routerLink:'./marca'},
+ 
+      ]
+    },
 
 
     {label:'Usuarios', icon: 'person', routerLink: './user'},

@@ -72,7 +72,7 @@
 
             <mat-form-field >
                 <mat-label>Categoria</mat-label>
-                <mat-select formControlName="tec_cat">
+                <mat-select formControlName="_cat">
                     <mat-option *ngFor="let categoria of dataCategoria" [value]="categoria.cat_id">{{ categoria.cat_nombre }}</mat-option>
                 </mat-select>
             </mat-form-field>
