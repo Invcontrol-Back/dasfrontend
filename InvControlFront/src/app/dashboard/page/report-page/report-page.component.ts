@@ -47,6 +47,7 @@ export class ReportPageComponent {
     { id: 'TECNOLOGICO', nombre: 'TECNOLOGICO' },
     { id: 'INMOBILIARIO', nombre: 'INMOBILIARIO' },
     { id: 'SOFTWARE', nombre: 'SOFTWARE' },
+    { id: 'OTRO', nombre: 'OTRO' },
   ];
 
   detalleUno: any[] = [];
@@ -57,17 +58,7 @@ export class ReportPageComponent {
     { id: 'EXCEL', nombre: 'EXCEL' },
   ]
 
-  data: any[] = [
-    { codigo: '663131', generadoPor: 'Kevin Saquinga', fechaGenerado: '14/04/2024' },
-    { codigo: '663131', generadoPor: 'Kevin Saquinga', fechaGenerado: '14/04/2024' },
-    { codigo: '663131', generadoPor: 'Kevin Saquinga', fechaGenerado: '14/04/2024' }
-  ];
 
-  metaDataColumns: MetaDataColumn[] = [
-    { field: "codigo", title: "Codigo" },
-    { field: "generadoPor", title: "Generado por" },
-    { field: "fechaGenerado", title: "Fecha generado" }
-  ];
 
   constructor(private entidadEncargado:UsuarioService,private entidadUbicacion:UbicacionService,private entidadGeneral:GeneralService,private entidadComponentes:ComponenteService,
     private entidadInmueble:InmobiliarioService,private entidadSoftware:SoftwareService
@@ -108,6 +99,10 @@ export class ReportPageComponent {
       this.detalleUno = [
         {id:"GENERAL",nombre:"GENERAL"},
       ]  
+    }else if(event.value=='OTRO'){
+      this.detalleUno = [
+        {id:"UPE",nombre:"UPE"},
+      ] 
     }else{
       console.log("reporte no especificado")
     }
@@ -127,8 +122,7 @@ export class ReportPageComponent {
       this.mostrarUbicaciones = true
       this.mostrarDocumento = false
       this.documentoSeleccionado='PDF'
-    }
-    else{
+    }else{
       this.mostrarEncargados = false
       this.mostrarUbicaciones = false
       this.mostrarDocumento = true
@@ -161,11 +155,6 @@ export class ReportPageComponent {
     this.modalDeleteOpen = true;
   }
 
-  deleteData() {
-    this.data = this.data.filter(item => item.codigo !== this.idRow);
-    this.closeDeleteModal();
-  }
-
   generateReport() {
 
     if (this.tipoReporteSeleccionado =='TECNOLOGICO'){
@@ -190,6 +179,10 @@ export class ReportPageComponent {
       }
     }else if (this.tipoReporteSeleccionado == 'SOFTWARE'){
       this.reporteSoftwareGeneral()
+    }else if(this.tipoReporteSeleccionado=='OTRO'){
+      if(this.detalleSeleccionado =='UPE'){
+        this.reporteUPE()
+      }
     }else{
       console.log("no especificado")
     }
@@ -494,6 +487,35 @@ export class ReportPageComponent {
     return documentDefinition
   }
 
+  PDFUPE(data:any){
+    const content: any =  [
+      {
+        layout: 'lightHorizontalLines',
+        table: {
+          headerRows: 1,
+          widths: [ '*', '*', '*', '*','*','*', '*', '*', '*' ,'*'],
+          body: this.lecturaFilasUPE(data)
+          
+        }
+      }
+    ];
+    const documentDefinition: any = {
+      pageOrientation: 'landscape',
+      content: content,
+    };
+
+    return documentDefinition
+  }
+  lecturaFilasUPE(data:any){
+    const json:any = [ ['CODIGO','CATEGORIA','MARCA','MODELO','SERIE','DEPENDENCIA','UBICACION','ENCARGADO','DESCRIPCION'] ]
+    data.forEach((row: any) => {
+      json.push(
+        [ row.codigo, row.categoria,row.marca,row.modelo,row.serie,(row.año_ingreso+'\n'+row.dependencia),(row.bloque+'\n'+row.ubicacion+'\n'+row.etiqueta),row.encargado,row.descripcion]
+      )
+    })
+    return json;
+  }
+
   lecturaFilasInmueble(data:any){
     const json:any = [ ['CODIGO','CATEGORIA','MARCA','MODELO','SERIE','AÑO INGRESO','DEPENDENCIA','UBICACION','ENCARGADO'] ]
     data.forEach((row: any) => {
@@ -529,5 +551,34 @@ export class ReportPageComponent {
       )
     })
     return json;
+  }
+
+  reporteUPE(){
+    this.entidadGeneral.loadReporteUPE().subscribe(data=>{
+      if (this.documentoSeleccionado === 'EXCEL'){
+        const dataEstructurado = this.estructuraUPE(data)
+        this.exportToExcel(dataEstructurado,'reporteUPE')
+      }else{
+        const dataEstructurado = this.estructuraUPE(data)
+        const definicion = this.PDFUPE(dataEstructurado)
+        this.exportToPdf(definicion,'reporteUPE.pdf')
+      }
+    })
+  }
+
+  estructuraUPE(data: any): any[] {
+    const datos: any[] = [];
+    
+    data.forEach((row: any) => {
+      row.tecnologicos.forEach((row2: any) => {
+        datos.push(row2);
+      });
+      
+      row.inmobiliarios.forEach((row2: any) => {
+        datos.push(row2);
+      });
+    });
+  
+    return datos;
   }
 }

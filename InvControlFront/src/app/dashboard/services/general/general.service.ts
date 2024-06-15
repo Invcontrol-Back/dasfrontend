@@ -29,6 +29,11 @@ export class GeneralService {
     return this.http.get(url)
   }
 
+  loadReporteUPE(){
+    let url = 'http://localhost:8000/api/reporte/reporte_upe/?'
+    return this.http.get(url)
+  }
+
   loadReporteTecnologicoUbicacion(ubicacion:any){
     let url = 'http://localhost:8000/api/reporte/reporte_tecnologico_ubicacion/?ubicacion='
     return this.http.get(url+ubicacion)
