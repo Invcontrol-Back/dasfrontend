@@ -1,3 +1,41 @@
-
-@tailwind utilities;
+@tailwind base;
 @tailwind components;
+@tailwind utilities;
+
+/* Ajusta el tamaño de los labels para que no se superpongan */
+mat-form-field {
+    width: 100%;
+}
+
+mat-label {
+    font-size: 0.875rem; /* Ajusta el tamaño del label según sea necesario */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Espaciado y distribución en columnas */
+.grid {
+    display: grid;
+    gap: 16px;
+}
+
+/* Ajustes a los botones */
+button {
+    background-color: brown;
+    color: white !important;
+    border: 1px solid #7f7f7f;
+    padding: 10px 20px;
+    border-radius: 10px;
+    margin: 10px;
+}
+
+.custom-button {
+    width: 8cm;
+}
+
+/* Centrando los botones */
+.flex.justify-center {
+    display: flex;
+    justify-content: center;
+}
