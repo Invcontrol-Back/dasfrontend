@@ -10,30 +10,29 @@ export class AuthserviceService {
   private isAuthenticated: boolean = false;
   private user: any = null;
   private inactivityTimeout: any;
+  userstorage: any = null;
 
-  constructor(private router: Router, private usuarioService: UsuarioService) {}
+  constructor(private router: Router, private usuarioService: UsuarioService) {
+    this.checkSession();
+  }
 
   login(usuario: any): Observable<any> {
-
     return new Observable(observer => {
       this.usuarioService.login(usuario).subscribe(respuesta => {
         this.isAuthenticated = true;
-        this.user = {
+        this.user = respuesta;
+        this.userstorage = {
           usu_id: respuesta.usu_id,
           usu_correo: respuesta.usu_correo,
-          usu_contrasenia: respuesta.usu_contrasenia,
-          usu_cedula: respuesta.usu_cedula,
           usu_nombres: respuesta.usu_nombres,
           usu_apellidos: respuesta.usu_apellidos,
           usu_rol: respuesta.usu_rol,
-          usu_habilitado: respuesta.usu_habilitado,
-          usu_eliminado: respuesta.usu_eliminado,
-          rol_nombre: respuesta.rol_nombre
+          usu_habilitado: respuesta.usu_habilitado
         };
+        localStorage.setItem('user', JSON.stringify(this.userstorage)); // Almacena toda la información del usuario en localStorage
         this.startInactivityTimer();
         observer.next(this.user);
         observer.complete();
-        console.log('dem  1 ')
       }, error => {
         observer.error(error);
       });
@@ -43,13 +42,12 @@ export class AuthserviceService {
   logout(): void {
     this.isAuthenticated = false;
     this.user = null;
+    localStorage.removeItem('user');
     this.clearInactivityTimer();
     this.router.navigate(['/auth/login']);
-    console.log('dem   ')
   }
 
   isLoggedIn(): boolean {
-    console.log('logeado');
     return this.isAuthenticated;
   }
 
@@ -57,7 +55,7 @@ export class AuthserviceService {
     return this.user;
   }
 
-  getUserRole(): string {
+  getUserRole(): number | string {
     return this.user ? this.user.usu_rol : '';
   }
 
@@ -77,5 +75,14 @@ export class AuthserviceService {
 
   resetInactivityTimer() {
     this.startInactivityTimer();
+  }
+
+  private checkSession() {
+    const user = localStorage.getItem('user');
+    if (user) {
+      this.user = JSON.parse(user);
+      this.isAuthenticated = true;
+      this.startInactivityTimer();
+    }
   }
 }

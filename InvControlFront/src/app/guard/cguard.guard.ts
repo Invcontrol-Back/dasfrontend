@@ -9,8 +9,7 @@ export const cguardGuard: CanActivateFn = (route, state) => {
   if (authService.isLoggedIn()) {
     authService.resetInactivityTimer();
     const userRole = authService.getUserRole();
-    console.log(userRole); // Verifica el valor del rol del usuario
-    // Convertir userRole a cadena para comparación
+    console.log(userRole); 
     if (userRole.toString() === "1" || userRole.toString() === "2" || userRole.toString() === "3") {
       return true;
     }

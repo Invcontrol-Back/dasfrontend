@@ -1,40 +1,23 @@
 <div class="w-full flex justify-between p-2 px-6 sticky top-0 bg-red-800">
-    <div>
-        <ng-content select="[displayMenu]">
-
-        </ng-content>
-
+    <div class="mt-2">
+        <ng-content select="[displayMenu]"></ng-content>
     </div>
-    <div class="flex">
-            
-        <h3 class="text-slate-100 pr-3">{{user.usu_nombres}} {{user.usu_apellidos}}</h3>
-       
-            <div class="text-slate-100 pr-3">
-                <button mat-button [matMenuTriggerFor]="menu">
-                    <span class="material-icons">person</span> <!-- Ícono de usuario -->
+    <div class="flex mt-3">
+        <h3 class=" font-bold text-slate-100 pr-3 italic hover:not-italic  ">{{user.usu_nombres}} {{user.usu_apellidos}}</h3>
+        <div class="text-slate-100 pr-3">
+            <button mat-button [matMenuTriggerFor]="menu">
+                <span class="material-icons">person</span> <!-- Ícono de usuario -->
+            </button>
+            <mat-menu #menu="matMenu" class="max-w-64 max-h-80">
+                <button mat-menu-item routerLink="./profile" routerLinkActive="active-link">
+                    <mat-icon fontIcon="contacts" class="menu-icon"></mat-icon>
+                    <span>Información</span>
                 </button>
-                <mat-menu #menu="matMenu" class="max-w-64 max-h-80">
-                   
-                    <button mat-menu-item routerLink="./profile" routerLinkActive="active-link">Información
-                        <div >
-                            <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="contacts"></mat-icon>
-                            
-                        </div>
-                    </button>
-
-                   
-                            
-                     
-                            <button mat-menu-item (click)="onLogout()">Cerrar sesión</button>
-                   
-                </mat-menu>
-            </div>
+                <button mat-menu-item (click)="onLogout()">
+                    <mat-icon fontIcon="logout" class="menu-icon"></mat-icon>
+                    <span>Cerrar sesión</span>
+                </button>
+            </mat-menu>
         </div>
-    
-
-   
-    
-   
-        
-
+    </div>
 </div>
