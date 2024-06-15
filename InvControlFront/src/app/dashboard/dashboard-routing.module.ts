@@ -28,10 +28,7 @@ const routes: Routes = [
       { path: 'charcateristics', loadChildren: () => import('./page/characteristic/characteristic.module').then(m => m.CharacteristicModule), canActivate: [rutaGuard], data: { expectedRole: 2 } },
       { path: '', redirectTo: 'home', pathMatch: 'full' },
     ]
-    
-    
-  },
-
+  }
 ];
 
 @NgModule({
