@@ -1,9 +1,9 @@
 import { inject } from '@angular/core';
-import { CanActivateFn, Router } from '@angular/router';
+import { CanActivateFn, Router, ActivatedRouteSnapshot } from '@angular/router';
 import { AuthserviceService } from 'src/app/dashboard/services/authservice/authservice.service';
 
 
-export const rutaGuard: CanActivateFn = (route, state) => {
+export const rutaGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state) => {
   const authService = inject(AuthserviceService);
   const router = inject(Router);
 
@@ -19,4 +19,3 @@ export const rutaGuard: CanActivateFn = (route, state) => {
 
   return true;
 };
-  

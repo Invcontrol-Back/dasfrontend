@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { UsuarioService } from '../usuario/usuario.service';
 
 @Injectable({
@@ -31,8 +31,9 @@ export class AuthserviceService {
           usu_cedula: respuesta.usu_cedula,
           rol_nombre: respuesta.rol_nombre
         };
-        localStorage.setItem('user', JSON.stringify(this.userstorage)); 
+        localStorage.setItem('user', JSON.stringify(this.userstorage)); // Almacena userstorage en localStorage
         this.startInactivityTimer();
+        console.log(localStorage.getItem('user'))
         observer.next(this.user);
         observer.complete();
       }, error => {
@@ -44,22 +45,37 @@ export class AuthserviceService {
   logout(): void {
     this.isAuthenticated = false;
     this.user = null;
+    this.userstorage = null; // Limpia la información del usuario almacenada
     localStorage.removeItem('user');
     this.clearInactivityTimer();
     this.router.navigate(['/auth/login']);
   }
 
   isLoggedIn(): boolean {
-    return this.isAuthenticated;
+    return this.isAuthenticated || this.checkSession();
   }
 
   getUser(): any {
-
-    return this.user;
+    return this.userstorage;
   }
 
   getUserRole(): number | string {
-    return this.user ? this.user.usu_rol : '';
+    return this.userstorage ? this.userstorage.usu_rol : '';
+  }
+
+  setUser(user: any): void {
+    this.user = user;
+    this.userstorage = {
+      usu_id: user.usu_id,
+      usu_correo: user.usu_correo,
+      usu_nombres: user.usu_nombres,
+      usu_apellidos: user.usu_apellidos,
+      usu_rol: user.usu_rol,
+      usu_habilitado: user.usu_habilitado,
+      usu_cedula: user.usu_cedula,
+      rol_nombre: user.rol_nombre
+    };
+    localStorage.setItem('user', JSON.stringify(this.userstorage));
   }
 
   private startInactivityTimer() {
@@ -80,29 +96,17 @@ export class AuthserviceService {
     this.startInactivityTimer();
   }
 
-  private checkSession() {
-    const user = localStorage.getItem('user');
-    if (user) {
-      this.user = JSON.parse(user);
+  private checkSession(): boolean {
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      this.userstorage = JSON.parse(storedUser);
       this.isAuthenticated = true;
       this.startInactivityTimer();
+      return true;
     }
+    return false;
   }
 
-  setUser(user: any): void {
-    this.user = user;
-    this.userstorage = {
-      usu_id: user.usu_id,
-      usu_correo: user.usu_correo,
-      usu_nombres: user.usu_nombres,
-      usu_apellidos: user.usu_apellidos,
-      usu_rol: user.usu_rol,
-      usu_habilitado: user.usu_habilitado,
-      usu_cedula: user.usu_cedula,
-      rol_nombre: user.rol_nombre
-    };
-    localStorage.setItem('user', JSON.stringify(this.userstorage));
-  }
   isUserHabilitado(): boolean {
     return this.userstorage && this.userstorage.usu_habilitado === 'ACTIVO';
   }
