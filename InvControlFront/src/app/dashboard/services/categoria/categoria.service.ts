@@ -14,4 +14,14 @@ export class CategoriaService {
    loadCategorias():Observable<any> {
     return this.http.get(this.url)
   }
+
+  addCategory(entidad:any):Observable<any> {
+    return this.http.post(this.url, entidad)
+  }
+  updateCategory(id:any, category:any):Observable<any> {
+    return this.http.put(this.url+id+'/', category)
+  }
+  deleteCategory(id:any):Observable<any> {
+    return this.http.delete(this.url+id+'/')
+  }
 }

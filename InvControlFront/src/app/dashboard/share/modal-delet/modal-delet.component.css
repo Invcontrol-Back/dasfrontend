@@ -1,0 +1,88 @@
+@tailwind utilities;
+@tailwind components;
+.container{
+    background-color: rgb(255, 255, 255);
+    height: calc(100vh - 114px);
+}
+h2{
+    margin-left: 20px;
+}
+button {
+  background-color: brown;
+  color: white !important;
+  border: 1px solid #7f7f7f;
+  padding: 10px 20px;
+  border-radius: 10px;
+  margin: 10px;
+}
+.Cancelar{
+  background-color: rgb(96, 87, 87);
+  color: rgb(255, 255, 255) !important;
+  border: 1px solid #7f7f7f;
+  padding: 10px 20px;
+  border-radius: 10px;
+  margin: 10px;
+}
+.Cancelar:hover{
+  background-color: rgb(155, 146, 146);
+}
+
+.invalid-button {
+  background-color: rgb(96, 87, 87);
+  color: rgb(255, 255, 255) !important;
+}
+
+button:hover{
+  background-color: red;
+}
+
+.modal {
+    display: block;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+  
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+  }
+  
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  
+  .button-container button {
+    flex-grow: 1;
+    margin-right: 10px;
+  }
+  .search-field {
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 20px;
+    margin-left: 10px;
+  }

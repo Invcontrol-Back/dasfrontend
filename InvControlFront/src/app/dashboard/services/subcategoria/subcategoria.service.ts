@@ -13,4 +13,15 @@ export class SubcategoriaService {
    loadSubCategorias():Observable<any> {
     return this.http.get(this.url)
   }
+  addSubCategoria(subcat:any):Observable<any> {
+    return this.http.post(this.url, subcat)
+  }
+
+  updateSubCategorias(id : any, subcat:any):Observable<any> {
+    return this.http.put(this.url+id+'/', subcat)
+
+  }
+  deletSubCat(id:any):Observable<any>{
+    return this.http.delete(this.url+id+'/')
+  }
 }

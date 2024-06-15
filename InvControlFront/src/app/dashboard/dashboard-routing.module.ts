@@ -22,6 +22,8 @@ const routes: Routes = [
       {path: 'label', component: LocalizacionesComponent},
       {path: 'report', component: ReportPageComponent},
       {path: 'inventory', loadChildren: () => import ('./page/inventario/inventario.module').then(m=> m.InventarioModule) },
+      {path: 'charcateristics', loadChildren: () => import ('./page/characteristic/characteristic.module').then(m=> m.CharacteristicModule) },
+      
       {path: '', redirectTo:'home', pathMatch:'full'},
     
     ]
