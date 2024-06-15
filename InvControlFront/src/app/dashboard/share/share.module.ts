@@ -10,8 +10,10 @@ import { TableComponent } from './table/table.component';
 import {MatTableModule} from '@angular/material/table';
 import { ContainerComponent } from './container/container.component';
 import {MatCardModule} from '@angular/material/card';
-
+import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatExpansionModule} from '@angular/material/expansion';
+import { ModalDeletComponent } from './modal-delet/modal-delet.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 
@@ -22,6 +24,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
     NavVarComponent,
     TableComponent,
     ContainerComponent,
+    ModalDeletComponent,
 
 
   ],
@@ -30,6 +33,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
     ShareRoutingModule,
     MatListModule,
     MatIconModule,
+    MatToolbarModule,
+    MatDialogModule,
 
 
     MatExpansionModule,

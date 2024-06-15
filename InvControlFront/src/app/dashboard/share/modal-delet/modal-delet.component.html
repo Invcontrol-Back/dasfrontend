@@ -1,0 +1,36 @@
+
+<mat-toolbar class="flex justify-between bg-red-700 rounded-sm text-white" >
+ <h3>{{data.title}}</h3>
+ <button mat-icon-button mat-dialog-close class="hover:bg-red-900" >
+    <mat-icon>
+        close
+    </mat-icon>
+</button>
+</mat-toolbar>
+<mat-dialog-content>
+    <span>
+        {{data.message}}
+    </span>
+    <div class="flex justify-between px-6 ">
+        <button
+            class="bg-red-700 rounded-lg hover:bg-red-950"
+            mat-raised-button
+            
+            type="button"
+           
+            (click)="onConfirm()">
+            <a class="text-white  font-bold no-underline">Eliminar</a>
+
+        </button>
+        <button 
+            class="bg-red-700 rounded-lg hover:bg-red-950"
+                mat-button
+                mat-dialog-close>
+                <a class="no-underline text-white font-bold ">Cancelar</a>
+            </button>
+    </div>
+
+</mat-dialog-content>
+
+
+

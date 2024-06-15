@@ -1,0 +1,43 @@
+<mat-toolbar class="flex justify-between bg-red-700 rounded-lg text-white">
+    <h3>{{ titulo }} SUBCATEGORÍA</h3>
+    <button mat-icon-button mat-dialog-close class="hover:bg-red-900">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-toolbar>
+  
+  <mat-dialog-content class="rounded-lg flex justify-center">
+    <form [formGroup]="formulario">
+      <div class="grid grid-cols-1 space-x-6">
+  
+        <mat-form-field class="mx-4 w-48">
+          <mat-label>Nombre de la Subcategoría</mat-label>
+          <input type="text" formControlName="det_cat_nombre" matInput placeholder="Ingrese el nombre">
+        </mat-form-field>
+  
+        <mat-form-field >
+            <mat-label>Categoria</mat-label>
+            <mat-select formControlName="det_cat_cat">
+                <mat-option *ngFor="let categoria of dataCategoria" [value]="categoria.cat_id">{{ categoria.cat_nombre }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+  
+      </div>
+      <div class="flex justify-between px-6 mt-4">
+        <button
+          class="bg-red-700 rounded-lg hover:bg-red-950"
+          mat-raised-button
+          type="button"
+          [disabled]="formulario.invalid"
+          (click)="grabar()">
+          <span class="text-white font-bold no-underline">Grabar</span>
+        </button>
+        <button
+          class="bg-red-700 rounded-lg hover:bg-red-950"
+          mat-button
+          mat-dialog-close>
+          <span class="no-underline text-white font-bold">Cancelar</span>
+        </button>
+      </div>
+    </form>
+  </mat-dialog-content>
+  

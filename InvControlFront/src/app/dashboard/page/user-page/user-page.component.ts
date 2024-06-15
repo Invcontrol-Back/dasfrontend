@@ -149,7 +149,8 @@ export class UserPageComponent {
   }
 
   deleteData(): void {
-    this.entidadUsuario.deleteUsuario(this.selectedUser.usu_id).subscribe(()=>{
+    this.entidadUsuario.deleteUsuario(this.selectedUser.usu_id).
+    subscribe(()=>{
       this.closeDeleteModal();
       this.loadUsuarios()
     })
