@@ -25,7 +25,6 @@ export class SubcategoriaComponent {
     {field:"det_cat_id", title:"CÓDIGO"},
     {field:"det_cat_nombre", title:"NOMBRE"},
     {field:"cat_nombre", title:"CATEGORÍA"},
-    {field:"det_cat_eliminado", title:"HABILITADO"},
       
   ]
 
