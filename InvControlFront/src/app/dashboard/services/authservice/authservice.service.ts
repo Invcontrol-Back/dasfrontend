@@ -27,9 +27,11 @@ export class AuthserviceService {
           usu_nombres: respuesta.usu_nombres,
           usu_apellidos: respuesta.usu_apellidos,
           usu_rol: respuesta.usu_rol,
-          usu_habilitado: respuesta.usu_habilitado
+          usu_habilitado: respuesta.usu_habilitado,
+          usu_cedula: respuesta.usu_cedula,
+          rol_nombre: respuesta.rol_nombre
         };
-        localStorage.setItem('user', JSON.stringify(this.userstorage)); // Almacena toda la información del usuario en localStorage
+        localStorage.setItem('user', JSON.stringify(this.userstorage)); 
         this.startInactivityTimer();
         observer.next(this.user);
         observer.complete();
@@ -52,6 +54,7 @@ export class AuthserviceService {
   }
 
   getUser(): any {
+
     return this.user;
   }
 

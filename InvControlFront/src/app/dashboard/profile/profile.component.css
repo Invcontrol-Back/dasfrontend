@@ -1,0 +1,44 @@
+@tailwind utilities;
+@tailwind components;
+.profile-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+
+  
+  .profile-section {
+    display: grid;
+    gap: 16px;
+  }
+  
+  .profile-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+  }
+
+  
+  .profile-avatar {
+    width: 94px; 
+    height: 94px; 
+    overflow: hidden;
+    border-radius: 50%;
+  }
+  
+  .avatar-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .avatar-img {
+    width: 90%;
+    height: 90%;
+    object-fit: cover; 
+    border-radius: 50%;
+  }
+  
