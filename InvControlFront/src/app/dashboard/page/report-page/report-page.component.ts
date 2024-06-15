@@ -96,6 +96,7 @@ export class ReportPageComponent {
         {id:"UBICACION",nombre:"UBICACION"},
         {id:"ENCARGADO",nombre:"ENCARGADO"},
         {id:"ETIQUETAS",nombre:"ETIQUETAS"},
+        {id:"DITIC",nombre:"DITIC"},
         {id:"GENERAL",nombre:"GENERAL"},
       ]
     }else if (event.value=='INMOBILIARIO'){
@@ -142,6 +143,7 @@ export class ReportPageComponent {
       this.tipoReporteSeleccionado = '';
       this.detalleSeleccionado = '';
       this.encargadoSeleccionado = '';
+      this.documentoSeleccionado='';
     }
     this.modalOpen = true;
   }
@@ -173,6 +175,8 @@ export class ReportPageComponent {
         }
       }else if(this.detalleSeleccionado == 'GENERAL'){
           this.reporteGeneralTecnologico()
+      }else if(this.detalleSeleccionado =='DITIC'){
+          this.reporteDITIC()
       }else if(this.detalleSeleccionado == 'UBICACION'){
           this.reporteUbicacionTecnologico()
       }else if(this.detalleSeleccionado =='ENCARGADO'){
@@ -282,6 +286,21 @@ export class ReportPageComponent {
     });
   }
   //FIN REPORTE GENERAL TECNOLOGICO
+
+  //REPORTE DITIC
+  reporteDITIC(){
+    this.entidadGeneral.loadReporteTecnologicoDITIC().subscribe(data => {
+      if (this.documentoSeleccionado === 'EXCEL'){
+        const dataEstructurado = this.estructuraTecnologico(data)
+        this.exportToExcel(dataEstructurado,'reporteDITIC')
+      }else{
+        const dataEstructurado = this.estructuraTecnologico(data)
+        const definicion = this.PDFTecnologico(dataEstructurado)
+        this.exportToPdf(definicion,'reporteDITIC.pdf')
+      }
+    });
+  }
+  //FIN REPORTE DITIC
 
   //REPORTE ETIQUETAS
   reporteEtiquetas() {

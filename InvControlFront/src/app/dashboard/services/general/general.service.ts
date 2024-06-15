@@ -23,6 +23,12 @@ export class GeneralService {
     let url = 'http://localhost:8000/api/reporte/reporte_tecnologico_general/?'
     return this.http.get(url)
   }
+
+  loadReporteTecnologicoDITIC(){
+    let url = 'http://localhost:8000/api/reporte/reporte_tecnologico_ditic/?'
+    return this.http.get(url)
+  }
+
   loadReporteTecnologicoUbicacion(ubicacion:any){
     let url = 'http://localhost:8000/api/reporte/reporte_tecnologico_ubicacion/?ubicacion='
     return this.http.get(url+ubicacion)
