@@ -88,4 +88,34 @@ export class AuthserviceService {
       this.startInactivityTimer();
     }
   }
+
+  setUser(user: any): void {
+    this.user = user;
+    this.userstorage = {
+      usu_id: user.usu_id,
+      usu_correo: user.usu_correo,
+      usu_nombres: user.usu_nombres,
+      usu_apellidos: user.usu_apellidos,
+      usu_rol: user.usu_rol,
+      usu_habilitado: user.usu_habilitado,
+      usu_cedula: user.usu_cedula,
+      rol_nombre: user.rol_nombre
+    };
+    localStorage.setItem('user', JSON.stringify(this.userstorage));
+  }
+  isUserHabilitado(): boolean {
+    return this.userstorage && this.userstorage.usu_habilitado === 'ACTIVO';
+  }
+
+  isAdmin(): boolean {
+    return this.getUserRole() === 1; // Asumiendo que el rol de administrador es 1
+  }
+
+  isTecnico(): boolean {
+    return this.getUserRole() === 2; // Asumiendo que el rol de técnico es 2
+  }
+
+  isInvitado(): boolean {
+    return this.getUserRole() === 3; // Asumiendo que el rol de invitado es 3
+  }
 }

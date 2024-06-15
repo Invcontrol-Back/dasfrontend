@@ -10,25 +10,26 @@ import { UbicacionesComponent } from './page/areas/ubicaciones/ubicaciones.compo
 import { ReportPageComponent } from './page/report-page/report-page.component';
 import { LocalizacionesComponent } from './page/areas/localizaciones/localizaciones.component';
 import { ProfileComponent } from './profile/profile.component';
+import { rutaGuard } from '../guard/ruta/ruta.guard';
 
 const routes: Routes = [
   {
     path: '',
     component: DashboardLayouthComponent,
     children: [
-      {path: 'home', component: HomePageComponent},
-      {path: 'user', component: UserPageComponent},
-      {path: 'building', component: BloquesComponent},
-      {path: 'location', component: UbicacionesComponent},
-      {path: 'label', component: LocalizacionesComponent},
-      {path: 'report', component: ReportPageComponent},
-      {path: 'profile', component: ProfileComponent},
-      {path: 'inventory', loadChildren: () => import ('./page/inventario/inventario.module').then(m=> m.InventarioModule) },
-      {path: 'charcateristics', loadChildren: () => import ('./page/characteristic/characteristic.module').then(m=> m.CharacteristicModule) },
-      
-      {path: '', redirectTo:'home', pathMatch:'full'},
-    
+      { path: 'home', component: HomePageComponent },
+      { path: 'user', component: UserPageComponent, canActivate: [rutaGuard], data: { expectedRole: 1 } }, // Solo para administrador
+      { path: 'building', component: BloquesComponent, canActivate: [rutaGuard], data: { expectedRole: 1 } }, // Solo para administrador
+      { path: 'location', component: UbicacionesComponent, canActivate: [rutaGuard], data: { expectedRole: 1 } }, // Solo para administrador
+      { path: 'label', component: LocalizacionesComponent, canActivate: [rutaGuard], data: { expectedRole: 1 } }, // Solo para administrador
+      { path: 'report', component: ReportPageComponent },
+      { path: 'profile', component: ProfileComponent },
+      { path: 'inventory', loadChildren: () => import('./page/inventario/inventario.module').then(m => m.InventarioModule), canActivate: [rutaGuard], data: { expectedRole: 2 } },
+      { path: 'charcateristics', loadChildren: () => import('./page/characteristic/characteristic.module').then(m => m.CharacteristicModule), canActivate: [rutaGuard], data: { expectedRole: 2 } },
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
     ]
+    
+    
   },
 
 ];
