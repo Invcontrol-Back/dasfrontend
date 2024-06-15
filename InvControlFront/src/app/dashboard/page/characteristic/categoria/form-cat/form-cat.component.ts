@@ -13,7 +13,7 @@ export class FormCatComponent {
 
   titulo: string = '';
 
-  tipoBienOptions: string[] = ['TECNOLOGICO', 'SOFTWARE', 'INMOBILIARIO'];
+  tipoBienOptions: string[] = ['TECNOLOGICO', 'INMOBILIARIO'];
 
   constructor(
     private dialogRef: MatDialogRef<FormCatComponent>,

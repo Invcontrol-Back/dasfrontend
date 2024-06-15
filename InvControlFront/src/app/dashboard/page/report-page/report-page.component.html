@@ -66,22 +66,19 @@
                 </mat-select>
             </mat-form-field>
 
+            <mat-form-field *ngIf="mostrarDocumento">
+                <mat-label>Tipo Documento</mat-label>
+                <mat-select [(ngModel)]="documentoSeleccionado" name="documento" id="documento">
+                    <mat-option *ngFor="let doc of documento" [value]="doc.id">{{ doc.nombre}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
         <div class="button-container">
-            <button mat-button (click)="generateReport()" [disabled]="!isFormValid()">Generar</button>
+            <button mat-button (click)="generateReport()" [disabled]="!isFormValid()" [ngClass]="{'invalid-button': !isFormValid()}">Generar</button>
             <button mat-button 
             (click)="closeModal()" class="Cancelar">Cancelar</button>
         </div>
     </div>
 </div>
 
-<div *ngIf="modalDeleteOpen" class="modal">
-    <div class="modal-content">
-        <span class="close" (click)="closeDeleteModal()">&times;</span>
-        <h2>Eliminar Software</h2>
-        <span>¿Está seguro de eliminar el Software?</span>
-        <div class="button-container">
-            <button mat-button (click)="deleteData()">Eliminar</button>
-            <button mat-button (click)="closeDeleteModal()" class="Cancelar">Cancelar</button>
-        </div>
-    </div>
-</div>
+
