@@ -1,24 +1,22 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
+import { AuthserviceService } from '../dashboard/services/authservice/authservice.service';
 
 export const cguardGuard: CanActivateFn = (route, state) => {
+  const authService = inject(AuthserviceService);
+  const router = inject(Router);
 
-    const router = inject(Router);
-
-  const isLoggedIn = localStorage.getItem('rol');
-  console.log(isLoggedIn)
-  if (isLoggedIn) {
-    if (isLoggedIn === '1') {
-      return true;
-    } else if (isLoggedIn === '2') {
-      return true;
-    }else if (isLoggedIn === '3') {
+  if (authService.isLoggedIn()) {
+    authService.resetInactivityTimer();
+    const userRole = authService.getUserRole();
+    console.log(userRole); // Verifica el valor del rol del usuario
+    // Convertir userRole a cadena para comparación
+    if (userRole.toString() === "1" || userRole.toString() === "2" || userRole.toString() === "3") {
       return true;
     }
-
-
+    return false;
   }
+
   router.navigate(['/auth/login']);
   return false;
-
 };

@@ -1,29 +1,30 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { UsuarioService } from 'src/app/dashboard/services/usuario/usuario.service';
+import { AuthserviceService } from 'src/app/dashboard/services/authservice/authservice.service';
+
+
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.css']
 })
 export class LoginPageComponent {
+  correoText: string = '';
+  passText: string = '';
+  errorVisible: boolean = false;
 
-  correoText:string = ''
-  passText:string = ''
-  errorVisible:boolean = false
-
-  constructor(private router: Router,private entidadUsuario:UsuarioService) {}
+  constructor(private router: Router, private authService: AuthserviceService) {}
 
   onLogin(): void {
-    // Redirige al dashboard
-    const usuario = {usu_correo:this.correoText,usu_contrasenia:this.passText}
-    this.entidadUsuario.login(usuario).subscribe((respuesta) => {
-      localStorage.setItem('rol', respuesta.usu_rol);
-      this.router.navigate(['../../dashboard']);   
-    }, (error) => {
-      this.errorVisible = true
-    });
-
+    const usuario = { usu_correo: this.correoText, usu_contrasenia: this.passText };
+    this.authService.login(usuario).subscribe(
+      (respuesta) => {
+        //console.log(respuesta)
+        this.router.navigate(['../../dashboard/home']);
+      },
+      (error) => {
+        this.errorVisible = true;
+      }
+    );
   }
-
 }

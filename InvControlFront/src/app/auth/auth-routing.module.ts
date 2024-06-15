@@ -4,6 +4,7 @@ import { AuthLayouthComponent } from './auth-layouth/auth-layouth.component';
 import { LoginPageComponent } from './page/login-page/login-page.component';
 
 
+
 const routes: Routes = [
   {
     path: '',

@@ -77,7 +77,7 @@ private entidadBloque:BloqueService,private entidadUbicacion:UbicacionService){
     this.entidadLocalizacion.loadLocalizaciones().subscribe(data => {
       this.dataTipoUbicacion = data
     },error => {
-      console.log(error)
+      // console.log(error)
     })
   }
 
@@ -85,7 +85,7 @@ private entidadBloque:BloqueService,private entidadUbicacion:UbicacionService){
     this.entidadBloque.loadBuildings().subscribe(data => {
       this.dataBloque = data
     },error => {
-      console.log(error)
+      //console.log(error)
     })
   }
   onSelectionChangeBloque(event: MatSelectChange) {

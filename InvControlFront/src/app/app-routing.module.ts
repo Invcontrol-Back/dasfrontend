@@ -9,12 +9,13 @@ const routes: Routes = [
   },
   {
     path: 'dashboard',
-    loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule), //canActivateChild: [cguardGuard]
+    loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule), //canActivate: [cguardGuard]
   },
-  
   {
-    path: '', redirectTo:'auth', pathMatch: 'full'
-  }
+    path: '', redirectTo: 'auth/login', pathMatch: 'full'
+  },
+  { path: '**', redirectTo: 'auth/login', pathMatch: 'full' }
+  
 ];
 
 @NgModule({
