@@ -397,6 +397,9 @@ export class ReportPageComponent {
         serie: item.inm_serie,
         año_ingreso: item.inm_anio_ingreso,
         dependencia:item.dep_nombre,
+        bloque:item.blo_nombre,
+        ubicacion:item.ubi_nombre,
+        etiqueta:item.loc_nombre,
         encargado: item.usu_nombres + ' '+item.usu_apellidos
       };
     });
@@ -458,8 +461,8 @@ export class ReportPageComponent {
         layout: 'lightHorizontalLines',
         table: {
           headerRows: 1,
-          widths: [ '*', '*', '*', '*','*','*', '*', '*', '*'],
-          body: this.lecturaFilas(data)
+          widths: [ '*', '*', '*', '*','*','*', '*', '*', '*' ,'*'],
+          body: this.lecturaFilasInmueble(data)
           
         }
       }
@@ -472,11 +475,11 @@ export class ReportPageComponent {
     return documentDefinition
   }
 
-  lecturaFilas(data:any){
-    const json:any = [ ['CODIGO','CATEGORIA','MARCA','MODELO','SERIE','AÑO INGRESO','DEPENDENCIA','ENCARGADO'] ]
+  lecturaFilasInmueble(data:any){
+    const json:any = [ ['CODIGO','CATEGORIA','MARCA','MODELO','SERIE','AÑO INGRESO','DEPENDENCIA','UBICACION','ENCARGADO'] ]
     data.forEach((row: any) => {
       json.push(
-        [ row.codigo, row.categoria,row.marca,row.modelo,row.serie,row.año_ingreso,row.dependencia,row.encargado]
+        [ row.codigo, row.categoria,row.marca,row.modelo,row.serie,row.año_ingreso,row.dependencia,(row.bloque+'\n'+row.ubicacion+'\n'+row.etiqueta),row.encargado]
       )
     })
     return json;
