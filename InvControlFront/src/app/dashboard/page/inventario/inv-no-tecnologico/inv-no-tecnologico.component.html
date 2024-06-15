@@ -38,88 +38,103 @@
   <div class="modal-content">
     <span class="close" (click)="closeModal()">&times;</span>
     <h2>{{ titleText }}</h2>
-    <div class="form-row">
-      <mat-form-field class="form-field">
-        <mat-label>CODIGO</mat-label>
-        <input type="text" 
-               matInput 
-               required 
-               placeholder="Ingrese el código"
-               [(ngModel)]="codigoText"
-               [disabled]="disableInput">
-      </mat-form-field>
-      <mat-form-field class="form-field">
-        <mat-label>SERIE</mat-label>
-        <input type="text" 
-               matInput 
-               required 
-               placeholder="Ingrese la serie"
-               [(ngModel)]="serieText">
-      </mat-form-field>
-    </div>
-    <div class="form-row">
-      <mat-form-field class="form-field">
-        <mat-label>MODELO</mat-label>
-        <input type="text" 
-               matInput 
-               required 
-               placeholder="Ingrese el modelo"
-               [(ngModel)]="modeloText">
-      </mat-form-field>
-      <mat-form-field class="form-field">
-        <mat-label>MARCA</mat-label>
-        <input type="text" 
-               matInput 
-               required 
-               placeholder="Ingrese la marca"
-               [(ngModel)]="marcaText">
-      </mat-form-field>
-    </div>   
-    <div class="form-row">
-      <mat-form-field class="form-field">
-        <mat-label>AÑO INGRESO</mat-label>
-        <input type="number" 
-               matInput 
-               required 
-               placeholder="Ingrese el año"
-               [(ngModel)]="anioIngresoText">
-      </mat-form-field>
-      <mat-form-field class="form-field">
-        <mat-label>ENCARGADO</mat-label>
-        <mat-select [(ngModel)]="encargadoIdText" name="encargadoIdText" id="encargadoIdText">
-          <mat-option *ngFor="let encargado of dataUsuarios" [value]="encargado.usu_id">{{ encargado.usu_nombres }}</mat-option>
+    
+    <mat-form-field >
+        <mat-label>Bloque</mat-label>
+        <mat-select (selectionChange)="onSelectionChangeBloque($event)">
+            <mat-option *ngFor="let bloque of dataBloque" [value]="bloque.blo_id">{{ bloque.blo_nombre }}</mat-option>
         </mat-select>
-      </mat-form-field>
-    </div>
-    <div class="form-row">
-      <mat-form-field class="form-field">
-        <mat-label>CATEGORÍA</mat-label>
-        <mat-select [(ngModel)]="categoriaText" name="categoriaText" id="categoriaText">
-          <mat-option *ngFor="let categoria of dataCategoria" [value]="categoria.cat_id">{{ categoria.cat_nombre }}</mat-option>
+    </mat-form-field>
+    <mat-form-field >
+        <mat-label>Ubicacion</mat-label>
+        <mat-select (selectionChange)="onSelectionChangeUbicacion($event)">
+            <mat-option *ngFor="let ubicacion of dataUbicacion" [value]="ubicacion.ubi_id">{{ ubicacion.ubi_nombre }}</mat-option>
         </mat-select>
-      </mat-form-field>
-      <mat-form-field class="form-field">
-        <mat-label>DEPENDENCIA</mat-label>
-        <mat-select [(ngModel)]="dependenciaText" name="dependenciaText" id="dependenciaText">
-          <mat-option *ngFor="let dependencia of dataDependencia" [value]="dependencia.dep_id">{{ dependencia.dep_nombre }}</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-    <div class="button-container">
-      <button mat-button 
-              (click)="saveData()" 
-              [disabled]="!isFormValid()" 
-              [ngClass]="{'invalid-button': !isFormValid()}"
-              *ngIf="showButtonCreate">Guardar</button>
-      <button mat-button 
-              (click)="updateData()" 
-              [disabled]="!isFormValid()" 
-              [ngClass]="{'invalid-button': !isFormValid()}"
-              *ngIf="showButtonEdit">Actualizar</button>
-      <button mat-button 
-              (click)="closeModal()" 
-              class="Cancelar">Cancelar</button>
-    </div>
+    </mat-form-field>
+
+    <form [formGroup]="formulario">
+      <div class="grid grid-cols-2 space-x-6 ">
+
+          <mat-form-field class="mx-4 w-48"  >
+              <mat-label>Código</mat-label>
+              <input type="text" formControlName="inm_codigo" matInput placeholder="Ingrese el codigo">
+          </mat-form-field>
+
+          <mat-form-field >
+              <mat-label>Marca</mat-label>
+              <mat-select formControlName="inm_mar">
+                  <mat-option *ngFor="let marca of dataMarca" [value]="marca.mar_id">{{ marca.mar_nombre }}</mat-option>
+              </mat-select>
+          </mat-form-field>
+
+          <mat-form-field >
+              <mat-label>Modelo</mat-label>
+              <input type="text" formControlName="inm_modelo" matInput placeholder="Ingrese el modelo">
+          </mat-form-field>
+  
+
+          <mat-form-field class="w-48" >
+              <mat-label>N° Serie</mat-label>
+              <input type="text" formControlName="inm_serie" matInput placeholder="Ingrese la serie">
+            </mat-form-field>
+            
+          <mat-form-field >
+              <mat-label>Año de Ingreso</mat-label>
+              <input type="text" formControlName="inm_anio_ingreso" required matInput placeholder="Ingrese el año">
+          </mat-form-field>
+  
+          <mat-form-field >
+              <mat-label>Laboratorista Encargado</mat-label>
+              <mat-select formControlName="inm_encargado">
+                  <mat-option *ngFor="let encargado of dataUsuarios" [value]="encargado.usu_id">{{ encargado.usu_nombres }}</mat-option>
+              </mat-select>
+          </mat-form-field>
+
+          <mat-form-field >
+              <mat-label>Localización</mat-label>
+              <mat-select formControlName="inm_loc">
+                  <mat-option *ngFor="let ubicacion of dataTipoUbicacion" [value]="ubicacion.loc_id">{{ ubicacion.loc_nombre }}</mat-option>
+              </mat-select>
+          </mat-form-field>
+
+          <mat-form-field >
+              <mat-label>Categoria</mat-label>
+              <mat-select formControlName="inm_cat">
+                  <mat-option *ngFor="let categoria of dataCategoria" [value]="categoria.cat_id">{{ categoria.cat_nombre }}</mat-option>
+              </mat-select>
+          </mat-form-field>
+
+          <mat-form-field >
+              <mat-label>Dependencia</mat-label>
+              <mat-select formControlName="inm_dep">
+                  <mat-option *ngFor="let dependencia of dataDependencia" [value]="dependencia.dep_id">{{ dependencia.dep_nombre }}</mat-option>
+              </mat-select>
+          </mat-form-field>
+
+          <mat-form-field >
+              <mat-label>Descripción (opcional)</mat-label>
+              <input type="text" formControlName="inm_descripcion" matInput placeholder="Ingrese una descripción">
+          </mat-form-field>
+      </div>
+      
+      <div class="button-container">
+        <button mat-button 
+                (click)="saveData()" 
+                [disabled]="!isFormValid()" 
+                [ngClass]="{'invalid-button': !isFormValid()}"
+                *ngIf="showButtonCreate">Guardar</button>
+        <button mat-button 
+                (click)="updateData()" 
+                [disabled]="!isFormValid()" 
+                [ngClass]="{'invalid-button': !isFormValid()}"
+                *ngIf="showButtonEdit">Actualizar</button>
+        <button mat-button 
+                (click)="closeModal()" 
+                class="Cancelar">Cancelar</button>
+      </div>
+  </form>
+
+
   </div>
 </div>
 

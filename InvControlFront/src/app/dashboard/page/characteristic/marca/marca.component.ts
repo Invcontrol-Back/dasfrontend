@@ -23,7 +23,6 @@ export class MarcaComponent {
   metaDataColumns:MetaDataColumn[] = [
     {field:"mar_id", title:"CÓDIGO"},
     {field:"mar_nombre", title:"MARCA"},
-    {field:"mar_eliminado", title:"HABILITADO"},
       
   ]
 

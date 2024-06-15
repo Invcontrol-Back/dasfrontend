@@ -91,3 +91,8 @@ button:hover {
 .form-group mat-form-field {
     width: 48%;
 }
+
+.invalid-button {
+    background-color: rgb(97, 88, 88);
+    color: rgb(255, 255, 255) !important;
+  }

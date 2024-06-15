@@ -1,133 +1,111 @@
-<mat-toolbar class="flex justify-between bg-red-700 rounded-lg text-white" >
+<mat-toolbar class="flex justify-between bg-red-700 rounded-lg text-white p-4">
     <h3>{{titulo}} BIEN TECNOLÓGICO</h3>
-    <button mat-icon-button mat-dialog-close class="hover:bg-red-900" >
-        <mat-icon>
-            close
-        </mat-icon>
+    <button mat-icon-button mat-dialog-close class="hover:bg-red-900">
+        <mat-icon>close</mat-icon>
     </button>
 </mat-toolbar>
-<mat-dialog-content class="rounded-lg flex justify-center  ">
-    <mat-form-field >
-        <mat-label>Bloque</mat-label>
-        <mat-select (selectionChange)="onSelectionChangeBloque($event)">
-            <mat-option *ngFor="let bloque of dataBloque" [value]="bloque.blo_id">{{ bloque.blo_nombre }}</mat-option>
-        </mat-select>
-    </mat-form-field>
-    <mat-form-field >
-        <mat-label>Ubicacion</mat-label>
-        <mat-select (selectionChange)="onSelectionChangeUbicacion($event)">
-            <mat-option *ngFor="let ubicacion of dataUbicacion" [value]="ubicacion.ubi_id">{{ ubicacion.ubi_nombre }}</mat-option>
-        </mat-select>
-    </mat-form-field>
+<mat-dialog-content class="rounded-lg p-4">
+    <div class="grid grid-cols-2 gap-4 mb-4">
+        <mat-form-field class="w-full">
+            <mat-label>Bloque</mat-label>
+            <mat-select (selectionChange)="onSelectionChangeBloque($event)">
+                <mat-option *ngFor="let bloque of dataBloque" [value]="bloque.blo_id">{{ bloque.blo_nombre }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="w-full">
+            <mat-label>Ubicación</mat-label>
+            <mat-select (selectionChange)="onSelectionChangeUbicacion($event)">
+                <mat-option *ngFor="let ubicacion of dataUbicacion" [value]="ubicacion.ubi_id">{{ ubicacion.ubi_nombre }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
     <form [formGroup]="formulario">
-        <div class="grid grid-cols-2 space-x-6 ">
-
-            <mat-form-field class="mx-4 w-48"  >
+        <div class="grid grid-cols-3 gap-4">
+            <mat-form-field class="w-full">
                 <mat-label>Código Tecnológico</mat-label>
-                <input type="text" formControlName="tec_codigo" matInput placeholder="Ingrese el codigo">
-                
+                <input type="text" formControlName="tec_codigo" matInput>
             </mat-form-field>
 
-            <mat-form-field >
+            <mat-form-field class="w-full">
                 <mat-label>Marca</mat-label>
                 <mat-select formControlName="tec_mar">
                     <mat-option *ngFor="let marca of dataMarca" [value]="marca.mar_id">{{ marca.mar_nombre }}</mat-option>
                 </mat-select>
             </mat-form-field>
 
-            <mat-form-field >
+            <mat-form-field class="w-full">
                 <mat-label>Modelo</mat-label>
-                <input type="text" formControlName="tec_modelo" matInput placeholder="Ingrese el modelo">
+                <input type="text" formControlName="tec_modelo" matInput>
             </mat-form-field>
-    
 
-            <mat-form-field class="w-48" >
+            <mat-form-field class="w-full">
                 <mat-label>N° Serie Tecnológico</mat-label>
-                <input type="text" formControlName="tec_serie" matInput placeholder="Ingrese la serie">
-              </mat-form-field>
-              
-            <mat-form-field>
-                <mat-label>IP (opcional)</mat-label>
-                <input type="text" formControlName="tec_ip"  matInput placeholder="Ingrese la ip">
+                <input type="text" formControlName="tec_serie" matInput>
             </mat-form-field>
 
-            <mat-form-field >
-                <mat-label>Año de Ingreso</mat-label>
-                <input type="text" formControlName="tec_anio_ingreso" required matInput placeholder="Ingrese el año">
+            <mat-form-field class="w-full">
+                <mat-label>IP (opcional)</mat-label>
+                <input type="text" formControlName="tec_ip" matInput>
             </mat-form-field>
-    
-            <mat-form-field >
+
+            <mat-form-field class="w-full">
+                <mat-label>Año de Ingreso</mat-label>
+                <input type="text" formControlName="tec_anio_ingreso" required matInput>
+            </mat-form-field>
+
+            <mat-form-field class="w-full">
                 <mat-label>Laboratorista Encargado</mat-label>
                 <mat-select formControlName="tec_encargado">
                     <mat-option *ngFor="let encargado of dataEncargado" [value]="encargado.usu_id">{{ encargado.usu_nombres }}</mat-option>
                 </mat-select>
             </mat-form-field>
 
-            <mat-form-field >
+            <mat-form-field class="w-full">
                 <mat-label>Localización</mat-label>
                 <mat-select formControlName="tec_loc">
                     <mat-option *ngFor="let ubicacion of dataTipoUbicacion" [value]="ubicacion.loc_id">{{ ubicacion.loc_nombre }}</mat-option>
                 </mat-select>
             </mat-form-field>
 
-            <mat-form-field >
-                <mat-label>Categoria</mat-label>
+
+ 
+
+            <mat-form-field class="w-full">
+                <mat-label>Categoría</mat-label>
+
                 <mat-select formControlName="tec_cat">
                     <mat-option *ngFor="let categoria of dataCategoria" [value]="categoria.cat_id">{{ categoria.cat_nombre }}</mat-option>
                 </mat-select>
             </mat-form-field>
 
-            <mat-form-field >
+            <mat-form-field class="w-full">
                 <mat-label>Dependencia</mat-label>
                 <mat-select formControlName="tec_dep">
                     <mat-option *ngFor="let dependencia of dataDependencia" [value]="dependencia.dep_id">{{ dependencia.dep_nombre }}</mat-option>
                 </mat-select>
             </mat-form-field>
 
-            <mat-form-field >
+            <mat-form-field class="w-full">
                 <mat-label>Descripción (opcional)</mat-label>
-                <input type="text" formControlName="tec_descripcion" matInput placeholder="Ingrese una descripción">
+                <input type="text" formControlName="tec_descripcion" matInput>
             </mat-form-field>
         </div>
         
-        <div class="flex justify-between px-6 ">
+        <div class="flex justify-center mt-6">
             <button
-                class="bg-red-700 rounded-lg hover:bg-red-950"
+                class="bg-red-700 rounded-lg hover:bg-red-900 text-white font-bold py-2 px-4 custom-button"
                 mat-raised-button
-                
                 type="button"
                 [disabled]="formulario!.invalid"
                 (click)="grabar()">
-                <a class="text-white  font-bold no-underline">Grabar</a>
-
+                Guardar
             </button>
-            <button 
-            class="bg-red-700 rounded-lg hover:bg-red-950"
+            <button
+                class="bg-red-700 rounded-lg hover:bg-red-900 text-white font-bold py-2 px-4 custom-button"
                 mat-button
                 mat-dialog-close>
-                <a class="no-underline text-white font-bold ">Cancelar</a>
+                Cancelar
             </button>
         </div>
     </form>
 </mat-dialog-content>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -24,7 +24,6 @@ export class CategoriaComponent {
   metaDataColumns:MetaDataColumn[] = [
     {field:"cat_nombre", title:"CATEGORIA"},
     {field:"cat_tipoBien", title:"TIPO DE BIEN"},
-    {field:"cat_eliminado", title:"HABILITADO"},
       
   ]
 
