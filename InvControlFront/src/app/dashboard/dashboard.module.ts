@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardLayouthComponent } from './dashboard-layouth/dashboard-layouth.component';
 import { HomePageComponent } from './page/home-page/home-page.component';
@@ -18,17 +17,16 @@ import { MatTableModule } from '@angular/material/table';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
-
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatOptionModule } from '@angular/material/core';
-
 import { UbicacionesComponent } from './page/areas/ubicaciones/ubicaciones.component';
 import { ReportPageComponent } from './page/report-page/report-page.component';
 import { MatCardModule } from '@angular/material/card';
 import { LocalizacionesComponent } from './page/areas/localizaciones/localizaciones.component';
 import { CharacteristicRoutingModule } from './page/characteristic/characteristic-routing.module';
 import { ProfileComponent } from './profile/profile.component';
-import { FormProfileComponent } from './profile/form-profile/form-profile.component';
+
 
 
 
@@ -43,7 +41,7 @@ import { FormProfileComponent } from './profile/form-profile/form-profile.compon
     ReportPageComponent,
     LocalizacionesComponent,
     ProfileComponent,
-    FormProfileComponent,
+  
 
 
 
@@ -75,6 +73,7 @@ import { FormProfileComponent } from './profile/form-profile/form-profile.compon
     MatOptionModule,
     MatCardModule,
     CharacteristicRoutingModule,
+    ReactiveFormsModule
     
 
 
@@ -87,5 +86,6 @@ import { FormProfileComponent } from './profile/form-profile/form-profile.compon
     MatSelectModule,
     MatOptionModule
   ]
+   
 })
 export class DashboardModule { }
