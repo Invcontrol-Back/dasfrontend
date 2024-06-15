@@ -9,6 +9,7 @@ import { BloquesComponent } from './page/areas/bloques/bloques.component';
 import { UbicacionesComponent } from './page/areas/ubicaciones/ubicaciones.component';
 import { ReportPageComponent } from './page/report-page/report-page.component';
 import { LocalizacionesComponent } from './page/areas/localizaciones/localizaciones.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,7 @@ const routes: Routes = [
       {path: 'location', component: UbicacionesComponent},
       {path: 'label', component: LocalizacionesComponent},
       {path: 'report', component: ReportPageComponent},
+      {path: 'profile', component: ProfileComponent},
       {path: 'inventory', loadChildren: () => import ('./page/inventario/inventario.module').then(m=> m.InventarioModule) },
       {path: 'charcateristics', loadChildren: () => import ('./page/characteristic/characteristic.module').then(m=> m.CharacteristicModule) },
       

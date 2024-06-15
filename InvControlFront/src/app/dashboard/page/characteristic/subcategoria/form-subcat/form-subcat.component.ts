@@ -41,7 +41,7 @@ export class FormSubcatComponent {
     this.entidadCategoria.loadCategorias().subscribe(data => {
       this.dataCategoria = data
     },error => {
-      console.log(error)
+      //console.log(error)
     })
   }
 

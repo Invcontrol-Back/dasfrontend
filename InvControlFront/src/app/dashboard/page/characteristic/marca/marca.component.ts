@@ -62,7 +62,7 @@ export class MarcaComponent {
   deleteData(marca: any): void {
     this.entidadMarca.deleteMarca(marca.mar_id).subscribe(
       ()=>{
-        console.log('Marca eliminada:', marca);
+        //console.log('Marca eliminada:', marca);
         this.loadMarcas()
 
       }
