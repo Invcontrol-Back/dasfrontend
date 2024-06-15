@@ -39,6 +39,19 @@
     <span class="close" (click)="closeModal()">&times;</span>
     <h2>{{ titleText }}</h2>
     
+    <mat-form-field >
+        <mat-label>Bloque</mat-label>
+        <mat-select (selectionChange)="onSelectionChangeBloque($event)">
+            <mat-option *ngFor="let bloque of dataBloque" [value]="bloque.blo_id">{{ bloque.blo_nombre }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field >
+        <mat-label>Ubicacion</mat-label>
+        <mat-select (selectionChange)="onSelectionChangeUbicacion($event)">
+            <mat-option *ngFor="let ubicacion of dataUbicacion" [value]="ubicacion.ubi_id">{{ ubicacion.ubi_nombre }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
     <form [formGroup]="formulario">
       <div class="grid grid-cols-2 space-x-6 ">
 

@@ -7,7 +7,9 @@ import { UsuarioService } from 'src/app/dashboard/services/usuario/usuario.servi
 import { CategoriaService } from 'src/app/dashboard/services/categoria/categoria.service';
 import { MarcaService } from 'src/app/dashboard/services/marca/marca.service';
 import { LocalizacionService } from 'src/app/dashboard/services/localizacion/localizacion.service';
-
+import { MatSelectChange } from '@angular/material/select';
+import { UbicacionService } from 'src/app/dashboard/services/ubicacion/ubicacion.service';
+import { BloqueService } from 'src/app/dashboard/services/bloque/bloque.service';
 
 @Component({
   selector: 'app-inv-no-tecnologico',
@@ -30,29 +32,34 @@ export class InvNoTecnologicoComponent {
   dataCategoria:any[] = []
   dataMarca:any[]=[]
   dataTipoUbicacion:any[]=[]
+  dataBloque:any[]=[]
+  dataUbicacion:any[] =[]
+
   data: any[] = [];
   disableInput: boolean = true;
 
   metaDataColumns: MetaDataColumn[] = [
     { field: "inm_codigo", title: "CÓDIGO" },
-    { field: "inm_serie", title: "SERIE" },
+    { field: "mar_nombre", title: "MARCA" },
     { field: "inm_modelo", title: "MODELO" },
-    { field: "inm_marca", title: "MARCA" },
+    { field: "inm_serie", title: "SERIE" },
     { field: "cat_nombre", title: "CATEGORÍA" },
+    {field:"loc_nombre", title:"LOCALIZACION"},
     { field: "dep_nombre", title: "DEPENDENCIA" },
     { field: "usu_nombres", title: "ENCARGADO" },
     { field: "inm_anio_ingreso", title: "AÑO INGRESO" },
+    {field:"inm_descripcion", title:"DESCRIPCION"},
   ];
 
   constructor(private entidadInmueble:InmobiliarioService,private entidadDependencia:DependenciaService,
-    private entidadUsuario:UsuarioService,private entidadCategoria:CategoriaService,private entidadMarca:MarcaService,private entidadLocalizacion:LocalizacionService
+    private entidadUsuario:UsuarioService,private entidadCategoria:CategoriaService,private entidadMarca:MarcaService,private entidadLocalizacion:LocalizacionService,
+    private entidadUbicacion:UbicacionService,private entidadBloque:BloqueService
   ) {
     this.loadInmuebles();
     this.loadUsuarios();
     this.loadDependencia();
     this.loadCategorias()
     this.loadMarcas()
-    this.loadLocalizaciones()
   }
 
   loadInmuebles() {
@@ -87,6 +94,22 @@ export class InvNoTecnologicoComponent {
     })
   }
 
+  loadBloques(){
+    this.entidadBloque.loadBuildings().subscribe(data => {
+      this.dataBloque = data
+    },error => {
+      console.log(error)
+    })
+  }
+
+  loadUbicaciones(){
+    this.entidadUbicacion.loadLocations().subscribe(data => {
+      this.dataUbicacion = data
+    },error => {
+      console.log(error)
+    })
+  }
+
   loadLocalizaciones(){
     this.entidadLocalizacion.loadLocalizaciones().subscribe(data => {
       this.dataTipoUbicacion = data
@@ -103,13 +126,16 @@ export class InvNoTecnologicoComponent {
       this.showButtonEdit = false;
       this.disableInput = false
     } else {
-      this.titleText = 'ACTUALIZAR INMUEBLE';
+      this.titleText = 'ACTUALIZAR\n '+row.cat_nombre + ' ' + row.inm_codigo;
       this.cargarFormulario(row)
       this.showButtonCreate = false;
       this.showButtonEdit = true;
       this.disableInput = true
 
     }
+    this.loadLocalizaciones()
+    this.loadBloques()
+    this.loadUbicaciones()
     this.modalOpen = true;
   }
 
@@ -202,6 +228,25 @@ export class InvNoTecnologicoComponent {
     this.entidadInmueble.loadInmuebleFiltro(filterValue).subscribe((data) => {
       this.data = data;
     });
+  }
+
+  onSelectionChangeBloque(event: MatSelectChange) {
+    this.loadFiltroBloques(event.value)
+  }
+  onSelectionChangeUbicacion(event: MatSelectChange) {
+    this.loadFiltroUbicacion(event.value)
+  }
+
+  loadFiltroBloques(filtroBloque:any){
+    this.entidadUbicacion.loadFilterLocationBuildings(filtroBloque).subscribe(data=>{
+      this.dataUbicacion = data
+    })
+  }
+
+  loadFiltroUbicacion(filtroUbicacion:any){
+    this.entidadLocalizacion.loadFilterLocalizacionesLaboratorio(filtroUbicacion).subscribe(data=>{
+      this.dataTipoUbicacion = data
+    })
   }
 }
 
