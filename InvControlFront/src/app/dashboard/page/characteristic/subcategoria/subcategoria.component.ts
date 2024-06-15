@@ -41,7 +41,7 @@ export class SubcategoriaComponent {
       }));
       
     },error => {
-      console.log(error)
+      //console.log(error)
     })
   }
 
@@ -66,12 +66,12 @@ export class SubcategoriaComponent {
     // Lógica para eliminar el dato
     this.entidadSubCategoria.deletSubCat(subcategory.det_cat_id).subscribe(
       ()=>{
-        console.log('Sub Categoria eliminada:', subcategory);
+        //console.log('Sub Categoria eliminada:', subcategory);
         this.loadSubategoria()
 
       }
     );
-    console.log('Marca eliminada:', subcategory);
+    
   }
 
   openSubcatForm(fila: any = null): void {
@@ -88,13 +88,13 @@ export class SubcategoriaComponent {
           this.entidadSubCategoria.updateSubCategorias(form.det_cat_id, form).subscribe(data => {
             this.loadSubategoria();
           }, error => {
-            console.log(error);
+            //console.log(error);
           });
         } else {
           this.entidadSubCategoria.addSubCategoria(form).subscribe(data => {
             this.loadSubategoria();
           }, error => {
-            console.log(error);
+            //console.log(error);
           });
         }
       }

@@ -27,6 +27,9 @@ import { ReportPageComponent } from './page/report-page/report-page.component';
 import { MatCardModule } from '@angular/material/card';
 import { LocalizacionesComponent } from './page/areas/localizaciones/localizaciones.component';
 import { CharacteristicRoutingModule } from './page/characteristic/characteristic-routing.module';
+import { ProfileComponent } from './profile/profile.component';
+import { FormProfileComponent } from './profile/form-profile/form-profile.component';
+
 
 
 
@@ -39,6 +42,8 @@ import { CharacteristicRoutingModule } from './page/characteristic/characteristi
     UbicacionesComponent,
     ReportPageComponent,
     LocalizacionesComponent,
+    ProfileComponent,
+    FormProfileComponent,
 
 
 
@@ -69,7 +74,9 @@ import { CharacteristicRoutingModule } from './page/characteristic/characteristi
     MatDialogModule,
     MatOptionModule,
     MatCardModule,
-    CharacteristicRoutingModule
+    CharacteristicRoutingModule,
+    
+
 
   ],
   exports:[

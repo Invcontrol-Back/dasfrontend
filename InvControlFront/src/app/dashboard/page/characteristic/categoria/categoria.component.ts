@@ -68,7 +68,7 @@ export class CategoriaComponent {
   deleteData(category:any): void {
     this.entidadCategoria.deleteCategory(category.cat_id).subscribe(
       ()=>{
-        console.log('Categoria eliminada:', category);
+       // console.log('Categoria eliminada:', category);
         this.loadCategoria()
 
       }

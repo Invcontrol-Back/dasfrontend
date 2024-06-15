@@ -18,7 +18,7 @@ export class FormCatComponent {
   constructor(
     private dialogRef: MatDialogRef<FormCatComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private entidadCategoria: CategoriaService
+ 
   ) {
     this.titulo = data ? 'EDITAR' : 'AGREGAR';
   }
