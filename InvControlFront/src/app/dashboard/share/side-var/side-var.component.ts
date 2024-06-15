@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MenuItems } from '../models/menu.model';
+import { AuthserviceService } from '../../services/authservice/authservice.service';
 
 @Component({
   selector: 'app-side-var',
@@ -42,4 +43,24 @@ export class SideVarComponent {
 
 
   ];
+
+  constructor(private authService: AuthserviceService) {}
+
+  ngOnInit(): void {
+    this.filterMenuByRole();
+  }
+
+  filterMenuByRole(): void {
+    if (!this.authService.isUserHabilitado()) {
+      // Si el usuario no está habilitado, redirigir al login
+      this.authService.logout();
+    } else if (this.authService.isTecnico()) {
+      // Filtrar para el técnico
+      this.menu = this.menu.filter(item => item.label !== 'Característica' && item.label !== 'Usuarios' && item.label !== 'Áreas');
+    } else if (this.authService.isInvitado()) {
+      // Filtrar para el invitado
+      this.menu = this.menu.filter(item => item.label !== 'Inventario' && item.label !== 'Característica' && item.label !== 'Usuarios' && item.label !== 'Áreas');
+    }
+    // El administrador no necesita filtro
+  }
 }
