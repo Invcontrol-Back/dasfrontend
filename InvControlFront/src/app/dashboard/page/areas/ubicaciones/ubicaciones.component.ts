@@ -67,7 +67,6 @@ export class UbicacionesComponent {
 
   loadTypeLocation(){
     this.typeLocationEntity.loadBuildings().subscribe(data => {
-      this.dataBuilding = data
       this.dataFiltroTipoUbi = data
     },error => {
       console.log(error)

@@ -26,6 +26,7 @@ import { MatCardModule } from '@angular/material/card';
 import { LocalizacionesComponent } from './page/areas/localizaciones/localizaciones.component';
 import { CharacteristicRoutingModule } from './page/characteristic/characteristic-routing.module';
 import { ProfileComponent } from './profile/profile.component';
+import { UbicacionComponent } from './page/areas/ubicaciones/ubicacion/ubicacion.component';
 
 
 
@@ -41,6 +42,7 @@ import { ProfileComponent } from './profile/profile.component';
     ReportPageComponent,
     LocalizacionesComponent,
     ProfileComponent,
+    UbicacionComponent,
   
 
 
