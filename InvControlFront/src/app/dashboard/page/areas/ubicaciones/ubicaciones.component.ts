@@ -45,6 +45,7 @@ export class UbicacionesComponent {
     this.loadBuildings();
     this.loadTypeLocations();
     this.loadLocations();
+    this.loadTypeLocation();
   }
 
   loadBuildings(){
@@ -56,8 +57,15 @@ export class UbicacionesComponent {
     })
   }
 
-
   loadTypeLocations(){
+    this.typeLocationEntity.loadTipoUbicaciones().subscribe(data => {
+      this.dataTypeLocation = data
+    },error => {
+      console.log(error)
+    })
+  }
+
+  loadTypeLocation(){
     this.typeLocationEntity.loadBuildings().subscribe(data => {
       this.dataBuilding = data
       this.dataFiltroTipoUbi = data
