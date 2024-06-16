@@ -35,4 +35,11 @@ export class UbicacionService {
     const url_complementaria = 'obtener_laboratorio_bloque/?bloque='
     return this.http.get(this.url+url_complementaria+id)
   }
+
+  loadFilterTypesBuildings(id: string): Observable<any> {
+    const url_complementaria = 'obtener_laboratorio_tipo/?tipo_ubicacion=';
+    return this.http.get(this.url + url_complementaria+id);
+}
+
+  
 }

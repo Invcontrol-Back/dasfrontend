@@ -12,7 +12,7 @@ export class BloqueService {
   constructor(private http:HttpClient) {
    }
 
-   loadBuildings():Observable<any> {
+  loadBuildings():Observable<any> {
     console.log(`Esta es la URL: ${this.url}`)
     return this.http.get(this.url)
   }
@@ -33,3 +33,4 @@ export class BloqueService {
     return this.http.delete(this.url+id+'/')
   }
 }
+ 

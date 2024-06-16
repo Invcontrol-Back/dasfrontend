@@ -9,6 +9,18 @@
                 <mat-option *ngFor="let bloque of dataFiltroBloques" [value]="bloque.blo_id">{{ bloque.blo_nombre }}</mat-option>
             </mat-select>
         </mat-form-field>
+
+        <mat-form-field class="float-right">
+            <mat-label>Tipo de Ubicación</mat-label>
+            <mat-select [(ngModel)]="filtroTipoUbi" (ngModelChange)="onFiltroTipUbiChange()">
+              <mat-option value="TODOS">TODOS</mat-option>
+              <mat-option *ngFor="let tipo of dataFiltroTipoUbi" [value]="tipo.tip_ubi_id">{{ tipo.tip_ubi_nombre }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+          
+
+
+
         <app-container>
             <app-table [data]="data" [metaDataColumns]="metaDataColumns">
                 <ng-container matColumnDef="actions">
