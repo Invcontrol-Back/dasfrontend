@@ -76,3 +76,7 @@ button:hover{
     flex-grow: 1;
     margin-right: 10px;
   }
+
+  .float-right {
+    float: right;
+}

@@ -16,6 +16,11 @@ export class TipoUbicacionService {
     return this.http.get(this.url)
   }
 
+  loadBuildings():Observable<any> {
+    console.log(`Esta es la URL: ${this.url}`)
+    return this.http.get(this.url)
+  }
+  
   loadTipoUbicacion(id:string):Observable<any> {
     return this.http.get(this.url+id)
   }
@@ -32,3 +37,4 @@ export class TipoUbicacionService {
     return this.http.delete(this.url+id)
   }
 }
+ 

@@ -21,8 +21,10 @@ export class UbicacionesComponent {
   dataBuilding:any[] = []
   dataTypeLocation:any[] = []
   dataFiltroBloques:any []= []
+  dataFiltroTipoUbi:any [] =[]
 
   filtroBloque = ''
+  filtroTipoUbi = ''
   
   showButtonCreate: boolean = false;
   showButtonEdit: boolean = false;
@@ -35,10 +37,15 @@ export class UbicacionesComponent {
     {field:"tip_ubi_nombre", title:"TIPO DE UBICACION"}
   ]
 
-  constructor(private buildingEntity:BloqueService,private typeLocationEntity:TipoUbicacionService,private locationEntity:UbicacionService,){
+  constructor(private buildingEntity:BloqueService,
+    private typeLocationEntity:TipoUbicacionService,
+    private locationEntity:UbicacionService,
+    )
+    {
     this.loadBuildings();
     this.loadTypeLocations();
     this.loadLocations();
+    this.loadTypeLocation();
   }
 
   loadBuildings(){
@@ -53,6 +60,14 @@ export class UbicacionesComponent {
   loadTypeLocations(){
     this.typeLocationEntity.loadTipoUbicaciones().subscribe(data => {
       this.dataTypeLocation = data
+    },error => {
+      console.log(error)
+    })
+  }
+
+  loadTypeLocation(){
+    this.typeLocationEntity.loadBuildings().subscribe(data => {
+      this.dataFiltroTipoUbi = data
     },error => {
       console.log(error)
     })
@@ -130,9 +145,37 @@ export class UbicacionesComponent {
     }
   }
 
-  loadFiltroBloques(){
-    this.locationEntity.loadFilterLocationBuildings(this.filtroBloque).subscribe(data=>{
-      this.data = data
-    })
+  onFiltroTipUbiChange() {
+    console.log('Filtro Tipo Ubi Changed:', this.filtroTipoUbi);
+    if (this.filtroTipoUbi == 'TODOS') {
+      this.loadLocations();
+    } else {
+      this.loadFiltroTipoUbi();
+    }
   }
+
+
+  loadFiltroBloques(){
+    console.log('xxxxxxxxx:', this.filtroBloque);
+    console.log('Filtro Tipo Ubi Changed:', this.filtroBloque);
+      this.locationEntity.loadFilterLocationBuildings(this.filtroBloque).subscribe(data=>{
+      console.log('Filtered Data:', data);
+      this.data = data
+    })  
+  }
+
+  loadFiltroTipoUbi() {
+    console.log('Loading Filtered Locations for Tipo Ubi:', this.filtroTipoUbi);
+     this.locationEntity.loadFilterTypesBuildings(this.filtroTipoUbi).subscribe(data => {
+      console.log('Filtered Data:', data);
+      this.data = data;
+    }, error => {
+      console.log('Error loading filtered locations:', error);
+    });  
+  }
+
+
+
+
+
 }
