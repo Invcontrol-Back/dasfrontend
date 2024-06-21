@@ -150,31 +150,69 @@
 
 <div *ngIf="modalTransferOpen" class="modal">
   <div class="modal-content">
-    <span class="close" (click)="closeTransferModal()">&times;</span>
-    <h2>Transferir bienes</h2>
+    <mat-toolbar class="flex justify-between bg-red-700 text-white p-4 mat-toolbar-red">
+      <h3>Transferir bienes</h3>
+      <button mat-icon-button (click)="closeTransferModal()" class="hover:bg-red-900">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-toolbar>
     
-    <mat-form-field>
-      <mat-label>Encargado</mat-label>
-      <mat-select required [(ngModel)]="encargado_objetivo">
-        <mat-option *ngFor="let usuario of data" [value]="usuario.usu_id">
-          {{ usuario.usu_nombres }} {{usuario.usu_apellidos}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+    <mat-dialog-content class="rounded-lg p-4">
+      <div class="mb-4">
+        <mat-form-field class="w-full">
+          <mat-label>Encargado Actual</mat-label>
+          <mat-select required [(ngModel)]="encargado_actual" (selectionChange)="onEncargadoActualChange($event)">
+            <mat-option *ngFor="let usuario of data" [value]="usuario.usu_id">
+              {{ usuario.usu_nombres }} {{ usuario.usu_apellidos }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
 
-    <mat-form-field>
-      <mat-label>Inmuebles del Encargado Seleccionado</mat-label>
-      <textarea matInput readonly [ngModel]="inmueblesTexto"></textarea>
-    </mat-form-field>
+      <h3>Inmuebles del Encargado Seleccionado</h3>
+      <div class="select-all-container">
+        <mat-checkbox (change)="toggleSelectAllInmuebles($event.checked)">
+          Seleccionar Todos
+        </mat-checkbox>
+      </div>
+      <div class="scroll-container">
+        <div *ngFor="let inmueble of inmuebles">
+          <mat-checkbox [(ngModel)]="inmueble.selected">
+            {{ inmueble.inm_codigo }} - {{ inmueble.cat_nombre }}
+          </mat-checkbox>
+        </div>
+      </div>
 
-    <mat-form-field>
-      <mat-label>Inmuebles del Encargado Seleccionado</mat-label>
-      <textarea matInput readonly [ngModel]="tecnologicoTexto"></textarea>
-    </mat-form-field>
+      <h3>Bienes Tecnológicos del Encargado Seleccionado</h3>
+      <div class="select-all-container">
+        <mat-checkbox (change)="toggleSelectAllTecnologicos($event.checked)">
+          Seleccionar Todos
+        </mat-checkbox>
+      </div>
+      <div class="scroll-container">
+        <div *ngFor="let tecnologico of tecnologicos">
+          <mat-checkbox [(ngModel)]="tecnologico.selected">
+            {{ tecnologico.tec_codigo }} - {{ tecnologico.cat_nombre }}
+          </mat-checkbox>
+        </div>
+      </div>
 
-    <div class="button-container">
-      <button mat-button (click)="transferData()" [disabled]="!isValid()" [ngClass]="{'invalid-button': !isValid()}">Transferir</button>
-      <button mat-button (click)="closeTransferModal()" class="Cancelar">Cancelar</button>
-    </div>
+      <div class="mb-4">
+        <mat-form-field class="w-full">
+          <mat-label>Nuevo Encargado</mat-label>
+          <mat-select required [(ngModel)]="encargado_nuevo">
+            <mat-option *ngFor="let usuario of getFilteredUsuarios()" [value]="usuario.usu_id">
+              {{ usuario.usu_nombres }} {{ usuario.usu_apellidos }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="button-container">
+        <button mat-button (click)="transferData()" [disabled]="!isValid()" [ngClass]="{'invalid-button': !isValid()}">Transferir</button>
+        <button mat-button (click)="closeTransferModal()" class="Cancelar">Cancelar</button>
+      </div>
+      
+    </mat-dialog-content>
   </div>
 </div>
