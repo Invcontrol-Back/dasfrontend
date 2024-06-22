@@ -59,5 +59,14 @@ export class GeneralService {
     let url = 'http://localhost:8000/api/reporte/estadistica_usuario/'
     return this.http.get(url)
   }
+  loadEstInmobiliario(){
+    let url = 'http://127.0.0.1:8000/api/reporte/estadistica_categoria_inmobiliario/'
+    return this.http.get<any>(url)
+  }
+  loadEstTecnologico(){
+    let url = 'http://127.0.0.1:8000/api/reporte/estadistica_categoria_tecnologico/'
+    return this.http.get<any>(url)
+  }
+
 
 }

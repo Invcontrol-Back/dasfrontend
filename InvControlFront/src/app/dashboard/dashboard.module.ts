@@ -28,6 +28,10 @@ import { MatCardModule } from '@angular/material/card';
 import { LocalizacionesComponent } from './page/areas/localizaciones/localizaciones.component';
 import { CharacteristicRoutingModule } from './page/characteristic/characteristic-routing.module';
 import { ProfileComponent } from './profile/profile.component';
+import { NgApexchartsModule } from "ng-apexcharts";
+
+
+
 
 
 
@@ -76,8 +80,10 @@ import { ProfileComponent } from './profile/profile.component';
     MatCardModule,
     CharacteristicRoutingModule,
     ReactiveFormsModule,
+    NgApexchartsModule,
     MatCheckboxModule,
     MatToolbarModule
+
 
   ],
   exports:[
