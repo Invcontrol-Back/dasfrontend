@@ -1,45 +1,45 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página de Inicio</title>
-</head>
-<body>
-      
-    <div class="card-container">
-        <mat-card *ngFor="let item of items">
-            <mat-card-header>{{ item.titulo }}</mat-card-header>
-            <mat-card-content class="contenido-flex">
-                <div class="contenido-izquierda">
-                    <p><strong>{{ item.disponibles }}</strong></p>
-                    <p>Disponibles</p>
-                    <div class="linea-horizontal"></div>
-                    <p><strong>{{ item.nodisponibles }}</strong></p>
-                    <p>Baja</p>
-                </div>
-                <div class="icono-derecha">
-                    <mat-icon fontIcon="{{ item.icono }}"></mat-icon>
-                </div>
-            </mat-card-content>
-        </mat-card>
-    </div>
+<div class="flex flex-wrap p-3 m-2">
+  <mat-card *ngFor="let item of items" class="bg-slate-50 flex-1 m-2 max-w-xs rounded-lg">
+    <mat-card-header class="bg-red-700 rounded-lg">
+      <mat-card-title>
+        <a class="text-slate-100">{{ item.titulo }}</a>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="flex flex-col justify-between md:flex-row md:justify-between items-start">
+      <div>
+        <p><strong>{{ item.disponibles }}</strong></p>
+        <p class="font-bold italic">Activos</p>
+        <div class="border-separate border border-slate-900"></div>
+        <p><strong>{{ item.nodisponibles }}</strong></p>
+        <p class="font-bold italic">Inactivos</p>
+      </div>
+      <div class="mt-4 md:mt-0 md:ml-4">
+        <mat-icon>{{ item.icono }}</mat-icon>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  
+</div>
+<div class="flex justify-center grid-cols-2">
+  <div id="chart">
+    <apx-chart
+    [series]="chartOptions.series!"
+    [chart]="chartOptions.chart!"
+    [labels]="chartOptions.labels"
+    [responsive]="chartOptions.responsive!"
+  ></apx-chart>
 
-    <div class="card-container">
-        <!--<mat-card>
-            <mat-card-header class="centrar-contenido">Bienes Tecnológicos</mat-card-header>
-            <mat-card-content class="contenido-flex">
-                <div class="chart-container">
-                    <div class="chart" *ngFor="let data of datos">
-                        
-                        <div class="label">{{ data.valor }}</div>
-                        <div class="bar" [style.height.px]="data.valor * escala"></div>
-                        <div class="label">{{ data.nombre }}</div>
-                    </div>
-                </div>
-            </mat-card-content>
-        </mat-card>-->
-        <img mat-card-image src="https://utaep.com.ec/wp/wp-content/uploads/2020/12/logo-uta.png" alt="My Image">
-    </div>
-</body>
-</html>
+  </div>
+  <div id="chart">
+    <apx-chart
+      [series]="barChartOptions.series!"
+      [chart]="barChartOptions.chart!"
+      [xaxis]="barChartOptions.xaxis!"
+      [responsive]="barChartOptions.responsive!"
+    ></apx-chart>
+  </div>
+
+
+</div>
+
+
