@@ -16,10 +16,12 @@ import { FormsModule} from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatOptionModule } from '@angular/material/core';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { UbicacionesComponent } from './page/areas/ubicaciones/ubicaciones.component';
 import { ReportPageComponent } from './page/report-page/report-page.component';
 import { MatCardModule } from '@angular/material/card';
@@ -79,10 +81,8 @@ import { NgApexchartsModule } from "ng-apexcharts";
     CharacteristicRoutingModule,
     ReactiveFormsModule,
     NgApexchartsModule,
-  
-
-
-    
+    MatCheckboxModule,
+    MatToolbarModule
 
 
   ],

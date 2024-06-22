@@ -8,7 +8,6 @@
       <input matInput (input)="applyFilter($event)" placeholder="Ingrese la cédula" (keydown)="onKeyDown($event)">
     </mat-form-field>
     <app-table [data]="data" [metaDataColumns]="metaDataColumns">
-      
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let row" class="alignButton">
@@ -23,23 +22,28 @@
           </button>
         </td>
       </ng-container>
-
     </app-table>
   </div>
 </div>
 
+<!-- Crear Usuario Modal -->
 <div *ngIf="modalOpen && action === 'crear'" class="modal">
   <div class="modal-content">
-    <span class="close" (click)="closeModal()">&times;</span>
-    <h2>Crear Usuario</h2>
-    <div class="form-grid">
-      <div class="form-group">
-        <mat-form-field>
+    <mat-toolbar class="flex justify-between bg-red-700 text-white p-4 mat-toolbar-red">
+      <h3>Crear Usuario</h3>
+      <button mat-icon-button (click)="closeModal()" class="hover:bg-red-900">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-toolbar>
+
+    <mat-dialog-content class="rounded-lg p-4">
+      <div class="form-grid">
+        <mat-form-field class="w-full">
           <mat-label>Cédula</mat-label>
           <input type="text" matInput required placeholder="Ingrese la cédula" [(ngModel)]="selectedUser.usu_cedula" (keydown)="onKeyDown($event)" maxlength="10">
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field class="w-full">
           <mat-label>Estado</mat-label>
           <mat-select [(ngModel)]="selectedUser.usu_habilitado">
             <mat-option value="ACTIVO">ACTIVO</mat-option>
@@ -47,25 +51,26 @@
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field class="w-full">
           <mat-label>Nombres</mat-label>
-          <input type="text" matInput required placeholder="Ingrese el usuario" [(ngModel)]="selectedUser.usu_nombres">
+          <input type="text" matInput required placeholder="Ingrese el nombre" [(ngModel)]="selectedUser.usu_nombres">
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field class="w-full">
           <mat-label>Apellidos</mat-label>
-          <input type="text" matInput required placeholder="Ingrese los nombres" [(ngModel)]="selectedUser.usu_apellidos">
+          <input type="text" matInput required placeholder="Ingrese los apellidos" [(ngModel)]="selectedUser.usu_apellidos">
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field class="w-full">
           <mat-label>Correo</mat-label>
           <input type="text" matInput required placeholder="Ingrese el correo" [(ngModel)]="selectedUser.usu_correo">
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field class="w-full">
           <mat-label>Contraseña</mat-label>
           <input type="text" matInput required placeholder="Ingrese la contraseña" [(ngModel)]="selectedUser.usu_contrasenia">
         </mat-form-field>
-        <mat-form-field>
+
+        <mat-form-field class="w-full">
           <mat-label>Rol</mat-label>
           <mat-select required [(ngModel)]="selectedUser.usu_rol">
             <mat-option *ngFor="let rol of dataRoles" [value]="rol.rol_id">
@@ -74,26 +79,33 @@
           </mat-select>
         </mat-form-field>
       </div>
-    </div>
-    <div class="button-container">
-      <button mat-button (click)="saveData()" [disabled]="!isFormValid()" [ngClass]="{'invalid-button': !isFormValid()}">Guardar</button>
-      <button mat-button (click)="closeModal()" class="Cancelar">Cancelar</button>
-    </div>
+
+      <div class="button-container">
+        <button mat-button (click)="saveData()" [disabled]="!isFormValid()" [ngClass]="{'invalid-button': !isFormValid()}">Guardar</button>
+        <button mat-button (click)="closeModal()" class="Cancelar">Cancelar</button>
+      </div>
+    </mat-dialog-content>
   </div>
 </div>
 
+<!-- Editar Usuario Modal -->
 <div *ngIf="modalOpen && action === 'actualizar'" class="modal">
   <div class="modal-content">
-    <span class="close" (click)="closeModal()">&times;</span>
-    <h2>Editar Usuario</h2>
-    <div class="form-grid">
-      <div class="form-group">
-        <mat-form-field>
+    <mat-toolbar class="flex justify-between bg-red-700 text-white p-4 mat-toolbar-red">
+      <h3>Editar Usuario</h3>
+      <button mat-icon-button (click)="closeModal()" class="hover:bg-red-900">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-toolbar>
+
+    <mat-dialog-content class="rounded-lg p-4">
+      <div class="form-grid">
+        <mat-form-field class="w-full">
           <mat-label>Cédula</mat-label>
           <input type="text" matInput required placeholder="Ingrese la cédula" [(ngModel)]="selectedUser.usu_cedula">
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field class="w-full">
           <mat-label>Estado</mat-label>
           <mat-select [(ngModel)]="selectedUser.usu_habilitado">
             <mat-option value="ACTIVO">ACTIVO</mat-option>
@@ -101,25 +113,26 @@
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field class="w-full">
           <mat-label>Nombres</mat-label>
-          <input type="text" matInput required placeholder="Ingrese el usuario" [(ngModel)]="selectedUser.usu_nombres">
+          <input type="text" matInput required placeholder="Ingrese el nombre" [(ngModel)]="selectedUser.usu_nombres">
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field class="w-full">
           <mat-label>Apellidos</mat-label>
-          <input type="text" matInput required placeholder="Ingrese los nombres" [(ngModel)]="selectedUser.usu_apellidos">
+          <input type="text" matInput required placeholder="Ingrese los apellidos" [(ngModel)]="selectedUser.usu_apellidos">
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field class="w-full">
           <mat-label>Correo</mat-label>
           <input type="text" matInput required placeholder="Ingrese el correo" [(ngModel)]="selectedUser.usu_correo">
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field class="w-full">
           <mat-label>Contraseña</mat-label>
           <input type="text" matInput required placeholder="Ingrese la contraseña" [(ngModel)]="selectedUser.usu_contrasenia">
         </mat-form-field>
-        <mat-form-field>
+
+        <mat-form-field class="w-full">
           <mat-label>Rol</mat-label>
           <mat-select required [(ngModel)]="selectedUser.usu_rol">
             <mat-option *ngFor="let rol of dataRoles" [value]="rol.rol_id">
@@ -128,53 +141,101 @@
           </mat-select>
         </mat-form-field>
       </div>
-    </div>
-    <div class="button-container">
-      <button mat-button (click)="updateData()" [disabled]="!isFormValid()" [ngClass]="{'invalid-button': !isFormValid()}">Actualizar</button>
-      <button mat-button (click)="closeModal()" class="Cancelar">Cancelar</button>
-    </div>
+
+      <div class="button-container">
+        <button mat-button (click)="updateData()" [disabled]="!isFormValid()" [ngClass]="{'invalid-button': !isFormValid()}">Actualizar</button>
+        <button mat-button (click)="closeModal()" class="Cancelar">Cancelar</button>
+      </div>
+    </mat-dialog-content>
   </div>
 </div>
 
+<!-- Eliminar Usuario Modal -->
 <div *ngIf="modalDeleteOpen" class="modal">
   <div class="modal-content">
-    <span class="close" (click)="closeDeleteModal()">&times;</span>
-    <h2>Eliminar Usuario</h2>
-    <span>¿Está seguro de dar de baja este usuario?</span>
-    <div class="button-container">
-      <button mat-button (click)="deleteData()">Eliminar</button>
-      <button mat-button (click)="closeDeleteModal()" class="Cancelar">Cancelar</button>
-    </div>
+    <mat-toolbar class="flex justify-between bg-red-700 text-white p-4 mat-toolbar-red">
+      <h3>Eliminar Usuario</h3>
+      <button mat-icon-button (click)="closeDeleteModal()" class="hover:bg-red-900">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-toolbar>
+
+    <mat-dialog-content class="rounded-lg p-4">
+      <p>¿Está seguro de dar de baja este usuario?</p>
+      <div class="button-container">
+        <button mat-button (click)="deleteData()">Eliminar</button>
+        <button mat-button (click)="closeDeleteModal()" class="Cancelar">Cancelar</button>
+      </div>
+    </mat-dialog-content>
   </div>
 </div>
 
+<!-- Transferir Bienes Modal -->
 <div *ngIf="modalTransferOpen" class="modal">
   <div class="modal-content">
-    <span class="close" (click)="closeTransferModal()">&times;</span>
-    <h2>Transferir bienes</h2>
+    <mat-toolbar class="flex justify-between bg-red-700 text-white p-4 mat-toolbar-red">
+      <h3>Transferir bienes</h3>
+      <button mat-icon-button (click)="closeTransferModal()" class="hover:bg-red-900">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-toolbar>
     
-    <mat-form-field>
-      <mat-label>Encargado</mat-label>
-      <mat-select required [(ngModel)]="encargado_objetivo">
-        <mat-option *ngFor="let usuario of data" [value]="usuario.usu_id">
-          {{ usuario.usu_nombres }} {{usuario.usu_apellidos}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+    <mat-dialog-content class="rounded-lg p-4">
+      <div class="mb-4">
+        <mat-form-field class="w-full">
+          <mat-label>Encargado Actual</mat-label>
+          <mat-select required [(ngModel)]="encargado_actual" (selectionChange)="onEncargadoActualChange($event)">
+            <mat-option *ngFor="let usuario of data" [value]="usuario.usu_id">
+              {{ usuario.usu_nombres }} {{ usuario.usu_apellidos }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
 
-    <mat-form-field>
-      <mat-label>Inmuebles del Encargado Seleccionado</mat-label>
-      <textarea matInput readonly [ngModel]="inmueblesTexto"></textarea>
-    </mat-form-field>
+      <h3>Inmuebles del Encargado Seleccionado</h3>
+      <div class="select-all-container">
+        <mat-checkbox (change)="toggleSelectAllInmuebles($event.checked)">
+          Seleccionar Todos
+        </mat-checkbox>
+      </div>
+      <div class="scroll-container">
+        <div *ngFor="let inmueble of inmuebles">
+          <mat-checkbox [(ngModel)]="inmueble.selected">
+            {{ inmueble.inm_codigo }} - {{ inmueble.cat_nombre }}
+          </mat-checkbox>
+        </div>
+      </div>
 
-    <mat-form-field>
-      <mat-label>Inmuebles del Encargado Seleccionado</mat-label>
-      <textarea matInput readonly [ngModel]="tecnologicoTexto"></textarea>
-    </mat-form-field>
+      <h3>Bienes Tecnológicos del Encargado Seleccionado</h3>
+      <div class="select-all-container">
+        <mat-checkbox (change)="toggleSelectAllTecnologicos($event.checked)">
+          Seleccionar Todos
+        </mat-checkbox>
+      </div>
+      <div class="scroll-container">
+        <div *ngFor="let tecnologico of tecnologicos">
+          <mat-checkbox [(ngModel)]="tecnologico.selected">
+            {{ tecnologico.tec_codigo }} - {{ tecnologico.cat_nombre }}
+          </mat-checkbox>
+        </div>
+      </div>
 
-    <div class="button-container">
-      <button mat-button (click)="transferData()" [disabled]="!isValid()" [ngClass]="{'invalid-button': !isValid()}">Transferir</button>
-      <button mat-button (click)="closeTransferModal()" class="Cancelar">Cancelar</button>
-    </div>
+      <div class="mb-4">
+        <mat-form-field class="w-full">
+          <mat-label>Nuevo Encargado</mat-label>
+          <mat-select required [(ngModel)]="encargado_nuevo">
+            <mat-option *ngFor="let usuario of getFilteredUsuarios()" [value]="usuario.usu_id">
+              {{ usuario.usu_nombres }} {{ usuario.usu_apellidos }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="button-container">
+        <button mat-button (click)="transferData()" [disabled]="!isValid()" [ngClass]="{'invalid-button': !isValid()}">Transferir</button>
+        <button mat-button (click)="closeTransferModal()" class="Cancelar">Cancelar</button>
+      </div>
+      
+    </mat-dialog-content>
   </div>
 </div>

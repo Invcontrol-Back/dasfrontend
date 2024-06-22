@@ -8,6 +8,7 @@ import { UsuarioService } from '../../services/usuario/usuario.service';
 import { RolService } from '../../services/rol/rol.service';
 import { InmobiliarioService } from '../../services/inmobiliario/inmobiliario.service';
 import { TecnologicoService } from '../../services/tecnologico/tecnologico.service';
+import { Inmueble, Tecnologico } from './interfaces/interfaces';
 
 @Component({
   selector: 'app-user-page',
@@ -29,8 +30,8 @@ export class UserPageComponent {
   dataRoles:any[] = []
   inmueblesTexto: string = '';
   tecnologicoTexto: string = '';
-  inmuebles: any[] = [];
-  tecnologicos: any[] = [];
+  inmuebles: Inmueble[] = [];
+  tecnologicos: Tecnologico[] = [];
 
   modalOpen = false;
   modalDeleteOpen = false;
@@ -38,7 +39,8 @@ export class UserPageComponent {
   selectedUser: any = {};
   titleText = '';
   action = '';
-  encargado_objetivo = '';
+  encargado_actual = '';
+  encargado_nuevo = '';
   showButtonCreate = false;
   showButtonEdit = false;
 
@@ -61,6 +63,10 @@ export class UserPageComponent {
     })
   }
 
+  getFilteredUsuarios(): any[] {
+    return this.data.filter(usuario => usuario.usu_id !== this.encargado_actual);
+  }
+  
   ngOnInit(): void {}
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -100,28 +106,38 @@ export class UserPageComponent {
   closeDeleteModal(): void {
     this.modalDeleteOpen = false;
   }
-  openTransferModal(user:any):void{
-    this.entidadInmueble.obtenerInmueblesEncargado(user.usu_id).subscribe(
-      response => {
-        this.inmuebles = response;
-        this.actualizarTextoInmuebles();
-      },
-      error => {
-        console.error('Error al buscar inmuebles', error);
-      }
-    );
-    this.entidadTecnologico.obtenerTecnologicoEncargado(user.usu_id).subscribe(
-      response => {
-        this.tecnologicos = response;
-        this.actualizarTextoTecnologico();
-      },
-      error => {
-        console.error('Error al buscar inmuebles', error);
-      }
-    );
-    this.modalTransferOpen = true;
+  openTransferModal(user: any): void {
+    this.encargado_actual = user.usu_id; // Establecer el encargado actual como el encargado actual al abrir el modal
     this.selectedUser = { ...user };
+
+    this.loadBienes(user.usu_id);
+    this.modalTransferOpen = true;
   }
+
+  loadBienes(encargadoId: string): void {
+    this.entidadInmueble.obtenerInmueblesEncargado(encargadoId).subscribe(
+      (response: Inmueble[]) => {
+        this.inmuebles = response.map((inmueble: Inmueble) => ({ ...inmueble, selected: false }));
+      },
+      error => {
+        console.error('Error al buscar inmuebles', error);
+      }
+    );
+    this.entidadTecnologico.obtenerTecnologicoEncargado(encargadoId).subscribe(
+      (response: Tecnologico[]) => {
+        this.tecnologicos = response.map((tecnologico: Tecnologico) => ({ ...tecnologico, selected: false }));
+      },
+      error => {
+        console.error('Error al buscar bienes tecnológicos', error);
+      }
+    );
+  }
+
+  onEncargadoActualChange(event: any): void {
+    const newEncargadoId = event.value;
+    this.loadBienes(newEncargadoId);
+  }
+
   closeTransferModal(): void {
     this.modalTransferOpen = false;
   }
@@ -157,17 +173,40 @@ export class UserPageComponent {
   }
 
   transferData() {
-    console.log(this.selectedUser)
-    const entidad = {encargado_anterior:this.selectedUser.usu_id,encargado_nuevo:this.encargado_objetivo}
-    this.entidadUsuario.transferirBienesGenerales(entidad).subscribe(
+    // Filtrar los inmuebles y tecnológicos seleccionados
+    const selectedInmuebles = this.inmuebles.filter(inmueble => inmueble.selected).map(inmueble => inmueble.inm_codigo);
+    const selectedTecnologicos = this.tecnologicos.filter(tecnologico => tecnologico.selected).map(tecnologico => tecnologico.tec_codigo);
+
+    // Crear el objeto de datos para la transferencia
+    const transferData = {
+      encargado_anterior: this.encargado_actual,
+      encargado_nuevo: this.encargado_nuevo,
+      inmuebles: selectedInmuebles,
+      tecnologicos: selectedTecnologicos
+    };
+
+    // Llamar al servicio de transferencia de bienes
+    this.entidadUsuario.transferirBienesGenerales(transferData).subscribe(
       response => {
-        this.closeTransferModal()
+        // Cerrar el modal en caso de éxito
+        this.closeTransferModal();
       },
       error => {
-        console.error('Error al actualizar bienes', error);
+        // Manejar el error
+        console.error('Error al transferir bienes', error);
       }
     );
   }
+
+
+  toggleSelectAllInmuebles(selectAll: boolean): void {
+    this.inmuebles.forEach(inmueble => inmueble.selected = selectAll);
+  }
+  
+  toggleSelectAllTecnologicos(selectAll: boolean): void {
+    this.tecnologicos.forEach(tecnologico => tecnologico.selected = selectAll);
+  }
+
   resetSelectedUser() {
     this.selectedUser = {
       cedula: '',
@@ -186,7 +225,8 @@ export class UserPageComponent {
     && this.selectedUser.usu_habilitado && this.selectedUser.usu_rol && this.selectedUser.usu_correo && this.selectedUser.usu_contrasenia;
   } 
 
-  isValid():boolean{
-    return this.encargado_objetivo != ''
+  isValid(): boolean {
+    return this.encargado_actual !== '' && this.encargado_nuevo !== '' && (this.inmuebles.some(inmueble => inmueble.selected) || this.tecnologicos.some(tecnologico => tecnologico.selected));
   }
 }
+
