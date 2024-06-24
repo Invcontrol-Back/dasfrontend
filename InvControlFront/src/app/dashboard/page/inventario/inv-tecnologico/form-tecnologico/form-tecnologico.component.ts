@@ -125,7 +125,7 @@ private entidadBloque:BloqueService,private entidadUbicacion:UbicacionService){
     })
   }
   loadCategorias(){
-    this.entidadCategoria.loadCategorias().subscribe(data => {
+    this.entidadCategoria.loadCategoriasEspecificas('TECNOLOGICO').subscribe(data => {
       this.dataCategoria = data
     },error => {
       console.log(error)

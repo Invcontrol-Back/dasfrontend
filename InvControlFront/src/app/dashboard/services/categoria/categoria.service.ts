@@ -24,4 +24,8 @@ export class CategoriaService {
   deleteCategory(id:any):Observable<any> {
     return this.http.delete(this.url+id+'/')
   }
+  loadCategoriasEspecificas(tipo:any):Observable<any>{
+    const url_complementaria = 'recuperar_tipo_categoria/?tipo='
+    return this.http.get(this.url+url_complementaria+tipo)
+  }
 }

@@ -81,7 +81,7 @@ export class InvNoTecnologicoComponent {
   }
 
   loadCategorias() {
-    this.entidadCategoria.loadCategorias().subscribe(data=>{
+    this.entidadCategoria.loadCategoriasEspecificas('INMOBILIARIO').subscribe(data=>{
       this.dataCategoria = data
     })
   }
