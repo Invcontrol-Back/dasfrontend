@@ -16,7 +16,6 @@ export class SideVarComponent {
       items: [{label:'Tecnologico', icon: 'computer', routerLink:'./tech'},
       {label:'Inmobiliario', icon: 'chair', routerLink:'./notech'},
       {label:'Software', icon: 'developer_board', routerLink:'./software'},
-      {label:'Componentes', icon: 'devices', routerLink:'./component'}
       ]
     },
      

@@ -68,5 +68,8 @@ export class GeneralService {
     return this.http.get<any>(url)
   }
 
-
+  loadReporteTecnologicoNecesidades(ubicacion:any){
+    let url = 'http://localhost:8000/api/reporte/reporte_tecnologico_necesidades/?ubicacion='
+    return this.http.get(url+ubicacion)
+  }
 }

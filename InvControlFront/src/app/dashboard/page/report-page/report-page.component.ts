@@ -89,6 +89,7 @@ export class ReportPageComponent {
         {id:"ETIQUETAS",nombre:"ETIQUETAS"},
         {id:"DITIC",nombre:"DITIC"},
         {id:"GENERAL",nombre:"GENERAL"},
+        {id:"NECESIDADES",nombre:"NECESIDADES"},
       ]
     }else if (event.value=='INMOBILIARIO'){
       this.detalleUno = [
@@ -115,6 +116,9 @@ export class ReportPageComponent {
       this.mostrarDocumento = true
     }else if (event.value == 'UBICACION'){
       this.mostrarEncargados = false
+      this.mostrarUbicaciones = true
+      this.mostrarDocumento = true
+    }else if(event.value=='NECESIDADES'){
       this.mostrarUbicaciones = true
       this.mostrarDocumento = true
     }else if(event.value=='ETIQUETAS'){
@@ -170,6 +174,8 @@ export class ReportPageComponent {
           this.reporteUbicacionTecnologico()
       }else if(this.detalleSeleccionado =='ENCARGADO'){
           this.reporteEncargadoTecnologico()
+      }else if(this.detalleSeleccionado == 'NECESIDADES'){
+          this.reporteNecesidadesTecnologico()
       }
     }else if (this.tipoReporteSeleccionado =='INMOBILIARIO'){
       if(this.detalleSeleccionado =='GENERAL'){
@@ -249,7 +255,20 @@ export class ReportPageComponent {
     })
   }
   //FIN REPORTE ENCARGADO TECNOLOGICO
-
+  //INICIO REPORTE NECESIDADES TECNOLOGICO
+  reporteNecesidadesTecnologico(){
+    this.entidadGeneral.loadReporteTecnologicoNecesidades(this.laboratorioSeleccionado).subscribe(data=>{
+      if (this.documentoSeleccionado == 'EXCEL'){
+        const dataEstructurado = this.estructuraTecnologicoNecesidades(data)
+        this.exportToExcel(dataEstructurado,'reporteTecnologicoNecesidades')
+      }else{
+        const dataEstructurado = this.estructuraTecnologicoNecesidades(data)
+        const definicion = this.PDFNecesidadesTecnologico(dataEstructurado)
+        this.exportToPdf(definicion,'reporteTecnologicoNecesidades')
+      }
+    })
+  }
+  //FIN REPORTE NECESIDADES TECNOLOGICO
   //REPORTE UBICAICON TECNOLOGICO
   reporteUbicacionTecnologico(){
     this.entidadGeneral.loadReporteTecnologicoUbicacion(this.laboratorioSeleccionado).subscribe(data=>{
@@ -580,5 +599,49 @@ export class ReportPageComponent {
     });
   
     return datos;
+  }
+
+  estructuraTecnologicoNecesidades(data:any){
+    const datosFiltrados = data.map((item:any) => {
+      const componentes = item.componentes.map((detalle: any) => {
+        return detalle
+      }).join('\n'); 
+
+      return {
+        codigo: item.codigo,
+        nombre: item.nombre,
+        etiqueta: item.etiqueta,
+        componentes : componentes
+      };
+    });
+    return datosFiltrados
+  }
+  PDFNecesidadesTecnologico(data:any){
+    const content: any =  [
+      {
+        layout: 'lightHorizontalLines',
+        table: {
+          headerRows: 1,
+          widths: [ '*', '*', '*', '*'],
+          body: this.lecturaFilasNecesidadesTecnologico(data)
+          
+        }
+      }
+    ];
+    const documentDefinition: any = {
+      content: content,
+    };
+
+    return documentDefinition
+  }
+
+  lecturaFilasNecesidadesTecnologico(data:any){
+    const json:any = [ ['CODIGO','NOMBRE','ETIQUETA','COMPONENTES'] ]
+    data.forEach((row: any) => {
+      json.push(
+        [ row.codigo,row.nombre,row.etiqueta,row.componentes]
+      )
+    })
+    return json;
   }
 }

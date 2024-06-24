@@ -21,6 +21,7 @@ export class FormTecnologicoComponent {
   formulario!: FormGroup;
 
   titulo=''
+  tec= ''
   dataTipoUbicacion:any[] = []
   dataEncargado:any[] = []
   dataCategoria:any[] = []
@@ -34,6 +35,7 @@ private entidadLocalizacion:LocalizacionService,private entidadUsuario:UsuarioSe
 private entidadDependencia:DependenciaService,private entidadTecnologico:TecnologicoService,private entidadMarca:MarcaService,
 private entidadBloque:BloqueService,private entidadUbicacion:UbicacionService){
    this.titulo=data?'EDICION':'NUEVO'
+   this.tec=data?data.cat_nombre + ' '+ data.tec_codigo:''
    this.loadLocalizaciones()
    this.loadUsuarios()
    this.loadCategorias()
