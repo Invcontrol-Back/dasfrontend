@@ -53,9 +53,10 @@
 
             <mat-form-field class="w-full">
                 <mat-label>Año de Ingreso</mat-label>
-                <input type="text" formControlName="tec_anio_ingreso" required matInput>
+                <input type="text" formControlName="tec_anio_ingreso" required matInput (keypress)="onlyNumberKey($event)" maxlength="4">
             </mat-form-field>
-
+            
+            
             <mat-form-field class="w-full">
                 <mat-label>Laboratorista Encargado</mat-label>
                 <mat-select formControlName="tec_encargado">

@@ -1,48 +1,48 @@
-
-
 <mat-toolbar class="flex justify-between bg-red-700 rounded-lg text-white">
-    <h3>{{titulo}} COMPONENTE</h3>
+    <h3>{{ titulo }} COMPONENTE</h3>
     <button mat-icon-button mat-dialog-close>
-        <mat-icon>
-            close
-        </mat-icon>
-
+        <mat-icon>close</mat-icon>
     </button>
 </mat-toolbar>
+
 <mat-dialog-content>
     <form fxLayout="column" [formGroup]="formulario">
-        <div class="grid grid-cols-2 space-x-6 ">
+        <div class="grid grid-cols-2 gap-6">
 
-            <mat-form-field >
+            <mat-form-field>
                 <mat-label>Marca</mat-label>
                 <mat-select formControlName="com_mar">
-                    <mat-option *ngFor="let marca of dataMarca" [value]="marca.mar_id">{{ marca.mar_nombre }}</mat-option>
+                    <mat-option *ngFor="let marca of dataMarca" [value]="marca.mar_id">
+                        {{ marca.mar_nombre }}
+                    </mat-option>
                 </mat-select>
             </mat-form-field>
 
-            <mat-form-field class="flex-1" >
+            <mat-form-field>
                 <mat-label>Modelo</mat-label>
                 <input type="text" formControlName="com_modelo" matInput placeholder="Ingrese el modelo">
             </mat-form-field>
 
-            <mat-form-field class="flex-1" >
+            <mat-form-field>
                 <mat-label>N° Serie Componente</mat-label>
                 <input type="text" formControlName="com_serie" matInput placeholder="Ingrese la serie">
             </mat-form-field>
-              
-            <mat-form-field class="flex-1" >
+
+            <mat-form-field>
                 <mat-label>Caracteristica</mat-label>
-                <input type="text" formControlName="com_caracteristica" matInput placeholder="Ingrese la caraacterística">
+                <input type="text" formControlName="com_caracteristica" matInput placeholder="Ingrese la característica">
             </mat-form-field>
 
-            <mat-form-field >
+            <mat-form-field>
                 <mat-label>Subcategoria</mat-label>
                 <mat-select formControlName="com_det_cat">
-                    <mat-option *ngFor="let subcategoria of dataSubcategoria" [value]="subcategoria.det_cat_id">{{ subcategoria.det_cat_nombre }}</mat-option>
+                    <mat-option *ngFor="let subcategoria of dataSubcategoria" [value]="subcategoria.det_cat_id">
+                        {{ subcategoria.det_cat_nombre }}
+                    </mat-option>
                 </mat-select>
             </mat-form-field>
 
-            <mat-form-field class="form-field">
+            <mat-form-field>
                 <mat-label>Estado</mat-label>
                 <mat-select formControlName="com_estado" placeholder="Seleccione el Estado">
                     <mat-option *ngFor="let tipo of tipos" [value]="tipo">
@@ -52,50 +52,28 @@
             </mat-form-field>
 
         </div>
-        
-        <div class="flex justify-between px-6 ">
-            <button
-             class="bg-red-700 rounded-lg hover:bg-red-950"
-            
-                mat-raised-button
 
+        <div class="flex justify-between mt-4">
+            <button
+                class="bg-red-700 rounded-lg hover:bg-red-900 text-white font-bold boton-largo"
+                mat-raised-button
                 type="button"
                 (click)="grabar()">
-                <a class="text-white  font-bold no-underline">Grabar</a>
-
+                Grabar
             </button>
             <button
                 mat-button
-                class="bg-red-700 rounded-lg hover:bg-red-950"
-
+                class="bg-red-700 rounded-lg hover:bg-red-900 text-white font-bold boton-largo"
                 type="button"
-               mat-dialog-close>
-               <a class="text-white  font-bold no-underline">Cancelar</a>
-
+                mat-dialog-close>
+                Cancelar
             </button>
-
         </div>
-
     </form>
 </mat-dialog-content>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<style>
+    .boton-largo {
+        width: 5cm;
+    }
+</style>
