@@ -82,6 +82,17 @@ Este proyecto ha sido configurado utilizando las siguientes herramientas y tecno
 
 
 -----
+# Autores ✒️
 
+El proyecto fue posible gracias a la contribución de las siguientes personas:
 
+- **Katerin Cecen Rubio** - [Katerin Cecen](https://github.com/Katerin2001)
+- **Angel Pilamunga** - [Angel Pilamunga](https://github.com/AngelDark0) 
+- **Sebastian Ilbay**  - [Sebastian Ilbay](https://github.com/ATLASSdeveloper)
+- **Daniel Sanchez**  - [Daniel Sanchez](https://github.com/danianderz)
+- **Kevin Saquinga** - [Kevin Saquinga](https://github.com/KEVIN-XTREM-2023))
+---------
+
+<!-- Agrega más capturas de pantalla según sea necesario -->
+Agradecemos a todos los [contribuyentes](#contribuyentes) que han participado en este proyecto. 🌟
 
