@@ -112,3 +112,79 @@ button:hover {
 .form-field.full-width {
   flex-basis: 100%;
 }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.grid-cols-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.col-span-1 {
+  grid-column: span 1;
+}
+
+.col-span-3 {
+  grid-column: span 3;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.grid-cols-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.col-span-1 {
+  grid-column: span 1;
+}
+
+.col-span-2 {
+  grid-column: span 2;
+}
+
+.col-span-3 {
+  grid-column: span 3;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.contenedorInput{
+  width:100%;
+display:flex;
+flex-direction: row;
+gap:10px;
+
+}
+.input1,.input2{
+  width: 50%;
+
+}
+ 
+

@@ -84,3 +84,8 @@ button:hover{
     margin-bottom: 20px;
     margin-left: 10px;
   }
+  .contenedorTabla{
+    max-width:100vw;
+    overflow-x: scroll;
+
+  }

@@ -39,79 +39,80 @@
     <span class="close" (click)="closeModal()">&times;</span>
     <h2>{{ titleText }}</h2>
     
-    <mat-form-field >
-        <mat-label>Bloque</mat-label>
-        <mat-select (selectionChange)="onSelectionChangeBloque($event)">
-            <mat-option *ngFor="let bloque of dataBloque" [value]="bloque.blo_id">{{ bloque.blo_nombre }}</mat-option>
-        </mat-select>
-    </mat-form-field>
-    <mat-form-field >
-        <mat-label>Ubicacion</mat-label>
-        <mat-select (selectionChange)="onSelectionChangeUbicacion($event)">
-            <mat-option *ngFor="let ubicacion of dataUbicacion" [value]="ubicacion.ubi_id">{{ ubicacion.ubi_nombre }}</mat-option>
-        </mat-select>
-    </mat-form-field>
-
     <form [formGroup]="formulario">
-      <div class="grid grid-cols-2 space-x-6 ">
+      <div class="contenedorInput">
+        <mat-form-field class="input1">
+            <mat-label>Bloque</mat-label>
+            <mat-select (selectionChange)="onSelectionChangeBloque($event)">
+                <mat-option *ngFor="let bloque of dataBloque" [value]="bloque.blo_id">{{ bloque.blo_nombre }}</mat-option>
+            </mat-select>
+        </mat-form-field>
 
-          <mat-form-field class="mx-4 w-48"  >
+        <mat-form-field class="input2">
+            <mat-label>Ubicación</mat-label>
+            <mat-select (selectionChange)="onSelectionChangeUbicacion($event)">
+                <mat-option *ngFor="let ubicacion of dataUbicacion" [value]="ubicacion.ubi_id">{{ ubicacion.ubi_nombre }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="grid grid-cols-3 gap-6">
+          <mat-form-field class="col-span-1">
               <mat-label>Código</mat-label>
               <input type="text" formControlName="inm_codigo" matInput placeholder="Ingrese el codigo">
           </mat-form-field>
 
-          <mat-form-field >
+          <mat-form-field class="col-span-1">
               <mat-label>Marca</mat-label>
               <mat-select formControlName="inm_mar">
                   <mat-option *ngFor="let marca of dataMarca" [value]="marca.mar_id">{{ marca.mar_nombre }}</mat-option>
               </mat-select>
           </mat-form-field>
 
-          <mat-form-field >
+          <mat-form-field class="col-span-1">
               <mat-label>Modelo</mat-label>
               <input type="text" formControlName="inm_modelo" matInput placeholder="Ingrese el modelo">
           </mat-form-field>
-  
 
-          <mat-form-field class="w-48" >
+          <mat-form-field class="col-span-1">
               <mat-label>N° Serie</mat-label>
               <input type="text" formControlName="inm_serie" matInput placeholder="Ingrese la serie">
-            </mat-form-field>
-            
-          <mat-form-field >
+          </mat-form-field>
+
+          <mat-form-field class="col-span-1">
               <mat-label>Año de Ingreso</mat-label>
               <input type="text" formControlName="inm_anio_ingreso" required matInput placeholder="Ingrese el año">
           </mat-form-field>
-  
-          <mat-form-field >
+
+          <mat-form-field class="col-span-1">
               <mat-label>Laboratorista Encargado</mat-label>
               <mat-select formControlName="inm_encargado">
                   <mat-option *ngFor="let encargado of dataUsuarios" [value]="encargado.usu_id">{{ encargado.usu_nombres }}</mat-option>
               </mat-select>
           </mat-form-field>
 
-          <mat-form-field >
+          <mat-form-field class="col-span-1">
               <mat-label>Localización</mat-label>
               <mat-select formControlName="inm_loc">
                   <mat-option *ngFor="let ubicacion of dataTipoUbicacion" [value]="ubicacion.loc_id">{{ ubicacion.loc_nombre }}</mat-option>
               </mat-select>
           </mat-form-field>
 
-          <mat-form-field >
+          <mat-form-field class="col-span-1">
               <mat-label>Categoria</mat-label>
               <mat-select formControlName="inm_cat">
                   <mat-option *ngFor="let categoria of dataCategoria" [value]="categoria.cat_id">{{ categoria.cat_nombre }}</mat-option>
               </mat-select>
           </mat-form-field>
 
-          <mat-form-field >
+          <mat-form-field class="col-span-1">
               <mat-label>Dependencia</mat-label>
               <mat-select formControlName="inm_dep">
                   <mat-option *ngFor="let dependencia of dataDependencia" [value]="dependencia.dep_id">{{ dependencia.dep_nombre }}</mat-option>
               </mat-select>
           </mat-form-field>
 
-          <mat-form-field >
+          <mat-form-field class="col-span-3">
               <mat-label>Descripción (opcional)</mat-label>
               <input type="text" formControlName="inm_descripcion" matInput placeholder="Ingrese una descripción">
           </mat-form-field>
@@ -133,8 +134,6 @@
                 class="Cancelar">Cancelar</button>
       </div>
   </form>
-
-
   </div>
 </div>
 
